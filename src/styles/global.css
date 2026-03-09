@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* ===== Design Tokens ===== */
+@theme {
+  --color-passport-navy: #0B1D3A;
+  --color-passport-navy-light: #122a52;
+  --color-passport-paper: #F5F1E8;
+  --color-passport-paper-dark: #E8E0D0;
+  --color-gold: #D4AF37;
+  --color-gold-light: #E8CD6B;
+  --color-stamp-red: #B22222;
+  --color-stamp-red-light: #D44040;
+  --color-ink-blue: #1E3A8A;
+  --color-ink-blue-light: #2B4FA8;
+  --color-dark-gray: #333333;
+  --color-medium-gray: #666666;
+  --color-light-gray: #999999;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-stamp: 'Special Elite', 'Courier New', monospace;
+}
+
+/* ===== Base Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* GSAP handles scroll */
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-passport-navy);
+  color: var(--color-dark-gray);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ===== Typography Utilities ===== */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-stamp {
+  font-family: var(--font-stamp);
+}
+
+/* ===== Passport Paper Texture ===== */
+.passport-paper {
+  background-color: var(--color-passport-paper);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(219, 207, 181, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(219, 207, 181, 0.2) 0%, transparent 60%);
+  position: relative;
+}
+
+.passport-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(180, 160, 120, 0.06) 28px,
+      rgba(180, 160, 120, 0.06) 29px
+    );
+  pointer-events: none;
+}
+
+/* ===== Stamp Effect ===== */
+.stamp-effect {
+  filter: saturate(0.85) contrast(1.1);
+  mix-blend-mode: multiply;
+}
+
+/* ===== Gold Foil Shimmer ===== */
+@keyframes goldShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gold-foil {
+  background: linear-gradient(
+    90deg,
+    var(--color-gold) 0%,
+    var(--color-gold-light) 25%,
+    var(--color-gold) 50%,
+    var(--color-gold-light) 75%,
+    var(--color-gold) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Journey Path Animation ===== */
+@keyframes drawPath {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+.journey-path {
+  stroke-dasharray: 6 3;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-passport-navy);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 3px;
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
