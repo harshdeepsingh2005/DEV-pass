@@ -57,6 +57,11 @@ const FloatingPassport = ({ cover, spreads }) => {
         if (children.length) gsap.set(children, { autoAlpha: 0, y: 8 })
       })
 
+      /* Unpause gold-foil shimmer on cover (it's always visible, not part of flip reveals) */
+      coverLeafRef.current?.querySelectorAll('.gold-foil').forEach(
+        (el) => { el.style.animationPlayState = 'running' },
+      )
+
       /* ---- Pin ---- */
       ScrollTrigger.create({
         trigger: containerRef.current,
@@ -106,12 +111,22 @@ const FloatingPassport = ({ cover, spreads }) => {
       /* Reveal first spread content — at 80% of cover flip */
       const coverFlipStart = 6
       const coverFlipDur = 12
+      const revealPos0 = coverFlipStart + coverFlipDur * 0.8
       const firstChildren = spreadRefs.current[0]?.querySelectorAll(':scope > *')
       if (firstChildren?.length) {
         tl.to(firstChildren,
           { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
-          coverFlipStart + coverFlipDur * 0.8,
+          revealPos0,
         )
+      }
+      /* Trigger any in-page animations on first spread */
+      const firstPaths = spreadRefs.current[0]?.querySelectorAll('.journey-path')
+      if (firstPaths?.length) {
+        tl.to(firstPaths, { strokeDashoffset: 0, duration: 4, ease: 'power2.inOut' }, revealPos0)
+      }
+      const firstAnimated = spreadRefs.current[0]?.querySelectorAll('.gold-foil, [style*="animation"]')
+      if (firstAnimated?.length) {
+        tl.call(() => firstAnimated.forEach(el => el.style.animationPlayState = 'running'), null, revealPos0)
       }
 
       /* ── Phase 2: Page flips (18% → 97%) ── */
@@ -144,12 +159,22 @@ const FloatingPassport = ({ cover, spreads }) => {
         tl.set(leaf, { autoAlpha: 0 }, segStart + flipDur + 0.2)
 
         /* Reveal content on newly visible spread — at 80% of page flip */
+        const revealPos = segStart + flipDur * 0.8
         const nextChildren = spreadRefs.current[i + 1]?.querySelectorAll(':scope > *')
         if (nextChildren?.length) {
           tl.to(nextChildren,
             { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
-            segStart + flipDur * 0.8,
+            revealPos,
           )
+        }
+        /* Trigger any in-page animations on this spread */
+        const paths = spreadRefs.current[i + 1]?.querySelectorAll('.journey-path')
+        if (paths?.length) {
+          tl.to(paths, { strokeDashoffset: 0, duration: 4, ease: 'power2.inOut' }, revealPos)
+        }
+        const animated = spreadRefs.current[i + 1]?.querySelectorAll('.gold-foil, [style*="animation"]')
+        if (animated?.length) {
+          tl.call(() => animated.forEach(el => el.style.animationPlayState = 'running'), null, revealPos)
         }
       }
     }, containerRef)
