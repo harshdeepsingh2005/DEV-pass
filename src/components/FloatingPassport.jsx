@@ -248,7 +248,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                 style={{
                   transform: 'translateZ(-2px)',
                   transformStyle: 'preserve-3d',
-                  clipPath: 'inset(0 round 6px)',
+                  clipPath: 'inset(5px round 6px)',
                 }}
               >
                 <div
@@ -262,8 +262,8 @@ const FloatingPassport = ({ cover, spreads }) => {
                   <div
                     key={`spread-${i}`}
                     ref={(el) => setSpreadRef(el, i)}
-                    className="absolute inset-0"
-                    style={{ zIndex: 5 + i }}
+                    className="absolute"
+                    style={{ inset: 5, zIndex: 5 + i }}
                   >
                     {spreadEl}
                   </div>
@@ -286,8 +286,8 @@ const FloatingPassport = ({ cover, spreads }) => {
                   >
                     {/* Front face — right half of spread[i] */}
                     <div
-                      className="absolute inset-0 overflow-hidden"
-                      style={{ backfaceVisibility: 'hidden' }}
+                      className="absolute overflow-hidden"
+                      style={{ inset: 5, backfaceVisibility: 'hidden' }}
                     >
                       <div
                         className="absolute inset-0"
@@ -308,8 +308,8 @@ const FloatingPassport = ({ cover, spreads }) => {
 
                     {/* Back face — left half of spread[i+1] */}
                     <div
-                      className="absolute inset-0 overflow-hidden"
-                      style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                      className="absolute overflow-hidden"
+                      style={{ inset: 5, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                     >
                       <div
                         className="absolute inset-0"
