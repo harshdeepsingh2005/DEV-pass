@@ -22,7 +22,7 @@ const circleStamps = [
 ]
 
 const SkillsSpread = () => (
-  <div className="relative h-full w-full overflow-hidden p-[5px]">
+  <div className="relative h-full w-full overflow-hidden">
     {/* Page header — left */}
     <div className="absolute top-3 left-4 z-10 flex justify-between items-center" style={{ width: 'calc(50% - 1.5rem)' }}>
       <h2 className="font-heading text-passport-navy/80 text-sm font-bold">Skills Visa</h2>

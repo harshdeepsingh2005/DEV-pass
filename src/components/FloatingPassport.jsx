@@ -50,11 +50,11 @@ const FloatingPassport = ({ cover, spreads }) => {
         if (el) gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 })
       })
 
-      /* Hide stamps in base layers — they animate in after each page fully turns */
+      /* Hide ALL content in each spread — reveal only after the page fully turns */
       spreadRefs.current.forEach((el) => {
         if (!el) return
-        const stamps = el.querySelectorAll('.stamp-slam')
-        if (stamps.length) gsap.set(stamps, { autoAlpha: 0, scale: 1.15, y: 6 })
+        const children = el.querySelectorAll(':scope > *')
+        if (children.length) gsap.set(children, { autoAlpha: 0, y: 8 })
       })
 
       /* ---- Pin ---- */
@@ -103,12 +103,11 @@ const FloatingPassport = ({ cover, spreads }) => {
       tl.to(pagesRef.current, { autoAlpha: 1, duration: 3 }, 8)
       tl.to(coverLeafRef.current, { autoAlpha: 0, z: -10, duration: 3, ease: 'power1.in' }, 15)
 
-      /* Animate stamps on first visible spread — after cover is fully open */
-      const firstStamps = spreadRefs.current[0]?.querySelectorAll('.stamp-slam')
-      if (firstStamps?.length) {
-        tl.fromTo(firstStamps,
-          { autoAlpha: 0, scale: 1.15, y: 6 },
-          { autoAlpha: 1, scale: 1, y: 0, stagger: 0.2, duration: 2.5, ease: 'power3.out' },
+      /* Reveal first spread content — after cover is fully open */
+      const firstChildren = spreadRefs.current[0]?.querySelectorAll(':scope > *')
+      if (firstChildren?.length) {
+        tl.to(firstChildren,
+          { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
           18.5,
         )
       }
@@ -142,12 +141,11 @@ const FloatingPassport = ({ cover, spreads }) => {
 
         tl.set(leaf, { autoAlpha: 0 }, segStart + flipDur + 0.2)
 
-        /* Animate stamps on newly visible spread — after page is fully turned */
-        const nextStamps = spreadRefs.current[i + 1]?.querySelectorAll('.stamp-slam')
-        if (nextStamps?.length) {
-          tl.fromTo(nextStamps,
-            { autoAlpha: 0, scale: 1.15, y: 6 },
-            { autoAlpha: 1, scale: 1, y: 0, stagger: 0.2, duration: 2.5, ease: 'power3.out' },
+        /* Reveal all content on newly visible spread — after page is fully turned */
+        const nextChildren = spreadRefs.current[i + 1]?.querySelectorAll(':scope > *')
+        if (nextChildren?.length) {
+          tl.to(nextChildren,
+            { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
             segStart + flipDur + 0.5,
           )
         }
@@ -263,7 +261,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                     key={`spread-${i}`}
                     ref={(el) => setSpreadRef(el, i)}
                     className="absolute"
-                    style={{ inset: 5, zIndex: 5 + i }}
+                    style={{ inset: 10, zIndex: 5 + i }}
                   >
                     {spreadEl}
                   </div>

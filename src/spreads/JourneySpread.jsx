@@ -26,7 +26,7 @@ const buildBezierPath = (pts) => {
 }
 
 const JourneySpread = () => (
-  <div className="relative h-full w-full overflow-hidden p-[5px]">
+  <div className="relative h-full w-full overflow-hidden">
     {/* World map background — higher opacity for visibility */}
     <div className="absolute inset-0">
       <img

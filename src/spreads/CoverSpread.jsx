@@ -5,7 +5,7 @@
 import passportLogo from '../assets/icons/passport_logo.png'
 
 const CoverSpread = () => (
-  <div className="h-full flex flex-col items-center justify-between text-center px-8 py-8 p-[5px]">
+  <div className="h-full flex flex-col items-center justify-between text-center px-8 py-8">
     {/* Top — Title + serial + subtitle */}
     <div className="flex flex-col items-center pt-1">
       <h1 className="gold-foil font-heading text-xl sm:text-2xl font-bold tracking-wide leading-tight">
