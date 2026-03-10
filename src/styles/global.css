@@ -57,7 +57,6 @@ body {
   background-image:
     radial-gradient(ellipse at 20% 50%, rgba(219, 207, 181, 0.3) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 50%, rgba(219, 207, 181, 0.2) 0%, transparent 60%);
-  position: relative;
 }
 
 .passport-paper::before {

@@ -4,9 +4,9 @@
  * Items fixed: #2 (gold-foil), #30 (emblem), heading structure, serial number, issue dates.
  */
 const CoverSpread = () => (
-  <div className="h-full flex flex-col items-center justify-center text-center px-8 py-6">
+  <div className="h-full flex flex-col items-center justify-between text-center px-8 py-10">
     {/* Laurel wreath emblem with code brackets */}
-    <div className="mb-5">
+    <div className="mt-2">
       <svg width="64" height="64" viewBox="0 0 80 80" className="text-gold opacity-85">
         <path d="M40 6 C28 6 18 14 14 26 C10 38 12 50 20 58" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.7" />
         <path d="M40 6 C52 6 62 14 66 26 C70 38 68 50 60 58" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.7" />
@@ -23,34 +23,37 @@ const CoverSpread = () => (
       </svg>
     </div>
 
-    <p className="font-stamp text-gold/30 text-[8px] tracking-[0.6em] uppercase mb-3">
-      No. DEV-2024-0137
-    </p>
+    {/* Central content block */}
+    <div className="flex flex-col items-center">
+      <p className="font-stamp text-gold/30 text-[8px] tracking-[0.6em] uppercase mb-4">
+        No. DEV-2024-0137
+      </p>
 
-    <p className="font-stamp text-gold/55 text-[10px] tracking-[0.5em] uppercase mb-2">
-      Portfolio
-    </p>
-    <h1 className="gold-foil font-heading text-2xl sm:text-3xl font-bold tracking-wide leading-tight">
-      DEVELOPER PASSPORT
-    </h1>
+      <p className="font-stamp text-gold/55 text-[10px] tracking-[0.5em] uppercase mb-3">
+        Portfolio
+      </p>
+      <h1 className="gold-foil font-heading text-2xl sm:text-3xl font-bold tracking-wide leading-tight">
+        DEVELOPER PASSPORT
+      </h1>
 
-    <div className="w-20 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent my-4" />
+      <div className="w-20 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent my-5" />
 
-    <p className="font-stamp text-gold/75 text-[11px] sm:text-xs tracking-[0.3em] uppercase">
-      Harshdeep Singh
-    </p>
-    <p className="font-stamp text-gold/50 text-[9px] sm:text-[10px] tracking-[0.2em] uppercase mt-1">
-      AI / Machine Learning Engineer
-    </p>
+      <p className="font-stamp text-gold/75 text-[11px] sm:text-xs tracking-[0.3em] uppercase">
+        Harshdeep Singh
+      </p>
+      <p className="font-stamp text-gold/50 text-[9px] sm:text-[10px] tracking-[0.2em] uppercase mt-1.5">
+        AI / Machine Learning Engineer
+      </p>
+    </div>
 
-    <div className="mt-5 flex gap-6">
+    <div className="flex gap-8 mb-2">
       <div className="text-center">
         <p className="font-stamp text-gold/25 text-[7px] tracking-[0.2em] uppercase">Issued</p>
-        <p className="font-stamp text-gold/40 text-[8px] tracking-wider">2020</p>
+        <p className="font-stamp text-gold/40 text-[9px] tracking-wider mt-0.5">2020</p>
       </div>
       <div className="text-center">
         <p className="font-stamp text-gold/25 text-[7px] tracking-[0.2em] uppercase">Expires</p>
-        <p className="font-stamp text-gold/40 text-[8px] tracking-wider">NEVER</p>
+        <p className="font-stamp text-gold/40 text-[9px] tracking-wider mt-0.5">NEVER</p>
       </div>
     </div>
   </div>
