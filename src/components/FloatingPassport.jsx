@@ -302,13 +302,6 @@ const FloatingPassport = ({ cover, spreads }) => {
                   backgroundPosition: 'center',
                 }}
               >
-                <div
-                  className="absolute inset-0 rounded-r-md"
-                  style={{
-                    background:
-                      'linear-gradient(145deg, rgba(15,40,71,0.3) 0%, rgba(11,29,58,0.5) 50%, rgba(9,26,51,0.35) 100%)',
-                  }}
-                />
                 <div className="relative z-10 h-full">{cover}</div>
                 {/* Spine shadow */}
                 <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-black/20 to-transparent" />
