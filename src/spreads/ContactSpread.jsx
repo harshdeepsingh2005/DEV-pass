@@ -52,9 +52,9 @@ const contacts = [
 ]
 
 const ContactSpread = () => (
-  <div className="grid grid-cols-2 h-full">
+  <div className="grid grid-cols-2 h-full" style={{ columnGap: 48 }}>
     {/* Left page — Exit visa stamp */}
-    <div className="relative flex flex-col items-center justify-center p-6 border-r border-black/[0.04]">
+    <div className="relative flex flex-col items-center justify-center p-6">
       {/* Page number watermark */}
       <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 12</span>
 
