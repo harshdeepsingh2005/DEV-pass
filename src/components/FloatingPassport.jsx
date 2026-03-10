@@ -306,7 +306,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                   <div
                     key={`spread-${i}`}
                     ref={(el) => setSpreadRef(el, i)}
-                    className="absolute"
+                    className="absolute overflow-hidden"
                     style={{ inset: 10, zIndex: 5 + i }}
                   >
                     {spreadEl}
