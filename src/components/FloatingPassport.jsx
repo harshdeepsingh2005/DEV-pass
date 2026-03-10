@@ -99,10 +99,10 @@ const FloatingPassport = ({ cover, spreads }) => {
         { rotationY: -180, ease: 'power2.inOut', duration: 12 },
         6,
       )
-      // In preserve-3d context, z-index is ignored — translateZ controls stacking.
-      // Pages container sits at translateZ(-2px). Push the flipped cover behind it.
-      // GSAP scrub auto-reverts z back to 0 when scrolling back → cover reappears on top.
-      tl.set(coverLeafRef.current, { z: -6 }, 18)
+      // After flip completes: hide the cover so it can't overlap pages.
+      // visibility:hidden removes it from rendering entirely.
+      // GSAP scrub auto-reverts both when scrolling back past this point.
+      tl.set(coverLeafRef.current, { visibility: 'hidden', z: -10 }, 18)
 
       /* ── Phase 2: Page flips (18% → 97%) ── */
       // Each page leaf flips sequentially, revealing the next spread
@@ -363,7 +363,7 @@ const FloatingPassport = ({ cover, spreads }) => {
             {/* ═══════ FRONT COVER (flips open) ═══════ */}
             <div
               ref={coverLeafRef}
-              className="absolute z-40 rounded-md overflow-hidden"
+              className="absolute z-40 rounded-md"
               style={{
                 top: 0,
                 right: 0,
@@ -377,7 +377,7 @@ const FloatingPassport = ({ cover, spreads }) => {
             >
               {/* Exterior face */}
               <div
-                className="absolute inset-0 rounded-r-md"
+                className="absolute inset-0 rounded-r-md overflow-hidden"
                 style={{
                   backfaceVisibility: 'hidden',
                   backgroundImage: `url(${passportCover})`,
@@ -391,7 +391,7 @@ const FloatingPassport = ({ cover, spreads }) => {
 
               {/* Interior face (back of cover) */}
               <div
-                className="absolute inset-0 rounded-l-md"
+                className="absolute inset-0 rounded-l-md overflow-hidden"
                 style={{
                   backfaceVisibility: 'hidden',
                   transform: 'rotateY(180deg)',
