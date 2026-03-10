@@ -99,10 +99,11 @@ const FloatingPassport = ({ cover, spreads }) => {
         { rotationY: -180, ease: 'power2.inOut', duration: 12 },
         6,
       )
-      // After flip completes: hide the cover so it can't overlap pages.
-      // visibility:hidden removes it from rendering entirely.
-      // GSAP scrub auto-reverts both when scrolling back past this point.
-      tl.set(coverLeafRef.current, { visibility: 'hidden', z: -10 }, 18)
+      // Fade out the cover leaf as the flip finishes so it can't block pages.
+      // autoAlpha tweens opacity → 0 then sets visibility:hidden automatically.
+      // Starts at 15 (about 75% through the flip) so it fades out smoothly
+      // as the cover completes its rotation. GSAP scrub auto-reverts on scroll-back.
+      tl.to(coverLeafRef.current, { autoAlpha: 0, z: -10, duration: 3, ease: 'power1.in' }, 15)
 
       /* ── Phase 2: Page flips (18% → 97%) ── */
       // Each page leaf flips sequentially, revealing the next spread
