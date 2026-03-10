@@ -103,12 +103,14 @@ const FloatingPassport = ({ cover, spreads }) => {
       tl.to(pagesRef.current, { autoAlpha: 1, duration: 3 }, 8)
       tl.to(coverLeafRef.current, { autoAlpha: 0, z: -10, duration: 3, ease: 'power1.in' }, 15)
 
-      /* Reveal first spread content — after cover is fully open */
+      /* Reveal first spread content — at 80% of cover flip */
+      const coverFlipStart = 6
+      const coverFlipDur = 12
       const firstChildren = spreadRefs.current[0]?.querySelectorAll(':scope > *')
       if (firstChildren?.length) {
         tl.to(firstChildren,
           { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
-          18.5,
+          coverFlipStart + coverFlipDur * 0.8,
         )
       }
 
@@ -141,12 +143,12 @@ const FloatingPassport = ({ cover, spreads }) => {
 
         tl.set(leaf, { autoAlpha: 0 }, segStart + flipDur + 0.2)
 
-        /* Reveal all content on newly visible spread — after page is fully turned */
+        /* Reveal content on newly visible spread — at 80% of page flip */
         const nextChildren = spreadRefs.current[i + 1]?.querySelectorAll(':scope > *')
         if (nextChildren?.length) {
           tl.to(nextChildren,
             { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
-            segStart + flipDur + 0.5,
+            segStart + flipDur * 0.8,
           )
         }
       }
