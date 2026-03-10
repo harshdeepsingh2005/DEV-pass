@@ -28,8 +28,8 @@ const SkillsSpread = () => (
       <h2 className="font-heading text-passport-navy/80 text-sm font-bold">Skills Visa</h2>
     </div>
     {/* Page numbers */}
-    <span className="absolute bottom-2 left-3 z-10 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 02</span>
-    <span className="absolute bottom-2 right-3 z-10 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 03</span>
+    <span className="absolute bottom-2 left-3 z-10 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 02</span>
+    <span className="absolute bottom-2 right-3 z-10 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 03</span>
     {/* Header border */}
     <div className="absolute top-8 left-4 right-4 h-px bg-gold/15 z-10" />
 

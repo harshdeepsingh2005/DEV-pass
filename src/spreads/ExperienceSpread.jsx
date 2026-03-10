@@ -49,7 +49,7 @@ const ExperienceSpread = () => (
 
     {/* Left page */}
     <div className="p-4 sm:p-5 border-r border-black/[0.04] flex flex-col relative">
-      <span className="absolute bottom-2 left-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 10</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 10</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <h2 className="font-heading text-passport-navy text-sm sm:text-base font-bold">
@@ -90,7 +90,7 @@ const ExperienceSpread = () => (
 
     {/* Right page */}
     <div className="p-4 sm:p-5 flex flex-col relative">
-      <span className="absolute bottom-2 right-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 11</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 11</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <span className="font-stamp text-[8px] text-medium-gray tracking-widest">Continued</span>

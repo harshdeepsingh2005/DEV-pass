@@ -11,7 +11,7 @@ const CoverSpread = () => (
       <h1 className="gold-foil font-heading text-xl sm:text-2xl font-bold tracking-wide leading-tight">
         DEVELOPER PASSPORT
       </h1>
-      <p className="font-stamp text-gold/30 text-[7px] tracking-[0.5em] uppercase mt-2">
+      <p className="font-mrz text-gold/30 text-[7px] tracking-[0.5em] uppercase mt-2">
         No. DEV-2024-0137
       </p>
       <p className="font-stamp text-gold/55 text-[10px] tracking-[0.5em] uppercase mt-1">

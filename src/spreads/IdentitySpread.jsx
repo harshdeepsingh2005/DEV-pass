@@ -7,7 +7,7 @@ const IdentitySpread = () => (
   <div className="grid grid-cols-2 h-full">
     {/* Left page — Photo */}
     <div className="flex flex-col items-center justify-center p-4 sm:p-6 border-r border-black/[0.04] relative">
-      <span className="absolute bottom-2 left-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 01</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 01</span>
 
       <div className="relative">
         <div className="w-28 h-36 sm:w-32 sm:h-40 bg-passport-paper-dark border-2 border-gold/30 shadow-inner flex items-center justify-center">
@@ -42,7 +42,7 @@ const IdentitySpread = () => (
 
     {/* Right page — Details */}
     <div className="flex flex-col p-4 sm:p-6 relative">
-      <span className="absolute bottom-2 right-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 02</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 02</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20">
         <span className="font-stamp text-[8px] text-medium-gray tracking-[0.3em] uppercase">
@@ -94,7 +94,7 @@ const IdentitySpread = () => (
       </div>
 
       {/* MRZ zone */}
-      <div className="mt-2 pt-2 border-t border-medium-gray/15 font-mono text-[7px] text-passport-navy/25 leading-tight tracking-[0.15em] select-none overflow-hidden">
+      <div className="mt-2 pt-2 border-t border-medium-gray/15 font-mrz text-[7px] text-passport-navy/25 leading-tight tracking-[0.15em] select-none overflow-hidden">
         <p>P&lt;IND&lt;SINGH&lt;&lt;HARSHDEEP&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</p>
         <p>DEV2024013&lt;IND&lt;0000000&lt;M&lt;2505010&lt;&lt;&lt;&lt;&lt;&lt;&lt;00</p>
       </div>

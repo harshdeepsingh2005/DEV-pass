@@ -56,7 +56,7 @@ const ContactSpread = () => (
     {/* Left page — Exit visa stamp */}
     <div className="flex flex-col items-center justify-center p-6 border-r border-black/[0.04]">
       {/* Page number watermark */}
-      <span className="absolute bottom-2 left-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 12</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 12</span>
 
       <div
         className="stamp-effect border-stamp-red/50 rounded-sm px-8 py-5 mb-5"
@@ -91,7 +91,7 @@ const ContactSpread = () => (
 
     {/* Right page — Contact stamp buttons */}
     <div className="flex flex-col items-center justify-center p-5 sm:p-6 relative">
-      <span className="absolute bottom-2 right-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 13</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 13</span>
 
       <div className="w-full mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <span className="font-stamp text-[8px] text-medium-gray tracking-widest">

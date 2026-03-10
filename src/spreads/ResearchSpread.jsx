@@ -39,7 +39,7 @@ const ResearchSpread = () => (
   <div className="grid grid-cols-2 h-full">
     {/* Left page — Papers */}
     <div className="p-4 sm:p-5 border-r border-black/[0.04] flex flex-col relative">
-      <span className="absolute bottom-2 left-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 08</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 08</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <h2 className="font-heading text-passport-navy text-sm sm:text-base font-bold">
@@ -88,7 +88,7 @@ const ResearchSpread = () => (
 
     {/* Right page — Research metrics & stamps */}
     <div className="p-4 sm:p-5 relative flex flex-col">
-      <span className="absolute bottom-2 right-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 09</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 09</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <span className="font-stamp text-[8px] text-medium-gray tracking-widest">

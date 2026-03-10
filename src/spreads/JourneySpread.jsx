@@ -53,7 +53,7 @@ const JourneySpread = () => (
       <h2 className="font-heading text-passport-navy text-sm sm:text-base font-bold">
         Journey Map
       </h2>
-      <span className="font-stamp text-[8px] text-medium-gray tracking-widest">P 06–07</span>
+      <span className="font-mrz text-[8px] text-medium-gray tracking-widest">P 06–07</span>
     </div>
     <div className="mx-5 mt-1 h-px bg-gold/15" />
 

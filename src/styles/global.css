@@ -19,6 +19,7 @@
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-stamp: 'Special Elite', 'Courier New', monospace;
+  --font-mrz: 'OCR B', 'B612 Mono', 'Courier New', monospace;
 }
 
 /* ===== Base Styles ===== */
@@ -49,6 +50,10 @@ body {
 
 .font-stamp {
   font-family: var(--font-stamp);
+}
+
+.font-mrz {
+  font-family: var(--font-mrz);
 }
 
 /* ===== Passport Paper Texture ===== */
