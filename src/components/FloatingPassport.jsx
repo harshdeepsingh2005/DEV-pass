@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import deskBg from '../assets/background/desk-background.webp'
 import passportCover from '../assets/passport/passport_cover.webp'
 import passportPageTexture from '../assets/texture/passport-page.webp'
+import PassportSpine from './PassportSpine'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -248,21 +249,8 @@ const FloatingPassport = ({ cover, spreads }) => {
               />
               <div className="absolute inset-0 bg-passport-paper/92" />
 
-              {/* Left-page shadow (inner) */}
-              <div className="absolute right-1/2 top-0 bottom-0 w-6 z-30 bg-gradient-to-l from-black/[0.06] to-transparent" />
-              {/* Right-page shadow (inner) */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-6 z-30 bg-gradient-to-r from-black/[0.04] to-transparent" />
-
-              {/* Center spine */}
-              <div
-                className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 z-30"
-                style={{
-                  background:
-                    'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.04) 50%, rgba(0,0,0,0.1) 100%)',
-                  boxShadow:
-                    '-4px 0 12px rgba(0,0,0,0.06), 4px 0 12px rgba(0,0,0,0.06)',
-                }}
-              />
+              {/* ── Booklet binding seam ── */}
+              <PassportSpine />
 
               {/* ── Spreads (stacked, GSAP controls opacity) ── */}
               {spreads.map((spreadEl, i) => (
