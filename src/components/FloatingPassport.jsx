@@ -241,13 +241,13 @@ const FloatingPassport = ({ cover, spreads }) => {
             >
               {/* Page texture */}
               <div
-                className="absolute inset-0"
+                className="absolute inset-0 z-[1]"
                 style={{
                   backgroundImage: `url(${passportPageTexture})`,
                   backgroundSize: 'cover',
                 }}
               />
-              <div className="absolute inset-0 bg-passport-paper/92" />
+              <div className="absolute inset-0 z-[2] bg-passport-paper/92" />
 
               {/* ── Booklet binding seam ── */}
               <PassportSpine />
