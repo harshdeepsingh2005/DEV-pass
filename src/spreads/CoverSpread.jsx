@@ -25,7 +25,6 @@ const CoverSpread = () => (
         src={passportLogo}
         alt="Passport logo"
         className="w-20 h-20 sm:w-24 sm:h-24 opacity-85"
-        style={{ filter: 'brightness(0) invert(0.78) sepia(1) saturate(3) hue-rotate(15deg)' }}
       />
 
       <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent my-3" />
