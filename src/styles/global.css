@@ -78,6 +78,9 @@ body {
 /* ===== Stamp Effect ===== */
 .stamp-effect {
   filter: saturate(0.85) contrast(1.1);
+}
+
+.stamp-blend {
   mix-blend-mode: multiply;
 }
 
@@ -100,6 +103,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: goldShimmer 3s linear infinite;
 }
 
 /* ===== Journey Path Animation ===== */
@@ -109,7 +113,9 @@ body {
 }
 
 .journey-path {
-  stroke-dasharray: 6 3;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawPath 2.5s ease forwards;
 }
 
 /* ===== Scrollbar ===== */

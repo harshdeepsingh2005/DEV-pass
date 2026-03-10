@@ -139,6 +139,40 @@ const FloatingPassport = ({ cover, spreads }) => {
     return () => ctx.revert()
   }, [spreads.length])
 
+  /* ---- Keyboard navigation (← →) ---- #26 */
+  useEffect(() => {
+    const totalScroll = window.innerHeight * 8
+    // Scroll targets as % of total: cover-closed, cover-open, then each spread center
+    const scrollTargets = [0, 14, 26, 40, 55, 70, 83, 95]
+
+    const handleKeyDown = (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
+      const container = containerRef.current
+      if (!container) return
+      const containerTop = container.offsetTop
+      const currentScroll = window.scrollY - containerTop
+      const currentProgress = Math.max(0, currentScroll / totalScroll) * 100
+
+      // Find which target we're closest to
+      let closestIdx = 0
+      let closestDist = Infinity
+      scrollTargets.forEach((t, i) => {
+        const dist = Math.abs(currentProgress - t)
+        if (dist < closestDist) { closestDist = dist; closestIdx = i }
+      })
+
+      let nextIdx = closestIdx
+      if (e.key === 'ArrowRight') nextIdx = Math.min(closestIdx + 1, scrollTargets.length - 1)
+      if (e.key === 'ArrowLeft') nextIdx = Math.max(closestIdx - 1, 0)
+
+      const targetScroll = containerTop + (scrollTargets[nextIdx] / 100) * totalScroll
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' })
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   return (
     <div ref={containerRef}>
       <div ref={viewportRef} className="w-full h-screen relative overflow-hidden">
@@ -181,7 +215,7 @@ const FloatingPassport = ({ cover, spreads }) => {
             style={{
               width: coverOpen ? 'min(82vw, 880px)' : 'min(34vw, 380px)',
               height: 'min(56vh, 500px)',
-              transition: 'width 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+              transition: 'width 0.5s ease-out',
               transformStyle: 'preserve-3d',
               filter:
                 'drop-shadow(0 30px 60px rgba(0,0,0,0.5)) drop-shadow(0 12px 24px rgba(0,0,0,0.3))',
@@ -199,7 +233,7 @@ const FloatingPassport = ({ cover, spreads }) => {
 
             {/* Pages container (visible when open) */}
             <div
-              className={`absolute inset-0 rounded-md overflow-hidden transition-opacity duration-500 ${
+              className={`passport-paper absolute inset-0 rounded-md overflow-hidden transition-opacity duration-500 ${
                 coverOpen ? 'opacity-100' : 'opacity-0'
               }`}
               style={{ transform: 'translateZ(-2px)' }}
@@ -254,7 +288,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                 width: coverOpen ? '50%' : '100%',
                 transformStyle: 'preserve-3d',
                 transformOrigin: 'left center',
-                transition: 'width 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: 'width 0.5s ease-out',
                 willChange: 'transform',
               }}
             >
@@ -290,18 +324,31 @@ const FloatingPassport = ({ cover, spreads }) => {
                     'linear-gradient(135deg, #0B1D3A 0%, #122a52 50%, #0a1a30 100%)',
                 }}
               >
-                <div className="absolute inset-4 border border-gold/8 rounded-sm" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-[0.06]">
-                  <svg
-                    width="100"
-                    height="100"
-                    viewBox="0 0 60 60"
-                    className="text-gold"
-                  >
-                    <circle cx="30" cy="30" r="28" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                    <circle cx="30" cy="30" r="20" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                    <path d="M30 5 L30 55 M5 30 L55 30" stroke="currentColor" strokeWidth="0.3" />
+                {/* Decorative border */}
+                <div className="absolute inset-3 border border-gold/15 rounded-sm" />
+                <div className="absolute inset-5 border border-gold/8 rounded-sm" />
+
+                {/* Corner flourishes */}
+                <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/25" />
+                <div className="absolute top-4 right-4 w-6 h-6 border-t border-r border-gold/25" />
+                <div className="absolute bottom-4 left-4 w-6 h-6 border-b border-l border-gold/25" />
+                <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/25" />
+
+                {/* Central emblem — visible */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <svg width="80" height="80" viewBox="0 0 60 60" className="text-gold/20">
+                    <circle cx="30" cy="30" r="28" fill="none" stroke="currentColor" strokeWidth="0.6" />
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="currentColor" strokeWidth="0.4" />
+                    <circle cx="30" cy="30" r="15" fill="none" stroke="currentColor" strokeWidth="0.3" />
+                    <text x="30" y="33" textAnchor="middle" fill="currentColor" fontSize="10" fontFamily="'Special Elite', monospace">&lt;/&gt;</text>
                   </svg>
+                  <p className="font-stamp text-gold/15 text-[8px] tracking-[0.4em] uppercase mt-3">
+                    Developer Passport
+                  </p>
+                  <div className="w-16 h-px bg-gold/10 mt-1.5" />
+                  <p className="font-stamp text-gold/10 text-[7px] tracking-[0.3em] uppercase mt-1">
+                    Official Document
+                  </p>
                 </div>
               </div>
             </div>
@@ -326,20 +373,27 @@ const FloatingPassport = ({ cover, spreads }) => {
 
         {/* ═══════ SPREAD INDICATORS ═══════ */}
         <div
-          className={`absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2 transition-opacity duration-500 ${
+          className={`absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 transition-opacity duration-500 ${
             coverOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          {spreads.map((_, i) => (
-            <div
-              key={i}
-              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                activeSpread === i
-                  ? 'bg-gold scale-[1.6]'
-                  : 'bg-white/20'
-              }`}
-            />
-          ))}
+          {/* Active spread name */}
+          <p className="font-stamp text-passport-paper/40 text-[9px] tracking-[0.3em] uppercase transition-all duration-300">
+            {['Identity', 'Skills', 'Projects', 'Journey', 'Research', 'Experience', 'Contact'][activeSpread] || ''}
+          </p>
+          <div className="flex gap-2">
+            {spreads.map((_, i) => (
+              <div
+                key={i}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                  activeSpread === i
+                    ? 'bg-gold scale-[1.6]'
+                    : 'bg-white/20'
+                }`}
+                title={['Identity', 'Skills', 'Projects', 'Journey', 'Research', 'Experience', 'Contact'][i]}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

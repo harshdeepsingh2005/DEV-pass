@@ -1,6 +1,7 @@
 /**
  * ContactSpread — Exit visa spread.
  * Left: large EXIT VISA stamp.  Right: stamp-style contact buttons.
+ * Items fixed: #1 (real URLs), #17 (brand colors), #7 (typography), #29 (page numbers).
  */
 const contacts = [
   {
@@ -10,8 +11,8 @@ const contacts = [
       </svg>
     ),
     label: 'GitHub',
-    url: 'https://github.com',
-    color: '#1E3A8A',
+    url: 'https://github.com/harshdeepsingh2005',
+    color: '#24292e',
   },
   {
     icon: (
@@ -20,8 +21,8 @@ const contacts = [
       </svg>
     ),
     label: 'LinkedIn',
-    url: 'https://linkedin.com',
-    color: '#1E3A8A',
+    url: 'https://www.linkedin.com/in/harshdeepsingh2005',
+    color: '#0077B5',
   },
   {
     icon: (
@@ -31,7 +32,7 @@ const contacts = [
       </svg>
     ),
     label: 'Email',
-    url: 'mailto:hello@example.com',
+    url: 'mailto:harshdeepsingh2005@gmail.com',
     color: '#B22222',
   },
   {
@@ -44,8 +45,9 @@ const contacts = [
       </svg>
     ),
     label: 'Download CV',
-    url: '#',
+    url: '/Harshdeep_Singh_CV.pdf',
     color: '#B22222',
+    download: true,
   },
 ]
 
@@ -53,44 +55,49 @@ const ContactSpread = () => (
   <div className="grid grid-cols-2 h-full">
     {/* Left page — Exit visa stamp */}
     <div className="flex flex-col items-center justify-center p-6 border-r border-black/[0.04]">
+      {/* Page number watermark */}
+      <span className="absolute bottom-2 left-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 12</span>
+
       <div
-        className="stamp-effect border-3 border-stamp-red/50 rounded-sm px-8 py-5 mb-5"
-        style={{ transform: 'rotate(-3deg)', borderWidth: '3px' }}
+        className="stamp-effect border-stamp-red/50 rounded-sm px-8 py-5 mb-5"
+        style={{ transform: 'rotate(-3deg)', borderWidth: '3px', borderStyle: 'solid', borderColor: 'rgba(178,34,34,0.5)' }}
       >
-        <p className="font-stamp text-stamp-red/40 text-[8px] tracking-[0.5em] uppercase text-center">
+        <p className="font-stamp text-stamp-red/40 text-[9px] tracking-[0.5em] uppercase text-center">
           Developer Passport
         </p>
         <h3 className="font-heading text-stamp-red text-2xl sm:text-3xl font-bold tracking-wide mt-1 text-center">
           EXIT VISA
         </h3>
         <div className="w-14 h-px bg-stamp-red/30 mx-auto mt-2.5" />
-        <p className="font-stamp text-stamp-red/30 text-[7px] tracking-[0.3em] uppercase text-center mt-2">
+        <p className="font-stamp text-stamp-red/30 text-[8px] tracking-[0.3em] uppercase text-center mt-2">
           Authorized
         </p>
       </div>
 
-      <p className="font-stamp text-medium-gray/40 text-[8px] tracking-[0.3em] uppercase text-center">
+      <p className="font-stamp text-medium-gray/50 text-[9px] tracking-[0.3em] uppercase text-center">
         Connect · Collaborate · Explore
       </p>
 
       {/* Footer */}
       <div className="mt-auto pt-4">
-        <p className="font-stamp text-medium-gray/30 text-[7px] tracking-widest uppercase text-center">
+        <p className="font-stamp text-medium-gray/35 text-[8px] tracking-widest uppercase text-center">
           © {new Date().getFullYear()} Harshdeep Singh
         </p>
-        <p className="font-stamp text-medium-gray/20 text-[6px] tracking-wider uppercase text-center mt-0.5">
+        <p className="font-stamp text-medium-gray/25 text-[8px] tracking-wider uppercase text-center mt-0.5">
           Valid for unlimited opportunities
         </p>
       </div>
     </div>
 
     {/* Right page — Contact stamp buttons */}
-    <div className="flex flex-col items-center justify-center p-5 sm:p-6">
+    <div className="flex flex-col items-center justify-center p-5 sm:p-6 relative">
+      <span className="absolute bottom-2 right-3 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 13</span>
+
       <div className="w-full mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
-        <span className="font-stamp text-[7px] text-medium-gray tracking-widest">
+        <span className="font-stamp text-[8px] text-medium-gray tracking-widest">
           Exit Points
         </span>
-        <span className="font-stamp text-[7px] text-medium-gray tracking-widest">P 12</span>
+        <span className="font-stamp text-[8px] text-medium-gray tracking-widest">Contact</span>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:gap-5 flex-1 content-center">
@@ -98,18 +105,19 @@ const ContactSpread = () => (
           <a
             key={i}
             href={c.url}
-            target="_blank"
+            target={c.download ? '_self' : '_blank'}
             rel="noopener noreferrer"
+            download={c.download ? true : undefined}
             className="group flex flex-col items-center gap-2 text-passport-navy/60 hover:text-passport-navy transition-colors"
             aria-label={c.label}
           >
             <div
-              className="stamp-effect w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] rounded-full border-2 flex items-center justify-center transition-all group-hover:scale-105 group-hover:border-opacity-80"
+              className="stamp-effect w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
               style={{ borderColor: c.color, color: c.color }}
             >
               {c.icon}
             </div>
-            <span className="font-stamp text-[7px] sm:text-[8px] tracking-widest uppercase">
+            <span className="font-stamp text-[8px] sm:text-[9px] tracking-widest uppercase transition-colors duration-300" style={{ color: c.color }}>
               {c.label}
             </span>
           </a>

@@ -1,16 +1,17 @@
 /**
  * SkillsSpread — Scattered visa stamps across both pages.
  * Each stamp represents a skill. Red and blue ink. Naturally scattered.
+ * Items fixed: #13 (hover states), #19 (proficiency hierarchy), #29 (page numbers).
  */
 const stamps = [
-  { skill: 'PYTHON',                color: '#1E3A8A', rot: -8,  x: '5%',  y: '8%',  type: 'rect-lg' },
-  { skill: 'MACHINE\nLEARNING',     color: '#B22222', rot: 6,   x: '54%', y: '5%',  type: 'rect-lg' },
-  { skill: 'REACT',                 color: '#1E3A8A', rot: -3,  x: '28%', y: '28%', type: 'rect' },
-  { skill: 'DJANGO',                color: '#B22222', rot: 14,  x: '8%',  y: '50%', type: 'rect' },
-  { skill: 'TENSORFLOW',            color: '#1E3A8A', rot: -5,  x: '58%', y: '30%', type: 'rect-lg' },
-  { skill: 'PYTORCH',               color: '#B22222', rot: 10,  x: '40%', y: '55%', type: 'rect' },
-  { skill: 'DATA\nENGINEERING',     color: '#1E3A8A', rot: -12, x: '3%',  y: '75%', type: 'rect-lg' },
-  { skill: 'REINFORCEMENT\nLEARNING', color: '#B22222', rot: -7, x: '48%', y: '70%', type: 'rect-lg' },
+  { skill: 'PYTHON',                color: '#1E3A8A', rot: -8,  x: '5%',  y: '8%',  tier: 'primary' },
+  { skill: 'MACHINE\nLEARNING',     color: '#B22222', rot: 6,   x: '54%', y: '5%',  tier: 'primary' },
+  { skill: 'REACT',                 color: '#1E3A8A', rot: -3,  x: '28%', y: '28%', tier: 'secondary' },
+  { skill: 'DJANGO',                color: '#B22222', rot: 14,  x: '8%',  y: '50%', tier: 'secondary' },
+  { skill: 'TENSORFLOW',            color: '#1E3A8A', rot: -5,  x: '58%', y: '30%', tier: 'primary' },
+  { skill: 'PYTORCH',               color: '#B22222', rot: 10,  x: '40%', y: '55%', tier: 'secondary' },
+  { skill: 'DATA\nENGINEERING',     color: '#1E3A8A', rot: -12, x: '3%',  y: '75%', tier: 'primary' },
+  { skill: 'REINFORCEMENT\nLEARNING', color: '#B22222', rot: -7, x: '48%', y: '70%', tier: 'primary' },
 ]
 
 const circleStamps = [
@@ -25,49 +26,53 @@ const SkillsSpread = () => (
     {/* Page header — left */}
     <div className="absolute top-3 left-4 z-10 flex justify-between items-center" style={{ width: 'calc(50% - 1.5rem)' }}>
       <h2 className="font-heading text-passport-navy/80 text-sm font-bold">Skills Visa</h2>
-      <span className="font-stamp text-[7px] text-medium-gray tracking-widest">P 02</span>
     </div>
-    <div className="absolute top-3 right-4 z-10 text-right" style={{ width: 'calc(50% - 1.5rem)' }}>
-      <span className="font-stamp text-[7px] text-medium-gray tracking-widest">P 03</span>
-    </div>
+    {/* Page numbers */}
+    <span className="absolute bottom-2 left-3 z-10 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 02</span>
+    <span className="absolute bottom-2 right-3 z-10 font-stamp text-[7px] text-medium-gray/20 tracking-widest">P 03</span>
     {/* Header border */}
     <div className="absolute top-8 left-4 right-4 h-px bg-gold/15 z-10" />
 
-    {/* Scattered rectangular stamps */}
-    {stamps.map((s, i) => (
-      <div
-        key={i}
-        className="absolute stamp-effect"
-        style={{ left: s.x, top: s.y, transform: `rotate(${s.rot}deg)` }}
-      >
+    {/* Scattered rectangular stamps — with proficiency-based sizing & hover */}
+    {stamps.map((s, i) => {
+      const isPrimary = s.tier === 'primary'
+      return (
         <div
-          className={`border-2 rounded-sm ${s.type === 'rect-lg' ? 'px-3 py-2 sm:px-4 sm:py-2.5' : 'px-2.5 py-1.5 sm:px-3 sm:py-2'}`}
-          style={{ borderColor: s.color, color: s.color }}
+          key={i}
+          className="absolute stamp-effect group cursor-default"
+          style={{ left: s.x, top: s.y, transform: `rotate(${s.rot}deg)` }}
         >
-          <p
-            className={`font-stamp tracking-wider font-bold text-center leading-tight whitespace-pre-line ${
-              s.type === 'rect-lg' ? 'text-[10px] sm:text-xs' : 'text-[9px] sm:text-[10px]'
+          <div
+            className={`border-2 rounded-sm transition-transform duration-300 group-hover:scale-110 ${
+              isPrimary ? 'px-3 py-2 sm:px-4 sm:py-2.5' : 'px-2 py-1.5 sm:px-2.5 sm:py-1.5'
             }`}
+            style={{ borderColor: s.color, color: s.color }}
           >
-            {s.skill}
-          </p>
-          <div className="w-full h-px mt-1 opacity-25" style={{ backgroundColor: s.color }} />
-          <p className="font-stamp text-[5px] sm:text-[6px] tracking-[0.3em] uppercase text-center mt-0.5 opacity-50">
-            Verified
-          </p>
+            <p
+              className={`font-stamp tracking-wider font-bold text-center leading-tight whitespace-pre-line ${
+                isPrimary ? 'text-[10px] sm:text-xs' : 'text-[8px] sm:text-[9px]'
+              }`}
+            >
+              {s.skill}
+            </p>
+            <div className="w-full h-px mt-1 opacity-25" style={{ backgroundColor: s.color }} />
+            <p className="font-stamp text-[6px] tracking-[0.3em] uppercase text-center mt-0.5 opacity-50">
+              {isPrimary ? 'Expert' : 'Proficient'}
+            </p>
+          </div>
         </div>
-      </div>
-    ))}
+      )
+    })}
 
-    {/* Circular stamps */}
+    {/* Circular stamps — with hover */}
     {circleStamps.map((c, i) => (
       <div
         key={`c-${i}`}
-        className="absolute stamp-effect"
+        className="absolute stamp-effect group cursor-default"
         style={{ left: c.x, top: c.y, transform: `rotate(${c.rot}deg)` }}
       >
         <div
-          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 flex items-center justify-center"
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
           style={{ borderColor: c.color, color: c.color }}
         >
           <div className="text-center">
