@@ -99,9 +99,10 @@ const FloatingPassport = ({ cover, spreads }) => {
         { rotationY: -180, ease: 'power2.inOut', duration: 12 },
         6,
       )
-      // Once fully flipped, drop cover behind pages so it doesn't block content.
-      // GSAP scrub auto-reverts when scrolling back past this point → z goes back to 40.
-      tl.set(coverLeafRef.current, { zIndex: 1 }, 18)
+      // In preserve-3d context, z-index is ignored — translateZ controls stacking.
+      // Pages container sits at translateZ(-2px). Push the flipped cover behind it.
+      // GSAP scrub auto-reverts z back to 0 when scrolling back → cover reappears on top.
+      tl.set(coverLeafRef.current, { z: -6 }, 18)
 
       /* ── Phase 2: Page flips (18% → 97%) ── */
       // Each page leaf flips sequentially, revealing the next spread
