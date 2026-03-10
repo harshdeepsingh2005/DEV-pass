@@ -128,6 +128,11 @@ const FloatingPassport = ({ cover, spreads }) => {
           },
           segStart,
         )
+        // After the flip, hide the leaf so its back face doesn't stack above
+        // later pages (z-index ordering causes leaf[0]'s back to cover leaf[5]'s).
+        // The base spread layers underneath show the correct content.
+        // GSAP scrub auto-reverts autoAlpha when scrolling back.
+        tl.set(leaf, { autoAlpha: 0 }, segStart + flipDur + 0.3)
       }
     }, containerRef)
 
