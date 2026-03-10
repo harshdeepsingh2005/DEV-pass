@@ -284,27 +284,28 @@ const FloatingPassport = ({ cover, spreads }) => {
                 </div>
               ))}
 
-              {/* ── Page leaves (flip to reveal next spread) ── */}
+              {/* ── Page leaves (right-half only, flip from spine) ── */}
               {Array.from({ length: numPages }, (_, i) => (
                 <div
                   key={`leaf-${i}`}
                   ref={(el) => setPageLeafRef(el, i)}
-                  className="absolute inset-0"
+                  className="absolute top-0 bottom-0 overflow-visible"
                   style={{
+                    left: '50%',
+                    width: '50%',
                     zIndex: 20 + (numPages - i),
                     transformStyle: 'preserve-3d',
                     transformOrigin: 'left center',
                     willChange: 'transform',
                   }}
                 >
-                  {/* Front face — shows spread[i] (right half visible = current content) */}
+                  {/* Front face — right half of spread[i] */}
                   <div
-                    className="absolute inset-0"
+                    className="absolute inset-0 overflow-hidden"
                     style={{
                       backfaceVisibility: 'hidden',
                     }}
                   >
-                    {/* Paper texture */}
                     <div
                       className="absolute inset-0"
                       style={{
@@ -313,11 +314,11 @@ const FloatingPassport = ({ cover, spreads }) => {
                       }}
                     />
                     <div className="absolute inset-0 bg-passport-paper/95" />
-                    {/* Spread content */}
-                    <div className="absolute inset-0">
+                    {/* Full spread shifted left so right half is visible */}
+                    <div className="absolute top-0 bottom-0" style={{ width: '200%', left: '-100%' }}>
                       {spreads[i]}
                     </div>
-                    {/* Page edge shadow (right edge, subtle depth) */}
+                    {/* Page edge shadow (right edge) */}
                     <div
                       className="absolute right-0 top-0 bottom-0 pointer-events-none"
                       style={{
@@ -328,9 +329,9 @@ const FloatingPassport = ({ cover, spreads }) => {
                     />
                   </div>
 
-                  {/* Back face — shows spread[i+1] (visible when page flipped) */}
+                  {/* Back face — left half of spread[i+1] (visible when flipped) */}
                   <div
-                    className="absolute inset-0"
+                    className="absolute inset-0 overflow-hidden"
                     style={{
                       backfaceVisibility: 'hidden',
                       transform: 'rotateY(180deg)',
@@ -344,7 +345,8 @@ const FloatingPassport = ({ cover, spreads }) => {
                       }}
                     />
                     <div className="absolute inset-0 bg-passport-paper/95" />
-                    <div className="absolute inset-0">
+                    {/* Full spread at normal position so left half is visible */}
+                    <div className="absolute top-0 bottom-0" style={{ width: '200%', left: '0' }}>
                       {spreads[i + 1]}
                     </div>
                     {/* Page edge shadow (left edge on back face) */}
