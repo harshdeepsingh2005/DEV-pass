@@ -83,6 +83,7 @@ body {
 /* ===== Stamp Effect ===== */
 .stamp-effect {
   filter: saturate(0.85) contrast(1.1);
+  mix-blend-mode: multiply;
 }
 
 .stamp-blend {

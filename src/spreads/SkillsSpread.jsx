@@ -39,7 +39,7 @@ const SkillsSpread = () => (
       return (
         <div
           key={i}
-          className="absolute stamp-effect group cursor-default"
+          className="absolute stamp-effect stamp-slam group cursor-default"
           style={{ left: s.x, top: s.y, transform: `rotate(${s.rot}deg)` }}
         >
           <div
@@ -56,7 +56,7 @@ const SkillsSpread = () => (
               {s.skill}
             </p>
             <div className="w-full h-px mt-1 opacity-25" style={{ backgroundColor: s.color }} />
-            <p className="font-stamp text-[6px] tracking-[0.3em] uppercase text-center mt-0.5 opacity-50">
+            <p className="font-stamp text-[7px] tracking-[0.3em] uppercase text-center mt-0.5 opacity-50">
               {isPrimary ? 'Expert' : 'Proficient'}
             </p>
           </div>
@@ -68,7 +68,7 @@ const SkillsSpread = () => (
     {circleStamps.map((c, i) => (
       <div
         key={`c-${i}`}
-        className="absolute stamp-effect group cursor-default"
+        className="absolute stamp-effect stamp-slam group cursor-default"
         style={{ left: c.x, top: c.y, transform: `rotate(${c.rot}deg)` }}
       >
         <div
@@ -80,7 +80,7 @@ const SkillsSpread = () => (
               {c.text}
             </p>
             {c.sub && (
-              <p className="font-stamp text-[5px] sm:text-[6px] tracking-wider uppercase opacity-50">
+              <p className="font-stamp text-[6px] sm:text-[7px] tracking-wider uppercase opacity-50">
                 {c.sub}
               </p>
             )}

@@ -64,7 +64,7 @@ const ProjectsSpread = () => (
           >
             {/* Visa stamp appearance */}
             <div
-              className="absolute -top-1.5 -right-1.5 stamp-effect px-1.5 py-0.5 border border-stamp-red/50 rounded-sm font-stamp text-[6px] text-stamp-red/60 tracking-wider uppercase"
+              className="absolute -top-1.5 -right-1.5 stamp-effect stamp-slam px-1.5 py-0.5 border border-stamp-red/50 rounded-sm font-stamp text-[7px] text-stamp-red/60 tracking-wider uppercase"
               style={{ transform: `rotate(${-4 + i * 6}deg)` }}
             >
               Approved
@@ -75,12 +75,12 @@ const ProjectsSpread = () => (
                 {p.title}
               </h3>
             </div>
-            <p className="text-dark-gray/65 text-[9px] leading-relaxed">{p.description}</p>
+            <p className="text-dark-gray/65 text-[10px] leading-relaxed">{p.description}</p>
             <div className="flex flex-wrap gap-1 mt-1.5">
               {p.tags.map((t, j) => (
                 <span
                   key={j}
-                  className="font-stamp text-[6px] sm:text-[7px] text-ink-blue/70 border border-ink-blue/20 rounded-sm px-1.5 py-0.5 tracking-wider uppercase"
+                  className="font-stamp text-[7px] sm:text-[8px] text-ink-blue/70 border border-ink-blue/20 rounded-sm px-1.5 py-0.5 tracking-wider uppercase"
                 >
                   {t}
                 </span>
@@ -109,7 +109,7 @@ const ProjectsSpread = () => (
             className="group relative block bg-passport-paper-dark/30 border border-gold/15 rounded-sm p-2.5 transition-all duration-300 hover:border-gold/30 hover:shadow-sm"
           >
             <div
-              className="absolute -top-1.5 -right-1.5 stamp-effect px-1.5 py-0.5 border border-ink-blue/50 rounded-sm font-stamp text-[6px] text-ink-blue/60 tracking-wider uppercase"
+              className="absolute -top-1.5 -right-1.5 stamp-effect stamp-slam px-1.5 py-0.5 border border-ink-blue/50 rounded-sm font-stamp text-[7px] text-ink-blue/60 tracking-wider uppercase"
               style={{ transform: `rotate(${3 + i * -5}deg)` }}
             >
               Reviewed
@@ -120,12 +120,12 @@ const ProjectsSpread = () => (
                 {p.title}
               </h3>
             </div>
-            <p className="text-dark-gray/65 text-[9px] leading-relaxed">{p.description}</p>
+            <p className="text-dark-gray/65 text-[10px] leading-relaxed">{p.description}</p>
             <div className="flex flex-wrap gap-1 mt-1.5">
               {p.tags.map((t, j) => (
                 <span
                   key={j}
-                  className="font-stamp text-[6px] sm:text-[7px] text-ink-blue/70 border border-ink-blue/20 rounded-sm px-1.5 py-0.5 tracking-wider uppercase"
+                  className="font-stamp text-[7px] sm:text-[8px] text-ink-blue/70 border border-ink-blue/20 rounded-sm px-1.5 py-0.5 tracking-wider uppercase"
                 >
                   {t}
                 </span>
@@ -138,7 +138,7 @@ const ProjectsSpread = () => (
       {/* Large approval stamp */}
       <div className="mt-auto pt-3 flex justify-center">
         <div
-          className="stamp-effect border-2 border-stamp-red/40 rounded-sm px-5 py-2"
+          className="stamp-effect stamp-slam border-2 border-stamp-red/40 rounded-sm px-5 py-2"
           style={{ transform: 'rotate(-4deg)' }}
         >
           <p className="font-stamp text-stamp-red/50 text-[8px] tracking-[0.3em] uppercase text-center">

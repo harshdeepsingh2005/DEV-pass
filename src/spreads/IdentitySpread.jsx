@@ -64,7 +64,7 @@ const IdentitySpread = () => (
           <label className="font-stamp text-[8px] text-medium-gray/70 tracking-[0.2em] uppercase block">
             Title
           </label>
-          <p className="font-stamp text-[10px] text-stamp-red tracking-wider uppercase mt-0.5">
+          <p className="font-stamp text-[11px] text-stamp-red tracking-wider uppercase mt-0.5">
             AI / Machine Learning Engineer
           </p>
         </div>
@@ -73,7 +73,7 @@ const IdentitySpread = () => (
           <label className="font-stamp text-[8px] text-medium-gray/70 tracking-[0.2em] uppercase block">
             Biography
           </label>
-          <p className="text-dark-gray/70 text-[10px] sm:text-[11px] leading-relaxed mt-0.5">
+          <p className="text-dark-gray/70 text-[11px] sm:text-xs leading-relaxed mt-0.5">
             AI engineer building complex simulation engines and research-oriented systems.
             Passionate about reinforcement learning, predictive modeling, and turning
             data into intelligent decision-making tools. Experienced in full-stack development

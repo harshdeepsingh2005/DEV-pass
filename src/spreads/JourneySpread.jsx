@@ -107,7 +107,7 @@ const JourneySpread = () => (
               y={m.y - 17}
               textAnchor="middle"
               fill="#0B1D3A"
-              fontSize="7"
+              fontSize="8"
               fontFamily="'Special Elite', monospace"
               fontWeight="bold"
             >
@@ -119,7 +119,7 @@ const JourneySpread = () => (
               y={m.y + 20}
               textAnchor="middle"
               fill="#0B1D3A"
-              fontSize="5.5"
+              fontSize="6.5"
               fontFamily="'Special Elite', monospace"
               opacity="0.5"
             >
@@ -130,7 +130,7 @@ const JourneySpread = () => (
               y={m.y + 30}
               textAnchor="middle"
               fill="#B22222"
-              fontSize="6.5"
+              fontSize="7.5"
               fontFamily="'Special Elite', monospace"
             >
               {m.year}
@@ -139,10 +139,10 @@ const JourneySpread = () => (
         ))}
 
         {/* Labels */}
-        <text x={milestones[0].x - 15} y="128" fill="#D4AF37" fontSize="5.5" fontFamily="'Special Elite', monospace" opacity="0.45">
+        <text x={milestones[0].x - 15} y="128" fill="#D4AF37" fontSize="6.5" fontFamily="'Special Elite', monospace" opacity="0.45">
           ORIGIN
         </text>
-        <text x={milestones[milestones.length - 1].x - 15} y="128" fill="#D4AF37" fontSize="5.5" fontFamily="'Special Elite', monospace" opacity="0.45">
+        <text x={milestones[milestones.length - 1].x - 15} y="128" fill="#D4AF37" fontSize="6.5" fontFamily="'Special Elite', monospace" opacity="0.45">
           CURRENT
         </text>
       </svg>

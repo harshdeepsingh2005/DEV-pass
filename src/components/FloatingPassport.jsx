@@ -50,6 +50,13 @@ const FloatingPassport = ({ cover, spreads }) => {
         if (el) gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 })
       })
 
+      /* Hide stamps in base layers — they slam in when each spread activates */
+      spreadRefs.current.forEach((el) => {
+        if (!el) return
+        const stamps = el.querySelectorAll('.stamp-slam')
+        if (stamps.length) gsap.set(stamps, { autoAlpha: 0, scale: 1.5 })
+      })
+
       /* ---- Pin ---- */
       ScrollTrigger.create({
         trigger: containerRef.current,
@@ -96,6 +103,16 @@ const FloatingPassport = ({ cover, spreads }) => {
       tl.to(pagesRef.current, { autoAlpha: 1, duration: 3 }, 8)
       tl.to(coverLeafRef.current, { autoAlpha: 0, z: -10, duration: 3, ease: 'power1.in' }, 15)
 
+      /* Slam in stamps on first visible spread */
+      const firstStamps = spreadRefs.current[0]?.querySelectorAll('.stamp-slam')
+      if (firstStamps?.length) {
+        tl.fromTo(firstStamps,
+          { autoAlpha: 0, scale: 1.5 },
+          { autoAlpha: 1, scale: 1, stagger: 0.15, duration: 2, ease: 'back.out(1.7)' },
+          10,
+        )
+      }
+
       /* ── Phase 2: Page flips (18% → 97%) ── */
       const flipStart = 18
       const flipEnd = 97
@@ -121,6 +138,16 @@ const FloatingPassport = ({ cover, spreads }) => {
         }
         if (spreadRefs.current[i + 1]) {
           tl.set(spreadRefs.current[i + 1], { autoAlpha: 1 }, midpoint)
+        }
+
+        /* Slam in stamps on newly visible spread */
+        const nextStamps = spreadRefs.current[i + 1]?.querySelectorAll('.stamp-slam')
+        if (nextStamps?.length) {
+          tl.fromTo(nextStamps,
+            { autoAlpha: 0, scale: 1.5 },
+            { autoAlpha: 1, scale: 1, stagger: 0.15, duration: 2, ease: 'back.out(1.7)' },
+            midpoint + 0.3,
+          )
         }
 
         tl.set(leaf, { autoAlpha: 0 }, segStart + flipDur + 0.2)

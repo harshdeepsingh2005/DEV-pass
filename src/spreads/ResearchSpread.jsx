@@ -57,7 +57,7 @@ const ResearchSpread = () => (
             >
               {/* Status badge */}
               <div
-                className="stamp-effect absolute -top-1.5 -right-1 px-1.5 py-0.5 rounded-sm border font-stamp text-[6px] tracking-wider uppercase"
+                className="stamp-effect stamp-slam absolute -top-1.5 -right-1 px-1.5 py-0.5 rounded-sm border font-stamp text-[7px] tracking-wider uppercase"
                 style={{
                   borderColor: sc,
                   color: sc,
@@ -69,14 +69,14 @@ const ResearchSpread = () => (
               <h3 className="font-heading text-xs text-passport-navy font-bold pr-14 leading-snug group-hover:text-ink-blue transition-colors">
                 {p.title}
               </h3>
-              <p className="font-stamp text-[7px] text-stamp-red/60 tracking-wider mt-0.5">
+              <p className="font-stamp text-[8px] text-stamp-red/60 tracking-wider mt-0.5">
                 {p.venue} • {p.year}
               </p>
-              <p className="text-dark-gray/65 text-[9px] leading-relaxed mt-1">
+              <p className="text-dark-gray/65 text-[10px] leading-relaxed mt-1">
                 {p.summary}
               </p>
               {p.doi && (
-                <p className="font-mono text-[6px] text-medium-gray/50 mt-1 tracking-wider">
+                <p className="font-mono text-[7px] text-medium-gray/50 mt-1 tracking-wider">
                   {p.doi}
                 </p>
               )}
@@ -130,7 +130,7 @@ const ResearchSpread = () => (
 
       {/* Validation stamps */}
       <div className="flex-1 relative">
-        <div className="absolute top-2 left-4 stamp-effect" style={{ transform: 'rotate(-10deg)' }}>
+        <div className="absolute top-2 left-4 stamp-effect stamp-slam" style={{ transform: 'rotate(-10deg)' }}>
           <div className="w-16 h-16 rounded-full border-2 border-[#B22222]/50 flex items-center justify-center">
             <div className="text-center">
               <p className="font-stamp text-[7px] text-[#B22222]/60 tracking-wider uppercase font-bold">Peer</p>
@@ -139,7 +139,7 @@ const ResearchSpread = () => (
           </div>
         </div>
 
-        <div className="absolute top-4 right-6 stamp-effect" style={{ transform: 'rotate(6deg)' }}>
+        <div className="absolute top-4 right-6 stamp-effect stamp-slam" style={{ transform: 'rotate(6deg)' }}>
           <div className="border-2 border-[#1E3A8A]/50 rounded-sm px-3 py-1.5">
             <p className="font-stamp text-[7px] text-[#1E3A8A]/60 tracking-[0.2em] uppercase font-bold">IEEE</p>
           </div>

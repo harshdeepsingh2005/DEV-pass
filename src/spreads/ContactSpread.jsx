@@ -54,12 +54,12 @@ const contacts = [
 const ContactSpread = () => (
   <div className="grid grid-cols-2 h-full">
     {/* Left page — Exit visa stamp */}
-    <div className="flex flex-col items-center justify-center p-6 border-r border-black/[0.04]">
+    <div className="relative flex flex-col items-center justify-center p-6 border-r border-black/[0.04]">
       {/* Page number watermark */}
       <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 12</span>
 
       <div
-        className="stamp-effect border-stamp-red/50 rounded-sm px-8 py-5 mb-5"
+        className="stamp-effect stamp-slam border-stamp-red/50 rounded-sm px-8 py-5 mb-5"
         style={{ transform: 'rotate(-3deg)', borderWidth: '3px', borderStyle: 'solid', borderColor: 'rgba(178,34,34,0.5)' }}
       >
         <p className="font-stamp text-stamp-red/40 text-[9px] tracking-[0.5em] uppercase text-center">
@@ -112,7 +112,7 @@ const ContactSpread = () => (
             aria-label={c.label}
           >
             <div
-              className="stamp-effect w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+              className="stamp-effect stamp-slam w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
               style={{ borderColor: c.color, color: c.color }}
             >
               {c.icon}

@@ -77,10 +77,10 @@ const ExperienceSpread = () => (
             <h3 className="font-heading text-xs sm:text-sm text-passport-navy font-bold leading-snug mt-0.5">
               {exp.title}
             </h3>
-            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-wider uppercase mt-0.5">
+            <p className="font-stamp text-[8px] text-medium-gray/60 tracking-wider uppercase mt-0.5">
               {exp.employer}
             </p>
-            <p className="text-dark-gray/60 text-[9px] leading-relaxed mt-0.5">
+            <p className="text-dark-gray/60 text-[10px] leading-relaxed mt-0.5">
               {exp.description}
             </p>
           </div>
@@ -113,10 +113,10 @@ const ExperienceSpread = () => (
             <h3 className="font-heading text-xs sm:text-sm text-passport-navy font-bold leading-snug mt-0.5">
               {exp.title}
             </h3>
-            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-wider uppercase mt-0.5">
+            <p className="font-stamp text-[8px] text-medium-gray/60 tracking-wider uppercase mt-0.5">
               {exp.employer}
             </p>
-            <p className="text-dark-gray/60 text-[9px] leading-relaxed mt-0.5">
+            <p className="text-dark-gray/60 text-[10px] leading-relaxed mt-0.5">
               {exp.description}
             </p>
           </div>
