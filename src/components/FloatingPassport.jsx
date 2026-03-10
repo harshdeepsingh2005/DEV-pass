@@ -9,42 +9,36 @@ import PassportSpine from './PassportSpine'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * FloatingPassport — A floating passport book pinned in the viewport.
+ * FloatingPassport — 3D page-flip passport driven by scroll.
  *
- * The passport stays centered while scroll progress controls a master GSAP
- * timeline that flips the cover open and cross-fades between spreads.
+ * Architecture:
+ *   • Pages stacked like a real book — each "page leaf" has a front & back face.
+ *   • GSAP ScrollTrigger scrubs rotateY(0 → −180°) on each leaf sequentially.
+ *   • Cover flips open first, then inner pages flip one-by-one.
+ *   • Each spread sits on a layer; when a page leaf flips, the next spread is revealed.
+ *   • Shadows, paper texture, and bending illusion enhance realism.
  *
  * Props:
  *   cover   — React element for the closed cover face
- *   spreads — array of React elements, one per spread (7 spreads expected)
- *
- * Timeline (scroll progress → animation):
- *   0-8%     cover closed, passport on desk
- *   8-20%    cover flips open (3D rotateY)
- *   20-33%   spread 0 (Identity) visible
- *   33-48%   spread 1 (Skills)
- *   48-63%   spread 2 (Projects)
- *   63-78%   spread 3 (Journey)
- *   78-88%   spread 4 (Research)
- *   88-93%   spread 5 (Experience)
- *   93-100%  spread 6 (Exit Visa)
+ *   spreads — array of React elements (7 spreads)
  */
 const FloatingPassport = ({ cover, spreads }) => {
   const containerRef = useRef(null)
   const viewportRef = useRef(null)
   const passportRef = useRef(null)
   const coverLeafRef = useRef(null)
-  const spreadRefs = useRef([])
+  const pageLeafRefs = useRef([])
   const [coverOpen, setCoverOpen] = useState(false)
   const [activeSpread, setActiveSpread] = useState(-1)
 
-  const setSpreadRef = useCallback((el, i) => {
-    if (el) spreadRefs.current[i] = el
+  const setPageLeafRef = useCallback((el, i) => {
+    if (el) pageLeafRefs.current[i] = el
   }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const totalScroll = window.innerHeight * 8
+      const numPages = spreads.length - 1 // 6 page flips between 7 spreads
 
       /* ---- Pin the viewport ---- */
       ScrollTrigger.create({
@@ -55,7 +49,7 @@ const FloatingPassport = ({ cover, spreads }) => {
         pinSpacing: true,
       })
 
-      /* ---- Floating oscillation (runs continuously) ---- */
+      /* ---- Floating oscillation ---- */
       gsap.fromTo(
         passportRef.current,
         { y: 6, rotation: -1 },
@@ -75,76 +69,75 @@ const FloatingPassport = ({ cover, spreads }) => {
           trigger: containerRef.current,
           start: 'top top',
           end: `+=${totalScroll}`,
-          scrub: 0.8,
+          scrub: 0.6,
           onUpdate: (self) => {
             const p = self.progress * 100
-            setCoverOpen(p >= 16)
-            if (p < 20) setActiveSpread(-1)
-            else if (p < 33) setActiveSpread(0)
-            else if (p < 48) setActiveSpread(1)
-            else if (p < 63) setActiveSpread(2)
-            else if (p < 78) setActiveSpread(3)
-            else if (p < 88) setActiveSpread(4)
-            else if (p < 93) setActiveSpread(5)
-            else setActiveSpread(6)
+            setCoverOpen(p >= 14)
+
+            // Determine which spread is active based on page flips
+            if (p < 18) setActiveSpread(-1)
+            else {
+              // Each page flip occupies a portion of the remaining timeline
+              const flipZoneStart = 18
+              const flipZoneEnd = 97
+              const flipRange = flipZoneEnd - flipZoneStart
+              const progressInFlips = Math.min(p - flipZoneStart, flipRange) / flipRange
+              const idx = Math.min(
+                Math.floor(progressInFlips * spreads.length),
+                spreads.length - 1,
+              )
+              setActiveSpread(idx)
+            }
           },
         },
       })
 
-      /* Phase: Cover flip (8% → 20%) */
+      /* ── Phase 1: Cover flip (6% → 18%) ── */
       tl.fromTo(
         coverLeafRef.current,
         { rotationY: 0 },
         { rotationY: -180, ease: 'power2.inOut', duration: 12 },
-        8,
+        6,
       )
 
-      /* Phase: Spreads */
-      const entryPoints = [18, 33, 48, 63, 78, 88, 93]
-      const transitionDur = 5
+      /* ── Phase 2: Page flips (18% → 97%) ── */
+      // Each page leaf flips sequentially, revealing the next spread
+      const flipStart = 18
+      const flipEnd = 97
+      const flipSegment = (flipEnd - flipStart) / numPages
+      const flipDur = flipSegment * 0.7 // actual flip takes 70% of segment
 
-      // First spread fades in
-      if (spreadRefs.current[0]) {
+      for (let i = 0; i < numPages; i++) {
+        const leaf = pageLeafRefs.current[i]
+        if (!leaf) continue
+
+        const segStart = flipStart + i * flipSegment
+        // Flip: rotateY 0 → -180
         tl.fromTo(
-          spreadRefs.current[0],
-          { opacity: 0, x: 25 },
-          { opacity: 1, x: 0, duration: transitionDur, ease: 'power2.out' },
-          entryPoints[0],
+          leaf,
+          { rotationY: 0 },
+          {
+            rotationY: -180,
+            ease: 'power2.inOut',
+            duration: flipDur,
+          },
+          segStart,
         )
-      }
-
-      // Subsequent: cross-fade
-      for (let i = 1; i < spreads.length; i++) {
-        const t = entryPoints[i]
-        if (!t) break
-        // fade out previous
-        if (spreadRefs.current[i - 1]) {
-          tl.to(
-            spreadRefs.current[i - 1],
-            { opacity: 0, x: -25, duration: transitionDur, ease: 'power2.in' },
-            t - 3,
-          )
-        }
-        // fade in current
-        if (spreadRefs.current[i]) {
-          tl.fromTo(
-            spreadRefs.current[i],
-            { opacity: 0, x: 25 },
-            { opacity: 1, x: 0, duration: transitionDur, ease: 'power2.out' },
-            t,
-          )
-        }
       }
     }, containerRef)
 
     return () => ctx.revert()
   }, [spreads.length])
 
-  /* ---- Keyboard navigation (← →) ---- #26 */
+  /* ---- Keyboard navigation (← →) ---- */
   useEffect(() => {
     const totalScroll = window.innerHeight * 8
-    // Scroll targets as % of total: cover-closed, cover-open, then each spread center
-    const scrollTargets = [0, 14, 26, 40, 55, 70, 83, 95]
+    const numStops = spreads.length + 1 // cover + each spread
+    const scrollTargets = Array.from({ length: numStops }, (_, i) => {
+      if (i === 0) return 0
+      // Spread centers spread across 18%–97%
+      return 18 + ((i - 0.5) / spreads.length) * 79
+    })
 
     const handleKeyDown = (e) => {
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
@@ -154,7 +147,6 @@ const FloatingPassport = ({ cover, spreads }) => {
       const currentScroll = window.scrollY - containerTop
       const currentProgress = Math.max(0, currentScroll / totalScroll) * 100
 
-      // Find which target we're closest to
       let closestIdx = 0
       let closestDist = Infinity
       scrollTargets.forEach((t, i) => {
@@ -172,7 +164,26 @@ const FloatingPassport = ({ cover, spreads }) => {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [spreads.length])
+
+  /*
+   * Page-leaf model:
+   *   We need (spreads.length - 1) page leaves between spreads.
+   *   Leaf i sits between spread[i] and spread[i+1].
+   *   Front face = right side of spread[i] content (blank page paper).
+   *   Back face  = left side of spread[i+1] content (blank page paper).
+   *   When leaf i flips (rotateY → -180), it hides spread[i] and shows spread[i+1].
+   *
+   * Z-stacking (reverse order so leaf 0 is on top):
+   *   Spread 0     z: 7   (bottom-most spread, always visible behind everything)
+   *   Spread 1     z: 8
+   *   ...
+   *   Spread N     z: 7+N
+   *   Leaf 0       z: 20 + (numPages - 0)   (highest = on top of stack)
+   *   Leaf 1       z: 20 + (numPages - 1)
+   *   ...
+   */
+  const numPages = spreads.length - 1
 
   return (
     <div ref={containerRef}>
@@ -185,9 +196,7 @@ const FloatingPassport = ({ cover, spreads }) => {
             className="w-full h-full object-cover"
             aria-hidden="true"
           />
-          {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/25" />
-          {/* Vignette */}
           <div
             className="absolute inset-0"
             style={{
@@ -195,7 +204,6 @@ const FloatingPassport = ({ cover, spreads }) => {
                 'radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.55) 100%)',
             }}
           />
-          {/* Warm ambient light */}
           <div
             className="absolute inset-0 mix-blend-soft-light"
             style={{
@@ -232,14 +240,18 @@ const FloatingPassport = ({ cover, spreads }) => {
               }}
             />
 
-            {/* Pages container (visible when open) */}
+            {/* ═══════ PAGES CONTAINER ═══════ */}
             <div
               className={`passport-paper absolute inset-0 rounded-md overflow-hidden transition-opacity duration-500 ${
                 coverOpen ? 'opacity-100' : 'opacity-0'
               }`}
-              style={{ transform: 'translateZ(-2px)' }}
+              style={{
+                transform: 'translateZ(-2px)',
+                transformStyle: 'preserve-3d',
+                perspective: '2200px',
+              }}
             >
-              {/* Page texture */}
+              {/* Page texture background */}
               <div
                 className="absolute inset-0 z-[1]"
                 style={{
@@ -249,20 +261,99 @@ const FloatingPassport = ({ cover, spreads }) => {
               />
               <div className="absolute inset-0 z-[2] bg-passport-paper/92" />
 
-              {/* ── Booklet binding seam ── */}
-              <PassportSpine />
-
-              {/* ── Spreads (stacked, GSAP controls opacity) ── */}
+              {/* ── Spread layers (stacked, always rendered) ── */}
               {spreads.map((spreadEl, i) => (
                 <div
-                  key={i}
-                  ref={(el) => setSpreadRef(el, i)}
-                  className="absolute inset-0 z-20"
-                  style={{ opacity: 0, willChange: 'transform, opacity' }}
+                  key={`spread-${i}`}
+                  className="absolute inset-0"
+                  style={{
+                    zIndex: 7 + i,
+                  }}
                 >
                   {spreadEl}
                 </div>
               ))}
+
+              {/* ── Page leaves (flip to reveal next spread) ── */}
+              {Array.from({ length: numPages }, (_, i) => (
+                <div
+                  key={`leaf-${i}`}
+                  ref={(el) => setPageLeafRef(el, i)}
+                  className="absolute inset-0"
+                  style={{
+                    zIndex: 20 + (numPages - i),
+                    transformStyle: 'preserve-3d',
+                    transformOrigin: 'left center',
+                    willChange: 'transform',
+                  }}
+                >
+                  {/* Front face — shows spread[i] (right half visible = current content) */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backfaceVisibility: 'hidden',
+                    }}
+                  >
+                    {/* Paper texture */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `url(${passportPageTexture})`,
+                        backgroundSize: 'cover',
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-passport-paper/95" />
+                    {/* Spread content */}
+                    <div className="absolute inset-0">
+                      {spreads[i]}
+                    </div>
+                    {/* Page edge shadow (right edge, subtle depth) */}
+                    <div
+                      className="absolute right-0 top-0 bottom-0 pointer-events-none"
+                      style={{
+                        width: 8,
+                        background:
+                          'linear-gradient(to left, rgba(0,0,0,0.08) 0%, transparent 100%)',
+                      }}
+                    />
+                  </div>
+
+                  {/* Back face — shows spread[i+1] (visible when page flipped) */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg)',
+                    }}
+                  >
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `url(${passportPageTexture})`,
+                        backgroundSize: 'cover',
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-passport-paper/95" />
+                    <div className="absolute inset-0">
+                      {spreads[i + 1]}
+                    </div>
+                    {/* Page edge shadow (left edge on back face) */}
+                    <div
+                      className="absolute left-0 top-0 bottom-0 pointer-events-none"
+                      style={{
+                        width: 8,
+                        background:
+                          'linear-gradient(to right, rgba(0,0,0,0.08) 0%, transparent 100%)',
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {/* ── Booklet binding seam (always on top of pages) ── */}
+              <div style={{ zIndex: 35 }} className="absolute inset-0 pointer-events-none">
+                <PassportSpine />
+              </div>
             </div>
 
             {/* ═══════ FRONT COVER (flips open) ═══════ */}
@@ -291,7 +382,6 @@ const FloatingPassport = ({ cover, spreads }) => {
                 }}
               >
                 <div className="relative z-10 h-full">{cover}</div>
-                {/* Spine shadow */}
                 <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-black/20 to-transparent" />
               </div>
 
@@ -305,17 +395,12 @@ const FloatingPassport = ({ cover, spreads }) => {
                     'linear-gradient(135deg, #0B1D3A 0%, #122a52 50%, #0a1a30 100%)',
                 }}
               >
-                {/* Decorative border */}
                 <div className="absolute inset-3 border border-gold/15 rounded-sm" />
                 <div className="absolute inset-5 border border-gold/8 rounded-sm" />
-
-                {/* Corner flourishes */}
                 <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/25" />
                 <div className="absolute top-4 right-4 w-6 h-6 border-t border-r border-gold/25" />
                 <div className="absolute bottom-4 left-4 w-6 h-6 border-b border-l border-gold/25" />
                 <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/25" />
-
-                {/* Central emblem — visible */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <svg width="80" height="80" viewBox="0 0 60 60" className="text-gold/20">
                     <circle cx="30" cy="30" r="28" fill="none" stroke="currentColor" strokeWidth="0.6" />
@@ -358,7 +443,6 @@ const FloatingPassport = ({ cover, spreads }) => {
             coverOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >
-          {/* Active spread name */}
           <p className="font-stamp text-passport-paper/40 text-[9px] tracking-[0.3em] uppercase transition-all duration-300">
             {['Identity', 'Skills', 'Projects', 'Journey', 'Research', 'Experience', 'Contact'][activeSpread] || ''}
           </p>
