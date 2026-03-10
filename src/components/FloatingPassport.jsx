@@ -55,6 +55,9 @@ const FloatingPassport = ({ cover, spreads }) => {
         if (!el) return
         const children = el.querySelectorAll(':scope > *')
         if (children.length) gsap.set(children, { autoAlpha: 0, y: 8 })
+        /* Stamp-slam elements get extra initial state for the slam-down effect */
+        const stamps = el.querySelectorAll('.stamp-slam')
+        if (stamps.length) gsap.set(stamps, { scale: 1.4, rotation: () => gsap.utils.random(-8, 8) })
       })
 
       /* Unpause gold-foil shimmer on cover (it's always visible, not part of flip reveals) */
@@ -119,6 +122,14 @@ const FloatingPassport = ({ cover, spreads }) => {
           revealPos0,
         )
       }
+      /* Stamp-slam on first spread — slam in after content starts revealing */
+      const firstStamps = spreadRefs.current[0]?.querySelectorAll('.stamp-slam')
+      if (firstStamps?.length) {
+        tl.to(firstStamps, {
+          autoAlpha: 1, scale: 1, y: 0, rotation: 0,
+          duration: 1.2, stagger: 0.2, ease: 'back.out(2)',
+        }, revealPos0 + 1.5)
+      }
       /* Trigger any in-page animations on first spread */
       const firstPaths = spreadRefs.current[0]?.querySelectorAll('.journey-path')
       if (firstPaths?.length) {
@@ -166,6 +177,14 @@ const FloatingPassport = ({ cover, spreads }) => {
             { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
             revealPos,
           )
+        }
+        /* Stamp-slam on this spread — slam in after content starts revealing */
+        const stamps = spreadRefs.current[i + 1]?.querySelectorAll('.stamp-slam')
+        if (stamps?.length) {
+          tl.to(stamps, {
+            autoAlpha: 1, scale: 1, y: 0, rotation: 0,
+            duration: 1.2, stagger: 0.2, ease: 'back.out(2)',
+          }, revealPos + 1.5)
         }
         /* Trigger any in-page animations on this spread */
         const paths = spreadRefs.current[i + 1]?.querySelectorAll('.journey-path')
