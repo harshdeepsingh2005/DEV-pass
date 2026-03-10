@@ -43,7 +43,7 @@ const experiences = [
 const typeColor = { research: '#D4AF37', work: '#1E3A8A', education: '#B22222' }
 
 const ExperienceSpread = () => (
-  <div className="grid grid-cols-2 h-full relative" style={{ columnGap: 48 }}>
+  <div className="grid grid-cols-2 h-full relative p-[5px]" style={{ columnGap: 48 }}>
     {/* Bridging timeline line across both pages — goes through the spine */}
     <div className="absolute left-[calc(50%-0.5px)] top-14 bottom-12 w-px bg-gold/20 z-10" />
 

@@ -4,7 +4,7 @@
  * Items fixed: #5 (photo opacity), #7 (typography), #16 (MRZ zone), #21 (signature).
  */
 const IdentitySpread = () => (
-  <div className="grid grid-cols-2 h-full" style={{ columnGap: 48 }}>
+  <div className="grid grid-cols-2 h-full p-[5px]" style={{ columnGap: 48 }}>
     {/* Left page — Photo */}
     <div className="flex flex-col items-center justify-center p-4 sm:p-6 relative">
       <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 01</span>
