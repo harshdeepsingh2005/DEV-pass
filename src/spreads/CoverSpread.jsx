@@ -1,52 +1,45 @@
 /**
  * CoverSpread — Closed passport cover face.
- * Gold foil shimmer typography on navy with laurel emblem.
- * Items fixed: #2 (gold-foil), #30 (emblem), heading structure, serial number, issue dates.
+ * Passport logo SVG centred, gold foil heading, structured layout.
  */
 const CoverSpread = () => (
-  <div className="h-full flex flex-col items-center justify-between text-center px-8 py-10">
-    {/* Laurel wreath emblem with code brackets */}
-    <div className="mt-2">
-      <svg width="64" height="64" viewBox="0 0 80 80" className="text-gold opacity-85">
-        <path d="M40 6 C28 6 18 14 14 26 C10 38 12 50 20 58" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.7" />
-        <path d="M40 6 C52 6 62 14 66 26 C70 38 68 50 60 58" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.7" />
-        <ellipse cx="16" cy="30" rx="5" ry="2.5" fill="currentColor" opacity="0.3" transform="rotate(-30 16 30)" />
-        <ellipse cx="14" cy="40" rx="5" ry="2.5" fill="currentColor" opacity="0.3" transform="rotate(-10 14 40)" />
-        <ellipse cx="17" cy="50" rx="5" ry="2.5" fill="currentColor" opacity="0.3" transform="rotate(15 17 50)" />
-        <ellipse cx="64" cy="30" rx="5" ry="2.5" fill="currentColor" opacity="0.3" transform="rotate(30 64 30)" />
-        <ellipse cx="66" cy="40" rx="5" ry="2.5" fill="currentColor" opacity="0.3" transform="rotate(10 66 40)" />
-        <ellipse cx="63" cy="50" rx="5" ry="2.5" fill="currentColor" opacity="0.3" transform="rotate(-15 63 50)" />
-        <text x="40" y="42" textAnchor="middle" fill="currentColor" fontSize="18" fontFamily="monospace" opacity="0.85">&lt;/&gt;</text>
-        <circle cx="40" cy="38" r="15" fill="none" stroke="currentColor" strokeWidth="0.6" opacity="0.4" />
-        <circle cx="22" cy="58" r="1.2" fill="currentColor" opacity="0.5" />
-        <circle cx="58" cy="58" r="1.2" fill="currentColor" opacity="0.5" />
-      </svg>
-    </div>
-
-    {/* Central content block */}
-    <div className="flex flex-col items-center">
-      <p className="font-stamp text-gold/30 text-[8px] tracking-[0.6em] uppercase mb-4">
-        No. DEV-2024-0137
-      </p>
-
-      <p className="font-stamp text-gold/55 text-[10px] tracking-[0.5em] uppercase mb-3">
-        Portfolio
-      </p>
-      <h1 className="gold-foil font-heading text-2xl sm:text-3xl font-bold tracking-wide leading-tight">
+  <div className="h-full flex flex-col items-center justify-between text-center px-8 py-8">
+    {/* Top — Title + serial + subtitle */}
+    <div className="flex flex-col items-center pt-1">
+      <h1 className="gold-foil font-heading text-xl sm:text-2xl font-bold tracking-wide leading-tight">
         DEVELOPER PASSPORT
       </h1>
+      <p className="font-stamp text-gold/30 text-[7px] tracking-[0.5em] uppercase mt-2">
+        No. DEV-2024-0137
+      </p>
+      <p className="font-stamp text-gold/55 text-[10px] tracking-[0.5em] uppercase mt-1">
+        Portfolio
+      </p>
+    </div>
 
-      <div className="w-20 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent my-5" />
+    {/* Centre — Passport logo + name */}
+    <div className="flex flex-col items-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 640 640"
+        className="w-20 h-20 sm:w-24 sm:h-24 text-gold opacity-85"
+        fill="currentColor"
+      >
+        <path d="M128 128C128 92.7 156.7 64 192 64L448 64C483.3 64 512 92.7 512 128L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM224 472C224 485.3 234.7 496 248 496L392 496C405.3 496 416 485.3 416 472C416 458.7 405.3 448 392 448L248 448C234.7 448 224 458.7 224 472zM406.6 272C401.8 298.4 385.1 320.7 362.4 333.2C369.1 316.2 373.6 295.2 375 272L406.6 272zM233.5 272L265.1 272C266.5 295.1 271.1 316.2 277.7 333.2C255 320.7 238.3 298.4 233.5 272zM309.9 327C303.7 313.6 298.8 294.5 297.2 272L343 272C341.4 294.5 336.5 313.6 330.3 327C325.8 336.6 322.1 340.8 320.1 342.5C318.1 340.8 314.4 336.7 309.9 327zM309.9 185C314.4 175.4 318.1 171.2 320.1 169.5C322.1 171.2 325.8 175.3 330.3 185C336.5 198.4 341.4 217.5 343 240L297.2 240C298.8 217.5 303.7 198.4 309.9 185zM406.6 240L375 240C373.6 216.9 369 195.8 362.4 178.8C385.1 191.3 401.8 213.6 406.6 240zM265 240L233.4 240C238.2 213.6 254.9 191.3 277.6 178.8C270.9 195.8 266.4 216.8 265 240zM448 256C448 185.3 390.7 128 320 128C249.3 128 192 185.3 192 256C192 326.7 249.3 384 320 384C390.7 384 448 326.7 448 256z" />
+      </svg>
+
+      <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent my-3" />
 
       <p className="font-stamp text-gold/75 text-[11px] sm:text-xs tracking-[0.3em] uppercase">
         Harshdeep Singh
       </p>
-      <p className="font-stamp text-gold/50 text-[9px] sm:text-[10px] tracking-[0.2em] uppercase mt-1.5">
+      <p className="font-stamp text-gold/50 text-[8px] sm:text-[9px] tracking-[0.2em] uppercase mt-1">
         AI / Machine Learning Engineer
       </p>
     </div>
 
-    <div className="flex gap-8 mb-2">
+    {/* Bottom — Issued / Expires */}
+    <div className="flex gap-10 pb-1">
       <div className="text-center">
         <p className="font-stamp text-gold/25 text-[7px] tracking-[0.2em] uppercase">Issued</p>
         <p className="font-stamp text-gold/40 text-[9px] tracking-wider mt-0.5">2020</p>
