@@ -182,7 +182,16 @@ const FloatingPassport = ({ cover, spreads }) => {
         /* Plane — follows route via MotionPathPlugin */
         const plane = spreadEl.querySelector('.journey-plane')
         const route = spreadEl.querySelector('.journey-path')
+        const contrail = spreadEl.querySelector('.journey-contrail')
         if (plane && route) {
+          /* Set up contrail stroke for draw-on animation */
+          if (contrail) {
+            const cLen = contrail.getTotalLength()
+            gsap.set(contrail, { strokeDasharray: cLen, strokeDashoffset: cLen })
+            tl.to(contrail, { autoAlpha: 0.35, duration: 0.2 }, pos)
+            tl.to(contrail, { strokeDashoffset: 0, duration: 3, ease: 'power2.inOut' }, pos + 0.2)
+            tl.to(contrail, { autoAlpha: 0, duration: 0.8, ease: 'power1.in' }, pos + 2.8)
+          }
           tl.to(plane, { autoAlpha: 0.9, duration: 0.3 }, pos)
           tl.to(plane, {
             motionPath: { path: route, align: route, autoRotate: true, alignOrigin: [0.5, 0.5] },

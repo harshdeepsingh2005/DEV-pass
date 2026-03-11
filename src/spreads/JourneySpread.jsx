@@ -21,29 +21,35 @@ import worldMap from '../assets/maps/world-map.webp'
  *   .journey-ping       → CSS pulse (unpaused by GSAP)
  */
 const milestones = [
-  { x: 55,  y: 75,  label: 'B.Tech CSE',       sub: 'Lovely Professional Univ.',  year: '2024', cardBelow: false, region: { rx: 40, ry: 22 } },
-  { x: 165, y: 50,  label: 'ML Exploration',    sub: 'Python & TensorFlow',        year: '2024', cardBelow: true,  region: { rx: 35, ry: 20 } },
-  { x: 280, y: 80,  label: 'AI Simulation',     sub: 'CX-Twin RL Engine',          year: '2025', cardBelow: false, region: { rx: 38, ry: 22 } },
-  { x: 390, y: 48,  label: 'Applied AI',        sub: 'UHI & HealthSphere',         year: '2025', cardBelow: true,  region: { rx: 35, ry: 20 } },
-  { x: 500, y: 72,  label: 'AI Research',       sub: 'RL & Simulation Systems',    year: '2026', cardBelow: false, region: { rx: 38, ry: 22 } },
-  { x: 585, y: 50,  label: 'AI Engineer',       sub: 'Next-Gen AI Systems',        year: '2027', cardBelow: true,  region: { rx: 35, ry: 20 } },
+  /* ── LEFT PAGE (4 milestones) ── */
+  { x: 45,  y: 55,  label: 'B.Tech CSE',       sub: 'Lovely Professional Univ.',  year: '2024', cardBelow: true,  region: { rx: 38, ry: 20 } },
+  { x: 130, y: 90,  label: 'ML Exploration',    sub: 'Python & TensorFlow',        year: '2024', cardBelow: false, region: { rx: 35, ry: 18 } },
+  { x: 215, y: 48,  label: 'AI Simulation',     sub: 'CX-Twin RL Engine',          year: '2025', cardBelow: true,  region: { rx: 36, ry: 20 } },
+  { x: 295, y: 85,  label: 'Applied AI',        sub: 'UHI & HealthSphere',         year: '2025', cardBelow: false, region: { rx: 35, ry: 18 } },
+  /* ── RIGHT PAGE (3 milestones) ── */
+  { x: 395, y: 52,  label: 'AI Research',        sub: 'RL & Simulation Systems',    year: '2026', cardBelow: true,  region: { rx: 36, ry: 20 } },
+  { x: 490, y: 88,  label: 'AI Engineer',        sub: 'Next-Gen AI Systems',        year: '2027', cardBelow: false, region: { rx: 35, ry: 18 } },
+  { x: 585, y: 50,  label: 'Masters & Research', sub: 'Advanced AI & Beyond',       year: '2028+',cardBelow: true,  region: { rx: 38, ry: 20 } },
 ]
 
-/* Decorative board pins scattered across the map */
+/* Decorative board pins scattered across both pages */
 const boardPins = [
-  { x: 115, y: 42,  color: '#B22222', size: 'lg' },
-  { x: 340, y: 35,  color: '#1E3A8A', size: 'md' },
-  { x: 460, y: 130, color: '#B22222', size: 'sm' },
-  { x: 220, y: 125, color: '#1E3A8A', size: 'lg' },
-  { x: 560, y: 120, color: '#B22222', size: 'md' },
-  { x: 30,  y: 30,  color: '#1E3A8A', size: 'sm' },
+  /* Left page */
+  { x: 90,  y: 30,  color: '#B22222', size: 'lg' },
+  { x: 175, y: 130, color: '#1E3A8A', size: 'md' },
+  { x: 260, y: 25,  color: '#B22222', size: 'sm' },
+  /* Right page */
+  { x: 360, y: 125, color: '#1E3A8A', size: 'lg' },
+  { x: 450, y: 28,  color: '#B22222', size: 'md' },
+  { x: 555, y: 130, color: '#1E3A8A', size: 'sm' },
 ]
 
 /* Decorative thumb tacks */
 const thumbTacks = [
-  { x: 440, y: 22,  rot: -8,  color: '#B22222' },
-  { x: 140, y: 135, rot: 12,  color: '#1E3A8A' },
-  { x: 530, y: 28,  rot: 5,   color: '#D4AF37' },
+  { x: 30,  y: 135, rot: -8,  color: '#B22222' },
+  { x: 310, y: 20,  rot: 12,  color: '#1E3A8A' },
+  { x: 530, y: 22,  rot: -5,  color: '#D4AF37' },
+  { x: 610, y: 130, rot: 8,   color: '#B22222' },
 ]
 
 /* ── Photorealistic SVG board pin ── */
@@ -415,7 +421,17 @@ const JourneySpread = () => {
             <text x="-19" y="1.5" textAnchor="middle" fill="#D4AF37" fontSize="3.5" fontFamily="'B612 Mono', monospace">W</text>
           </g>
 
-          {/* ── Animated plane icon ── */}
+          {/* ── Animated plane icon with contrail ── */}
+          {/* Contrail — fading dashed trail that follows same path */}
+          <path
+            d={routePath}
+            fill="none"
+            stroke="#D4AF37"
+            strokeWidth="0.6"
+            strokeDasharray="2 4"
+            opacity="0"
+            className="journey-contrail"
+          />
           <g className="journey-plane" opacity="0">
             <g transform="translate(-8, -6)">
               <path
