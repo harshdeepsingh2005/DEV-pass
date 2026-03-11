@@ -120,6 +120,17 @@ body {
   /* Animation driven by GSAP timeline, not CSS */
 }
 
+/* ===== Journey Ping Pulse ===== */
+@keyframes journeyPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.4); }
+}
+
+.journey-ping {
+  animation: journeyPulse 2s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
 /* ===== Signature Stroke Animation ===== */
 .signature-path {
   stroke-dasharray: 500;

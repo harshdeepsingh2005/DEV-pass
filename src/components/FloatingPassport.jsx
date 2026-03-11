@@ -1,12 +1,13 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin'
 import deskBg from '../assets/background/desk-background.webp'
 import passportCover from '../assets/passport/passport_cover.webp'
 import passportPageTexture from '../assets/texture/passport-page.webp'
 import PassportSpine from './PassportSpine'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin)
 
 /**
  * FloatingPassport — 3D page-flip passport driven by scroll.
@@ -58,6 +59,12 @@ const FloatingPassport = ({ cover, spreads }) => {
         /* Stamp-slam elements get extra initial state for the slam-down effect */
         const stamps = el.querySelectorAll('.stamp-slam')
         if (stamps.length) gsap.set(stamps, { scale: 1.4, rotation: () => gsap.utils.random(-8, 8) })
+        /* Journey milestone markers start hidden + scaled down for pop-in */
+        const jMs = el.querySelectorAll('.journey-milestone')
+        if (jMs.length) gsap.set(jMs, { autoAlpha: 0, scale: 0 })
+        /* Journey region highlights start hidden */
+        const jRg = el.querySelectorAll('.journey-region')
+        if (jRg.length) gsap.set(jRg, { autoAlpha: 0, scale: 0.3 })
       })
 
       /* Unpause gold-foil shimmer on cover (it's always visible, not part of flip reveals) */
@@ -144,6 +151,49 @@ const FloatingPassport = ({ cover, spreads }) => {
         tl.call(() => firstAnimated.forEach(el => el.style.animationPlayState = 'running'), null, revealPos0)
       }
 
+      /* ── Journey element animator (milestones, regions, plane, pings) ── */
+      const revealJourney = (spreadEl, pos) => {
+        if (!spreadEl) return
+        /* Milestones — staggered scale-in synced to path draw */
+        const ms = spreadEl.querySelectorAll('.journey-milestone')
+        if (ms.length) {
+          const n = ms.length
+          ms.forEach((m, idx) => {
+            const off = n > 1 ? (idx / (n - 1)) * 2.5 : 0
+            tl.to(m, { autoAlpha: 1, scale: 1, duration: 0.8, ease: 'back.out(3)' }, pos + 0.3 + off)
+          })
+        }
+        /* Region highlights — glow when milestone appears */
+        const rg = spreadEl.querySelectorAll('.journey-region')
+        if (rg.length) {
+          const n = rg.length
+          rg.forEach((r, idx) => {
+            const off = n > 1 ? (idx / (n - 1)) * 2.5 : 0
+            tl.to(r, { autoAlpha: 0.08, scale: 1, duration: 1.2, ease: 'power2.out' }, pos + 0.3 + off)
+          })
+        }
+        /* Plane — follows route via MotionPathPlugin */
+        const plane = spreadEl.querySelector('.journey-plane')
+        const route = spreadEl.querySelector('.journey-path')
+        if (plane && route) {
+          tl.to(plane, { autoAlpha: 0.9, duration: 0.3 }, pos)
+          tl.to(plane, {
+            motionPath: { path: route, align: route, autoRotate: true, alignOrigin: [0.5, 0.5] },
+            duration: 3, ease: 'power2.inOut',
+          }, pos + 0.2)
+        }
+        /* Ping ring CSS pulse — unpause as each milestone appears */
+        const pings = spreadEl.querySelectorAll('.journey-ping')
+        if (pings.length) {
+          const n = pings.length
+          pings.forEach((p, idx) => {
+            const off = n > 1 ? (idx / (n - 1)) * 2.5 : 0
+            tl.call(() => { p.style.animationPlayState = 'running' }, null, pos + 0.5 + off)
+          })
+        }
+      }
+      revealJourney(spreadRefs.current[0], revealPos0)
+
       /* ── Phase 2: Page flips (18% → 97%) ── */
       const flipStart = 18
       const flipEnd = 97
@@ -203,6 +253,7 @@ const FloatingPassport = ({ cover, spreads }) => {
         if (animated?.length) {
           tl.call(() => animated.forEach(el => el.style.animationPlayState = 'running'), null, revealPos)
         }
+        revealJourney(spreadRefs.current[i + 1], revealPos)
       }
     }, containerRef)
 
