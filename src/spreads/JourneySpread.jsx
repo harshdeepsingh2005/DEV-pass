@@ -2,54 +2,52 @@ import { useRef, useEffect } from 'react'
 import worldMap from '../assets/maps/world-map.webp'
 
 /**
- * JourneySpread — Aged-parchment world-map with SVG stroke-draw route,
- * sequential milestone markers with floating info cards,
- * an animated plane icon, and glowing region highlights.
+ * JourneySpread — Curved flight-path across an aged world-map.
  *
- * Visual enhancements:
- *   • foxing-spots class for aged paper effect
- *   • SVG compass rose in bottom-left with metallic gold
- *   • Moodier warm-toned lighting overlay
- *   • Paper edge wear (vignette)
- *   • Milestone year badges styled as red ink flags
+ * Milestones sit directly ON a smooth S-curve that crosses both passport
+ * pages.  Info cards are offset above/below with slight random rotation
+ * to create a natural zig-zag layout.  A small airplane follows the path
+ * via GSAP MotionPathPlugin; each milestone node pulses when the plane
+ * arrives and reveals its card.
  *
  * GSAP class hooks (driven by FloatingPassport timeline):
  *   .journey-path      → strokeDashoffset draw
- *   .journey-milestone  → staggered scale-in
+ *   .journey-milestone  → staggered scale-in (card + node together)
  *   .journey-region     → staggered glow
  *   .journey-plane      → motionPath along route
- *   .journey-ping       → CSS pulse (unpaused by GSAP)
+ *   .journey-contrail   → stroke-draw trail behind plane
+ *   .journey-ping       → CSS pulse ring (unpaused by GSAP)
  */
+
+/* ─── Milestones ────────────────────────────────────────────────
+ * Placed directly on an S-curve.  y values form the wave;
+ * cardDir = 1 (below) or -1 (above) for zig-zag.
+ * cardOff / cardRot add per-card randomness.                     */
 const milestones = [
-  /* ── LEFT PAGE (4 milestones) ── */
-  { x: 45,  y: 55,  label: 'B.Tech CSE',       sub: 'Lovely Professional Univ.',  year: '2024', cardBelow: true,  region: { rx: 38, ry: 20 } },
-  { x: 130, y: 90,  label: 'ML Exploration',    sub: 'Python & TensorFlow',        year: '2024', cardBelow: false, region: { rx: 35, ry: 18 } },
-  { x: 215, y: 48,  label: 'AI Simulation',     sub: 'CX-Twin RL Engine',          year: '2025', cardBelow: true,  region: { rx: 36, ry: 20 } },
-  { x: 295, y: 85,  label: 'Applied AI',        sub: 'UHI & HealthSphere',         year: '2025', cardBelow: false, region: { rx: 35, ry: 18 } },
-  /* ── RIGHT PAGE (3 milestones) ── */
-  { x: 395, y: 52,  label: 'AI Research',        sub: 'RL & Simulation Systems',    year: '2026', cardBelow: true,  region: { rx: 36, ry: 20 } },
-  { x: 490, y: 88,  label: 'AI Engineer',        sub: 'Next-Gen AI Systems',        year: '2027', cardBelow: false, region: { rx: 35, ry: 18 } },
-  { x: 585, y: 50,  label: 'Masters & Research', sub: 'Advanced AI & Beyond',       year: '2028+',cardBelow: true,  region: { rx: 38, ry: 20 } },
+  { x: 50,  y: 95,  label: 'B.Tech CSE',       sub: 'Lovely Professional Univ.', year: '2024', cardDir: -1, cardOff: { dx: 3,  dy: -4 }, cardRot: -1.5 },
+  { x: 155, y: 42,  label: 'ML Exploration',    sub: 'Python & TensorFlow',       year: '2024', cardDir:  1, cardOff: { dx: -2, dy: 5  }, cardRot:  2   },
+  { x: 265, y: 100, label: 'AI Simulation',     sub: 'CX-Twin RL Engine',         year: '2025', cardDir: -1, cardOff: { dx: 5,  dy: -3 }, cardRot: -2   },
+  { x: 385, y: 38,  label: 'Applied AI',        sub: 'UHI & HealthSphere',        year: '2025', cardDir:  1, cardOff: { dx: -4, dy: 6  }, cardRot:  1.5 },
+  { x: 495, y: 98,  label: 'AI Research',       sub: 'RL & Simulation Systems',   year: '2026', cardDir: -1, cardOff: { dx: 2,  dy: -5 }, cardRot: -1   },
+  { x: 600, y: 45,  label: 'AI Engineer',       sub: 'Next-Gen AI Systems',       year: '2027', cardDir:  1, cardOff: { dx: -3, dy: 4  }, cardRot:  2.5 },
 ]
 
-/* Decorative board pins scattered across both pages */
+/* ── Decorative board pins (3 per page) ── */
 const boardPins = [
-  /* Left page */
-  { x: 90,  y: 30,  color: '#B22222', size: 'lg' },
-  { x: 175, y: 130, color: '#1E3A8A', size: 'md' },
-  { x: 260, y: 25,  color: '#B22222', size: 'sm' },
-  /* Right page */
-  { x: 360, y: 125, color: '#1E3A8A', size: 'lg' },
-  { x: 450, y: 28,  color: '#B22222', size: 'md' },
-  { x: 555, y: 130, color: '#1E3A8A', size: 'sm' },
+  { x: 105, y: 28,  color: '#B22222', size: 'lg' },
+  { x: 200, y: 140, color: '#1E3A8A', size: 'md' },
+  { x: 310, y: 22,  color: '#B22222', size: 'sm' },
+  { x: 360, y: 135, color: '#1E3A8A', size: 'lg' },
+  { x: 445, y: 25,  color: '#B22222', size: 'md' },
+  { x: 560, y: 140, color: '#1E3A8A', size: 'sm' },
 ]
 
-/* Decorative thumb tacks */
+/* ── Decorative thumb tacks (2 per page) ── */
 const thumbTacks = [
-  { x: 30,  y: 135, rot: -8,  color: '#B22222' },
-  { x: 310, y: 20,  rot: 12,  color: '#1E3A8A' },
-  { x: 530, y: 22,  rot: -5,  color: '#D4AF37' },
-  { x: 610, y: 130, rot: 8,   color: '#B22222' },
+  { x: 28,  y: 140, rot: -8,  color: '#B22222' },
+  { x: 175, y: 18,  rot: 10,  color: '#1E3A8A' },
+  { x: 530, y: 18,  rot: -5,  color: '#D4AF37' },
+  { x: 620, y: 138, rot: 7,   color: '#B22222' },
 ]
 
 /* ── Photorealistic SVG board pin ── */
@@ -106,20 +104,26 @@ const ThumbTack = ({ x, y, rot, color }) => {
   )
 }
 
-/** Build a smooth bezier path through milestone points */
-const buildBezierPath = (pts) => {
+/**
+ * Build a smooth Catmull-Rom–style cubic bezier through points.
+ * Uses tangent-based control points for a flowing flight-path feel.
+ */
+const buildFlightPath = (pts) => {
   if (pts.length < 2) return ''
   let d = `M ${pts[0].x},${pts[0].y}`
   for (let i = 1; i < pts.length; i++) {
     const prev = pts[i - 1]
     const curr = pts[i]
-    const dx = (curr.x - prev.x) * 0.4
-    d += ` C ${prev.x + dx},${prev.y} ${curr.x - dx},${curr.y} ${curr.x},${curr.y}`
+    /* Wider control point spread for sweeping arcs */
+    const dx = (curr.x - prev.x) * 0.45
+    /* Slight vertical overshoot for a looping feel */
+    const overshoot = (curr.y - prev.y) * 0.15
+    d += ` C ${prev.x + dx},${prev.y + overshoot} ${curr.x - dx},${curr.y - overshoot} ${curr.x},${curr.y}`
   }
   return d
 }
 
-const routePath = buildBezierPath(milestones)
+const routePath = buildFlightPath(milestones)
 
 const JourneySpread = () => {
   const pathRef = useRef(null)
@@ -224,8 +228,8 @@ const JourneySpread = () => {
               className="journey-region"
               cx={m.x}
               cy={m.y}
-              rx={m.region.rx}
-              ry={m.region.ry}
+              rx="38"
+              ry="20"
               fill="#D4AF37"
               opacity="0"
               filter="url(#regionGlow)"
@@ -233,15 +237,8 @@ const JourneySpread = () => {
             />
           ))}
 
-          {/* ── Dashed trail (full route, always faintly visible) ── */}
-          <path
-            d={routePath}
-            fill="none"
-            stroke="#D4AF37"
-            strokeWidth="0.8"
-            strokeDasharray="4 3"
-            opacity="0.2"
-          />
+          {/* ── Ghost trail (always faintly visible full route) ── */}
+          <path d={routePath} fill="none" stroke="#D4AF37" strokeWidth="0.6" strokeDasharray="3 5" opacity="0.15" />
 
           {/* ── Animated solid route (stroke-draw on scroll) ── */}
           <path
@@ -249,28 +246,26 @@ const JourneySpread = () => {
             d={routePath}
             fill="none"
             stroke="#D4AF37"
-            strokeWidth="1.8"
+            strokeWidth="1.6"
             strokeLinecap="round"
-            opacity="0.7"
+            opacity="0.65"
             className="journey-path"
           />
 
           {/* ── Decorative board pins ── */}
-          {boardPins.map((p, i) => (
-            <BoardPin key={`bp-${i}`} {...p} />
-          ))}
-
+          {boardPins.map((p, i) => <BoardPin key={`bp-${i}`} {...p} />)}
           {/* ── Decorative thumb tacks ── */}
-          {thumbTacks.map((t, i) => (
-            <ThumbTack key={`tt-${i}`} {...t} />
-          ))}
+          {thumbTacks.map((t, i) => <ThumbTack key={`tt-${i}`} {...t} />)}
 
-          {/* ── Milestone markers + floating info cards ── */}
+          {/* ══ Milestone nodes ON the curve + offset zig-zag cards ══ */}
           {milestones.map((m, i) => {
-            const above = !m.cardBelow
-            const cardY = above ? m.y - 55 : m.y + 20
-            const lineY1 = above ? m.y - 7 : m.y + 7
-            const lineY2 = above ? m.y - 19 : m.y + 20
+            /* Card sits above (cardDir=-1) or below (cardDir=1) the curve */
+            const gap = 22
+            const cardCx = m.x + m.cardOff.dx
+            const cardCy = m.y + m.cardDir * (gap + 18) + m.cardOff.dy
+            /* Connector endpoints — from node edge to card edge */
+            const connY1 = m.y + m.cardDir * 7
+            const connY2 = cardCy - m.cardDir * 18
 
             return (
               <g
@@ -278,110 +273,61 @@ const JourneySpread = () => {
                 className="journey-milestone"
                 style={{ transformOrigin: `${m.x}px ${m.y}px` }}
               >
-                {/* Ping ring (CSS pulse, unpaused by GSAP) */}
+                {/* ── Pulse ring (CSS animation, unpaused by GSAP) ── */}
                 <circle
-                  cx={m.x}
-                  cy={m.y}
-                  r="12"
-                  fill="none"
-                  stroke="#D4AF37"
-                  strokeWidth="0.6"
-                  opacity="0.3"
+                  cx={m.x} cy={m.y} r="14"
+                  fill="none" stroke="#D4AF37" strokeWidth="0.5" opacity="0.25"
                   className="journey-ping"
                   style={{ transformOrigin: `${m.x}px ${m.y}px` }}
                 />
-                {/* Outer ring */}
-                <circle cx={m.x} cy={m.y} r="6" fill="none" stroke="#D4AF37" strokeWidth="0.8" opacity="0.5" />
-                {/* Core dot */}
-                <circle cx={m.x} cy={m.y} r="3" fill="#D4AF37" />
-                {/* Inner highlight */}
-                <circle cx={m.x} cy={m.y} r="1.2" fill="#F5F1E8" opacity="0.7" />
+                {/* Outer glow ring */}
+                <circle cx={m.x} cy={m.y} r="7" fill="none" stroke="#D4AF37" strokeWidth="0.7" opacity="0.45" />
+                {/* Core dot — sits exactly on curve */}
+                <circle cx={m.x} cy={m.y} r="3.5" fill="#D4AF37" />
+                <circle cx={m.x} cy={m.y} r="1.5" fill="#F5F1E8" opacity="0.7" />
 
-                {/* Connector line from card to dot */}
+                {/* ── Dashed connector from node to card ── */}
                 <line
-                  x1={m.x}
-                  y1={lineY1}
-                  x2={m.x}
-                  y2={lineY2}
-                  stroke="#D4AF37"
-                  strokeWidth="0.5"
-                  opacity="0.35"
-                  strokeDasharray="2 1.5"
+                  x1={m.x} y1={connY1} x2={cardCx} y2={connY2}
+                  stroke="#D4AF37" strokeWidth="0.45" opacity="0.3"
+                  strokeDasharray="2 2"
                 />
 
-                {/* ── Floating info card ── */}
-                <g filter="url(#cardShadow)">
-                  {/* Card background */}
-                  <rect
-                    x={m.x - 42}
-                    y={cardY}
-                    width="84"
-                    height="36"
-                    rx="3"
-                    fill="#F5F1E8"
-                    stroke="#D4AF37"
-                    strokeWidth="0.5"
-                    opacity="0.95"
-                  />
+                {/* ── Floating info card (rotated + offset) ── */}
+                <g
+                  transform={`translate(${cardCx},${cardCy}) rotate(${m.cardRot})`}
+                  filter="url(#cardShadow)"
+                >
+                  {/* Card bg */}
+                  <rect x="-44" y="-18" width="88" height="36" rx="3"
+                    fill="#F5F1E8" stroke="#D4AF37" strokeWidth="0.5" opacity="0.95" />
                   {/* Top accent strip */}
-                  <rect
-                    x={m.x - 42}
-                    y={cardY}
-                    width="84"
-                    height="4"
-                    rx="3"
-                    fill="#D4AF37"
-                    opacity="0.25"
-                  />
-                  {/* Year badge — red ink flag style */}
-                  <rect
-                    x={m.x + 20}
-                    y={cardY + 2}
-                    width="18"
-                    height="9"
-                    rx="1.5"
-                    fill="#B22222"
-                    opacity="0.85"
-                  />
-                  <text
-                    x={m.x + 29}
-                    y={cardY + 9}
-                    textAnchor="middle"
-                    fill="#F5F1E8"
-                    fontSize="5.5"
-                    fontFamily="'B612 Mono', monospace"
-                    fontWeight="bold"
-                  >
+                  <rect x="-44" y="-18" width="88" height="4" rx="3"
+                    fill="#D4AF37" opacity="0.25" />
+                  {/* Year badge */}
+                  <rect x="22" y="-16" width="18" height="9" rx="1.5"
+                    fill="#B22222" opacity="0.85" />
+                  <text x="31" y="-9" textAnchor="middle" fill="#F5F1E8"
+                    fontSize="5.5" fontFamily="'B612 Mono', monospace" fontWeight="bold">
                     {m.year}
                   </text>
                   {/* Title */}
-                  <text
-                    x={m.x - 36}
-                    y={cardY + 16}
-                    fill="#0B1D3A"
-                    fontSize="7.5"
-                    fontFamily="'Special Elite', monospace"
-                    fontWeight="bold"
-                  >
+                  <text x="-38" y="-2" fill="#0B1D3A"
+                    fontSize="7.5" fontFamily="'Special Elite', monospace" fontWeight="bold">
                     {m.label}
                   </text>
-                  {/* Institution / subtitle */}
-                  <text
-                    x={m.x - 36}
-                    y={cardY + 28}
-                    fill="#666666"
-                    fontSize="6"
-                    fontFamily="'Special Elite', monospace"
-                  >
+                  {/* Subtitle */}
+                  <text x="-38" y="10" fill="#666"
+                    fontSize="5.5" fontFamily="'Special Elite', monospace">
                     {m.sub}
                   </text>
                 </g>
 
-                {/* Photorealistic card pin */}
+                {/* ── Card pin ── */}
                 {(() => {
                   const pinColor = i % 2 === 0 ? '#B22222' : '#1E3A8A'
                   const pid = `cpin-${i}`
-                  const px = m.x, py = cardY - 1
+                  const px = cardCx, py = cardCy - 19
                   return (
                     <g>
                       <defs>
