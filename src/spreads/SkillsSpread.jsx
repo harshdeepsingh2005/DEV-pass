@@ -51,7 +51,7 @@ const Stamp = ({ s }) => {
     : {}
   return (
     <div
-      className={`absolute stamp-slam group cursor-default ${s.feather ? 'ink-feather' : 'stamp-effect'}`}
+      className={`absolute stamp-slam group cursor-default ${s.feather ? 'ink-bleed-heavy' : 'ink-bleed'}`}
       style={{ left: s.x, top: s.y, transform: `rotate(${s.rot}deg)`, opacity: s.op, ...unevenStyle }}
     >
       <div
@@ -86,25 +86,37 @@ const Stamp = ({ s }) => {
   )
 }
 
-/* ── Ink splashes scattered across pages ── */
+/* ── Ink splashes scattered across pages (splattered, bleeding look) ── */
 const inkSplashes = [
-  /* Left page */
-  { x: '2%',  y: '28%', w: 18, h: 14, rot: 25,  color: '#1E3A8A', op: 0.25, page: 'left' },
-  { x: '42%', y: '6%',  w: 10, h: 8,  rot: -40, color: '#B22222', op: 0.20, page: 'left' },
-  { x: '35%', y: '50%', w: 22, h: 16, rot: 110, color: '#1E3A8A', op: 0.18, page: 'left' },
-  { x: '58%', y: '30%', w: 8,  h: 6,  rot: 70,  color: '#B22222', op: 0.22, page: 'left' },
-  { x: '18%', y: '72%', w: 14, h: 10, rot: -20, color: '#0B1D3A', op: 0.15, page: 'left' },
-  { x: '48%', y: '88%', w: 6,  h: 5,  rot: 45,  color: '#1E3A8A', op: 0.20, page: 'left' },
-  { x: '70%', y: '55%', w: 12, h: 9,  rot: -65, color: '#B22222', op: 0.18, page: 'left' },
-  /* Right page */
-  { x: '5%',  y: '25%', w: 16, h: 12, rot: -30, color: '#B22222', op: 0.22, page: 'right' },
-  { x: '40%', y: '5%',  w: 8,  h: 6,  rot: 55,  color: '#1E3A8A', op: 0.18, page: 'right' },
-  { x: '75%', y: '18%', w: 20, h: 14, rot: 140, color: '#0B1D3A', op: 0.15, page: 'right' },
-  { x: '30%', y: '48%', w: 12, h: 8,  rot: -80, color: '#B22222', op: 0.20, page: 'right' },
-  { x: '65%', y: '70%', w: 10, h: 7,  rot: 20,  color: '#1E3A8A', op: 0.22, page: 'right' },
-  { x: '15%', y: '85%', w: 14, h: 11, rot: -45, color: '#B22222', op: 0.18, page: 'right' },
-  { x: '50%', y: '32%', w: 7,  h: 5,  rot: 90,  color: '#0B1D3A', op: 0.20, page: 'right' },
-  { x: '85%', y: '50%', w: 9,  h: 7,  rot: -15, color: '#1E3A8A', op: 0.15, page: 'right' },
+  /* Left page — main blots */
+  { x: '2%',  y: '28%', w: 24, h: 18, rot: 25,  color: '#1E3A8A', op: 0.30, page: 'left',  br: '38% 62% 50% 50% / 60% 40% 60% 40%' },
+  { x: '42%', y: '6%',  w: 14, h: 11, rot: -40, color: '#B22222', op: 0.25, page: 'left',  br: '55% 45% 42% 58% / 48% 52% 48% 52%' },
+  { x: '35%', y: '50%', w: 28, h: 20, rot: 110, color: '#1E3A8A', op: 0.22, page: 'left',  br: '44% 56% 60% 40% / 55% 45% 55% 45%' },
+  { x: '58%', y: '30%', w: 12, h: 9,  rot: 70,  color: '#B22222', op: 0.28, page: 'left',  br: '50% 50% 35% 65% / 45% 55% 50% 50%' },
+  { x: '18%', y: '72%', w: 20, h: 14, rot: -20, color: '#0B1D3A', op: 0.20, page: 'left',  br: '60% 40% 48% 52% / 42% 58% 55% 45%' },
+  { x: '48%', y: '88%', w: 10, h: 8,  rot: 45,  color: '#1E3A8A', op: 0.26, page: 'left',  br: '45% 55% 55% 45% / 50% 50% 40% 60%' },
+  { x: '70%', y: '55%', w: 16, h: 12, rot: -65, color: '#B22222', op: 0.24, page: 'left',  br: '52% 48% 40% 60% / 58% 42% 52% 48%' },
+  /* Left page — tiny satellite drops */
+  { x: '8%',  y: '24%', w: 5,  h: 5,  rot: 80,  color: '#1E3A8A', op: 0.35, page: 'left',  br: '50%' },
+  { x: '50%', y: '4%',  w: 4,  h: 4,  rot: 10,  color: '#B22222', op: 0.30, page: 'left',  br: '50%' },
+  { x: '30%', y: '46%', w: 6,  h: 5,  rot: -55, color: '#1E3A8A', op: 0.28, page: 'left',  br: '50%' },
+  { x: '65%', y: '28%', w: 3,  h: 3,  rot: 30,  color: '#B22222', op: 0.32, page: 'left',  br: '50%' },
+  { x: '22%', y: '68%', w: 4,  h: 3,  rot: -10, color: '#0B1D3A', op: 0.25, page: 'left',  br: '50%' },
+  /* Right page — main blots */
+  { x: '5%',  y: '25%', w: 22, h: 16, rot: -30, color: '#B22222', op: 0.28, page: 'right', br: '48% 52% 58% 42% / 40% 60% 45% 55%' },
+  { x: '40%', y: '5%',  w: 12, h: 9,  rot: 55,  color: '#1E3A8A', op: 0.24, page: 'right', br: '55% 45% 50% 50% / 52% 48% 42% 58%' },
+  { x: '75%', y: '18%', w: 26, h: 18, rot: 140, color: '#0B1D3A', op: 0.20, page: 'right', br: '40% 60% 55% 45% / 48% 52% 60% 40%' },
+  { x: '30%', y: '48%', w: 16, h: 12, rot: -80, color: '#B22222', op: 0.26, page: 'right', br: '58% 42% 45% 55% / 55% 45% 48% 52%' },
+  { x: '65%', y: '70%', w: 14, h: 10, rot: 20,  color: '#1E3A8A', op: 0.28, page: 'right', br: '42% 58% 52% 48% / 50% 50% 55% 45%' },
+  { x: '15%', y: '85%', w: 18, h: 14, rot: -45, color: '#B22222', op: 0.22, page: 'right', br: '50% 50% 38% 62% / 45% 55% 50% 50%' },
+  { x: '50%', y: '32%', w: 10, h: 8,  rot: 90,  color: '#0B1D3A', op: 0.26, page: 'right', br: '60% 40% 50% 50% / 42% 58% 48% 52%' },
+  { x: '85%', y: '50%', w: 12, h: 10, rot: -15, color: '#1E3A8A', op: 0.20, page: 'right', br: '45% 55% 60% 40% / 55% 45% 40% 60%' },
+  /* Right page — tiny satellite drops */
+  { x: '12%', y: '22%', w: 5,  h: 4,  rot: 65,  color: '#B22222', op: 0.35, page: 'right', br: '50%' },
+  { x: '48%', y: '3%',  w: 3,  h: 3,  rot: -20, color: '#1E3A8A', op: 0.30, page: 'right', br: '50%' },
+  { x: '80%', y: '14%', w: 4,  h: 4,  rot: 40,  color: '#0B1D3A', op: 0.28, page: 'right', br: '50%' },
+  { x: '35%', y: '45%', w: 5,  h: 5,  rot: -70, color: '#B22222', op: 0.32, page: 'right', br: '50%' },
+  { x: '70%', y: '67%', w: 3,  h: 3,  rot: 15,  color: '#1E3A8A', op: 0.30, page: 'right', br: '50%' },
 ]
 
 /* ── Decorative circle accent stamps ── */
@@ -219,6 +231,14 @@ const SkillsSpread = () => (
     {inkSplashes.map((sp, i) => {
       const baseLeft = sp.page === 'left' ? 0 : 50
       const offset = sp.page === 'right' ? '24px' : '0px'
+      /* Splatter droplets radiating outward — random-ish offsets via index math */
+      const d1 = ((i * 7 + 3) % 11) - 5
+      const d2 = ((i * 5 + 7) % 13) - 6
+      const d3 = ((i * 3 + 11) % 9) - 4
+      const d4 = ((i * 9 + 2) % 11) - 5
+      const dropSize1 = 2 + (i % 3)
+      const dropSize2 = 1.5 + ((i + 1) % 3)
+      const dropSize3 = 1 + ((i + 2) % 2)
       return (
         <div
           key={`splash-${i}`}
@@ -231,7 +251,13 @@ const SkillsSpread = () => (
             backgroundColor: sp.color,
             opacity: sp.op,
             transform: `rotate(${sp.rot}deg)`,
+            borderRadius: sp.br,
             zIndex: 1,
+            boxShadow: [
+              `${d1 * 2}px ${d2 * 2}px 0 ${dropSize1}px ${sp.color}`,
+              `${d3 * 3}px ${d4 * 2}px 0 ${dropSize2}px ${sp.color}`,
+              `${-d2 * 2}px ${d1 * 3}px 0 ${dropSize3}px ${sp.color}`,
+            ].join(', '),
           }}
         />
       )

@@ -181,11 +181,51 @@ body {
   );
 }
 
-/* ===== Ink Splashes ===== */
+/* ===== Ink Splashes (splattered, bleeding look) ===== */
 .ink-splash {
   border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%;
   mix-blend-mode: multiply;
   pointer-events: none;
+  filter: blur(0.6px) contrast(1.4);
+}
+
+/* Satellite droplets via box-shadow (pseudo-element) */
+.ink-splash::before,
+.ink-splash::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.ink-splash::before {
+  width: 35%;
+  height: 40%;
+  top: -45%;
+  left: 60%;
+  opacity: 0.7;
+  filter: blur(0.3px);
+}
+.ink-splash::after {
+  width: 25%;
+  height: 30%;
+  bottom: -35%;
+  right: 55%;
+  opacity: 0.55;
+  filter: blur(0.4px);
+}
+
+/* ===== Ink Bleed on Stamps ===== */
+.ink-bleed {
+  filter: saturate(0.9) contrast(1.15) blur(0.35px) drop-shadow(0 0 0.8px currentColor);
+  mix-blend-mode: multiply;
+}
+
+/* Heavy bleed — big stamps, rubber press look */
+.ink-bleed-heavy {
+  filter: saturate(0.8) contrast(1.2) blur(0.5px) drop-shadow(0 0 1.2px currentColor);
+  mix-blend-mode: multiply;
 }
 
 /* ===== Line-ruled Paper ===== */
