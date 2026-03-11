@@ -120,6 +120,13 @@ body {
   /* Animation driven by GSAP timeline, not CSS */
 }
 
+/* ===== Signature Stroke Animation ===== */
+.signature-path {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  /* Animation driven by GSAP timeline, not CSS */
+}
+
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 6px;

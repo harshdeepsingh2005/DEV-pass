@@ -1,38 +1,118 @@
 /**
- * IdentitySpread — Passport identity page.
- * Left: passport-style photo frame.  Right: name, title, bio, signature + MRZ.
- * Items fixed: #5 (photo opacity), #7 (typography), #16 (MRZ zone), #21 (signature).
+ * IdentitySpread — Authentic passport identity page.
+ *
+ * Left page:  passport photo with gold corner brackets, structured metadata
+ *             fields (nationality, specialization, focus, passport ID),
+ *             specialization tag chips.
+ * Right page: structured document blocks (TITLE, BIOGRAPHY, CORE EXPERTISE,
+ *             TECH STACK) with passport-style divider rules.
+ * Footer:     animated SVG signature + MRZ zone.
+ *
+ * All animations are driven by GSAP via the FloatingPassport timeline —
+ * content starts hidden (autoAlpha 0) and reveals at 80 % of page flip.
+ * The .signature-path class uses stroke-dashoffset driven by GSAP.
  */
+
+const techStack = [
+  'Python', 'TensorFlow', 'PyTorch', 'Django',
+  'React', 'JavaScript', 'SQL', 'Docker',
+]
+
+const expertise = [
+  'Reinforcement Learning',
+  'Predictive Modeling',
+  'Simulation Engines',
+  'Data Pipelines',
+]
+
+const focusTags = [
+  'RL', 'Data Science', 'Simulation', 'Applied AI',
+]
+
+/* ─── Passport-style horizontal rule ─── */
+const Rule = ({ className = '' }) => (
+  <div className={`w-full flex items-center gap-2 ${className}`}>
+    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+  </div>
+)
+
+/* ─── Section label used on the right page ─── */
+const SectionLabel = ({ children }) => (
+  <span className="font-stamp text-[7px] text-gold/60 tracking-[0.35em] uppercase block mb-0.5 select-none">
+    {children}
+  </span>
+)
+
+/* ─── Metadata row used on the left page ─── */
+const MetaField = ({ label, value, mono = false }) => (
+  <div className="flex items-baseline gap-2">
+    <span className="font-stamp text-[7px] text-medium-gray/55 tracking-[0.2em] uppercase whitespace-nowrap w-[72px] shrink-0 text-right select-none">
+      {label}
+    </span>
+    <span className={`${mono ? 'font-mrz tracking-wider' : 'font-body'} text-[10px] text-passport-navy/80 leading-tight`}>
+      {value}
+    </span>
+  </div>
+)
+
 const IdentitySpread = () => (
   <div className="grid grid-cols-2 h-full" style={{ columnGap: 48 }}>
-    {/* Left page — Photo */}
-    <div className="flex flex-col items-center justify-center p-4 sm:p-6 relative">
-      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 01</span>
 
-      <div className="relative">
-        <div className="w-28 h-36 sm:w-32 sm:h-40 bg-passport-paper-dark border-2 border-gold/30 shadow-inner flex items-center justify-center">
-          <svg viewBox="0 0 100 120" className="w-20 h-24 text-passport-navy/35">
+    {/* ════════════════════  LEFT PAGE  ════════════════════ */}
+    <div className="flex flex-col items-center p-4 sm:p-5 relative">
+
+      {/* page number */}
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">
+        P&nbsp;01
+      </span>
+
+      {/* header label */}
+      <div className="w-full mb-3 pb-1.5 border-b border-gold/20">
+        <span className="font-stamp text-[8px] text-gold/50 tracking-[0.35em] uppercase select-none">
+          Identification
+        </span>
+      </div>
+
+      {/* ── Passport Photo Frame ── */}
+      <div className="relative mt-1">
+        {/* photo */}
+        <div className="w-[100px] h-[126px] sm:w-[110px] sm:h-[138px] bg-passport-paper-dark border border-gold/20 shadow-inner flex items-center justify-center">
+          <svg viewBox="0 0 100 120" className="w-16 h-20 text-passport-navy/25">
             <circle cx="50" cy="35" r="22" fill="currentColor" />
             <ellipse cx="50" cy="95" rx="35" ry="25" fill="currentColor" />
           </svg>
         </div>
-        {/* Photo frame corners */}
-        <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-gold/40" />
-        <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-gold/40" />
-        <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-gold/40" />
-        <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-gold/40" />
+        {/* gold corner brackets */}
+        <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-2 border-l-2 border-gold/50" />
+        <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-2 border-r-2 border-gold/50" />
+        <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-2 border-l-2 border-gold/50" />
+        <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-2 border-r-2 border-gold/50" />
       </div>
-      <p className="font-stamp text-[8px] text-medium-gray/50 tracking-[0.3em] uppercase mt-3">
+
+      <p className="font-stamp text-[7px] text-medium-gray/40 tracking-[0.35em] uppercase mt-2.5 select-none">
         Passport Photo
       </p>
-      <div className="w-16 h-px bg-gold/20 mt-2" />
 
-      {/* Focus areas tags */}
-      <div className="flex flex-wrap justify-center gap-1.5 mt-4 max-w-[200px]">
-        {['RL', 'Data Science', 'Simulation', 'Applied AI'].map((tag) => (
+      <Rule className="my-2.5" />
+
+      {/* ── Metadata Fields ── */}
+      <div className="w-full space-y-1.5 px-1">
+        <MetaField label="Surname" value="SINGH" mono />
+        <MetaField label="Given Name" value="HARSHDEEP" mono />
+        <MetaField label="Nationality" value="IND — India" mono />
+        <MetaField label="Specialization" value="Artificial Intelligence & ML" />
+        <MetaField label="Focus Area" value="Reinforcement Learning" />
+        <MetaField label="Passport ID" value="DEV-2024-013" mono />
+      </div>
+
+      <Rule className="my-2.5" />
+
+      {/* ── Specialization Tag Chips ── */}
+      <div className="flex flex-wrap justify-center gap-1.5 max-w-[210px]">
+        {focusTags.map((tag) => (
           <span
             key={tag}
-            className="font-stamp text-[8px] text-passport-navy/55 bg-passport-navy/5 border border-passport-navy/10 rounded-sm px-1.5 py-0.5 tracking-wide uppercase"
+            className="stamp-effect stamp-slam font-stamp text-[7px] text-passport-navy/60 bg-gold/8 border border-gold/20 rounded-sm px-2 py-0.5 tracking-wider uppercase"
           >
             {tag}
           </span>
@@ -40,61 +120,116 @@ const IdentitySpread = () => (
       </div>
     </div>
 
-    {/* Right page — Details */}
-    <div className="flex flex-col p-4 sm:p-6 relative">
-      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 02</span>
+    {/* ════════════════════  RIGHT PAGE  ════════════════════ */}
+    <div className="flex flex-col p-4 sm:p-5 relative">
 
-      <div className="mb-3 pb-2 border-b border-gold/20">
-        <span className="font-stamp text-[8px] text-medium-gray tracking-[0.3em] uppercase">
-          Identity Page
+      {/* page number */}
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">
+        P&nbsp;02
+      </span>
+
+      {/* header label */}
+      <div className="w-full mb-2.5 pb-1.5 border-b border-gold/20">
+        <span className="font-stamp text-[8px] text-gold/50 tracking-[0.35em] uppercase select-none">
+          Personal Data
         </span>
       </div>
 
-      <div className="space-y-3 flex-1">
-        <div>
-          <label className="font-stamp text-[8px] text-medium-gray/70 tracking-[0.2em] uppercase block">
-            Full Name
-          </label>
-          <p className="font-heading text-lg sm:text-xl text-passport-navy font-bold mt-0.5">
-            Harshdeep Singh
-          </p>
-        </div>
-
-        <div>
-          <label className="font-stamp text-[8px] text-medium-gray/70 tracking-[0.2em] uppercase block">
-            Title
-          </label>
-          <p className="font-stamp text-[11px] text-stamp-red tracking-wider uppercase mt-0.5">
-            AI / Machine Learning Engineer
-          </p>
-        </div>
-
-        <div>
-          <label className="font-stamp text-[8px] text-medium-gray/70 tracking-[0.2em] uppercase block">
-            Biography
-          </label>
-          <p className="text-dark-gray/70 text-[11px] sm:text-xs leading-relaxed mt-0.5">
-            AI engineer building complex simulation engines and research-oriented systems.
-            Passionate about reinforcement learning, predictive modeling, and turning
-            data into intelligent decision-making tools. Experienced in full-stack development
-            with deep expertise in TensorFlow, PyTorch, and Django.
-          </p>
-        </div>
-      </div>
-
-      {/* Signature */}
-      <div className="pt-3 mt-auto border-t border-gold/20">
-        <p className="font-heading italic text-xl text-passport-navy/70">
+      {/* ── TITLE ── */}
+      <div className="mb-2">
+        <SectionLabel>Full Name / Title</SectionLabel>
+        <p className="font-heading text-base sm:text-lg text-passport-navy font-bold leading-snug">
           Harshdeep Singh
         </p>
-        <div className="w-28 h-px bg-passport-navy/25 mt-0.5" />
-        <p className="font-stamp text-[8px] text-medium-gray/50 tracking-[0.3em] uppercase mt-1">
-          Holder&apos;s Signature
+        <p className="font-stamp text-[10px] text-stamp-red/80 tracking-wider uppercase mt-0.5">
+          AI &amp; Machine Learning Engineer
         </p>
       </div>
 
-      {/* MRZ zone */}
-      <div className="mt-2 pt-2 border-t border-medium-gray/15 font-mrz text-[7px] text-passport-navy/25 leading-tight tracking-[0.15em] select-none overflow-hidden">
+      <Rule className="mb-2" />
+
+      {/* ── BIOGRAPHY ── */}
+      <div className="mb-2">
+        <SectionLabel>Biography</SectionLabel>
+        <p className="text-dark-gray/70 text-[10px] sm:text-[11px] leading-relaxed">
+          AI engineer building complex simulation engines and research-oriented
+          systems. Passionate about reinforcement learning, predictive modeling,
+          and turning data into intelligent decision-making tools.
+        </p>
+      </div>
+
+      <Rule className="mb-2" />
+
+      {/* ── CORE EXPERTISE ── */}
+      <div className="mb-2">
+        <SectionLabel>Core Expertise</SectionLabel>
+        <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5">
+          {expertise.map((item) => (
+            <span
+              key={item}
+              className="text-[9px] text-passport-navy/70 font-body before:content-['▸'] before:mr-1 before:text-gold/60 before:text-[7px]"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <Rule className="mb-2" />
+
+      {/* ── TECH STACK ── */}
+      <div className="mb-2">
+        <SectionLabel>Tech Stack</SectionLabel>
+        <div className="flex flex-wrap gap-1 mt-0.5">
+          {techStack.map((t) => (
+            <span
+              key={t}
+              className="font-mrz text-[7px] text-passport-navy/55 bg-passport-navy/5 border border-passport-navy/10 rounded-[3px] px-1.5 py-[1px] tracking-wide"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Signature (SVG animated via GSAP) ── */}
+      <div className="pt-2 mt-auto border-t border-gold/20">
+        <SectionLabel>Holder&apos;s Signature</SectionLabel>
+        <svg
+          viewBox="0 0 220 40"
+          className="w-36 h-8 mt-0.5"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Stylised "Harshdeep" cursive path */}
+          <path
+            className="signature-path"
+            d="M8 30 C12 10, 18 10, 20 25 C22 35, 26 8, 30 20
+               C34 30, 36 12, 42 18 C48 24, 46 10, 52 15
+               C58 22, 56 8, 62 14 C68 20, 66 10, 72 16
+               C78 22, 80 8, 86 18 C90 24, 92 10, 98 16
+               C104 24, 106 8, 112 18 C116 24, 120 12, 124 20
+               C128 28, 132 10, 138 22 C142 30, 146 14, 150 20"
+            stroke="#0B1D3A"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.6"
+          />
+          {/* Underline flourish */}
+          <path
+            className="signature-path"
+            d="M6 34 Q80 28, 155 34"
+            stroke="#D4AF37"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+            opacity="0.4"
+          />
+        </svg>
+      </div>
+
+      {/* ── MRZ zone ── */}
+      <div className="mt-1.5 pt-1.5 border-t border-medium-gray/15 font-mrz text-[7px] text-passport-navy/25 leading-tight tracking-[0.15em] select-none overflow-hidden">
         <p>P&lt;IND&lt;SINGH&lt;&lt;HARSHDEEP&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</p>
         <p>DEV2024013&lt;IND&lt;0000000&lt;M&lt;2505010&lt;&lt;&lt;&lt;&lt;&lt;&lt;00</p>
       </div>

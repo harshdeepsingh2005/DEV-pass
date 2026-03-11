@@ -135,6 +135,10 @@ const FloatingPassport = ({ cover, spreads }) => {
       if (firstPaths?.length) {
         tl.to(firstPaths, { strokeDashoffset: 0, duration: 4, ease: 'power2.inOut' }, revealPos0)
       }
+      const firstSigs = spreadRefs.current[0]?.querySelectorAll('.signature-path')
+      if (firstSigs?.length) {
+        tl.to(firstSigs, { strokeDashoffset: 0, duration: 3, stagger: 0.8, ease: 'power2.out' }, revealPos0 + 2)
+      }
       const firstAnimated = spreadRefs.current[0]?.querySelectorAll('.gold-foil, [style*="animation"]')
       if (firstAnimated?.length) {
         tl.call(() => firstAnimated.forEach(el => el.style.animationPlayState = 'running'), null, revealPos0)
@@ -190,6 +194,10 @@ const FloatingPassport = ({ cover, spreads }) => {
         const paths = spreadRefs.current[i + 1]?.querySelectorAll('.journey-path')
         if (paths?.length) {
           tl.to(paths, { strokeDashoffset: 0, duration: 4, ease: 'power2.inOut' }, revealPos)
+        }
+        const sigs = spreadRefs.current[i + 1]?.querySelectorAll('.signature-path')
+        if (sigs?.length) {
+          tl.to(sigs, { strokeDashoffset: 0, duration: 3, stagger: 0.8, ease: 'power2.out' }, revealPos + 2)
         }
         const animated = spreadRefs.current[i + 1]?.querySelectorAll('.gold-foil, [style*="animation"]')
         if (animated?.length) {
