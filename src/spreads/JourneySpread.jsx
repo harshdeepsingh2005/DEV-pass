@@ -2,9 +2,16 @@ import { useRef, useEffect } from 'react'
 import worldMap from '../assets/maps/world-map.webp'
 
 /**
- * JourneySpread — Animated world-map with SVG stroke-draw route,
+ * JourneySpread — Aged-parchment world-map with SVG stroke-draw route,
  * sequential milestone markers with floating info cards,
  * an animated plane icon, and glowing region highlights.
+ *
+ * Visual enhancements:
+ *   • foxing-spots class for aged paper effect
+ *   • SVG compass rose in bottom-left with metallic gold
+ *   • Moodier warm-toned lighting overlay
+ *   • Paper edge wear (vignette)
+ *   • Milestone year badges styled as red ink flags
  *
  * GSAP class hooks (driven by FloatingPassport timeline):
  *   .journey-path      → strokeDashoffset draw
@@ -50,24 +57,41 @@ const JourneySpread = () => {
 
   return (
     <div className="relative h-full w-full overflow-hidden">
+      {/* ── Foxing spots (aged paper) ── */}
+      <div className="absolute inset-0 foxing-spots pointer-events-none z-[1]" />
+
       {/* World map background */}
       <div className="absolute inset-0">
         <img
           src={worldMap}
           alt=""
           className="w-full h-full object-cover"
-          style={{ opacity: 0.22 }}
+          style={{ opacity: 0.18, filter: 'sepia(0.3) saturate(0.8)' }}
           aria-hidden="true"
         />
       </div>
 
+      {/* ── Aged parchment warm tone ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'linear-gradient(180deg, rgba(180,160,120,0.06) 0%, rgba(160,130,90,0.08) 100%)' }}
+      />
+
       {/* Grid overlay */}
       <div
-        className="absolute inset-0 opacity-[0.08]"
+        className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage:
             'linear-gradient(rgba(212,175,55,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.3) 1px, transparent 1px)',
           backgroundSize: '30px 30px',
+        }}
+      />
+
+      {/* ── Paper edge wear (vignette) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[2]"
+        style={{
+          background: 'radial-gradient(ellipse at center, transparent 55%, rgba(120,100,70,0.12) 100%)',
         }}
       />
 
@@ -221,7 +245,7 @@ const JourneySpread = () => {
                     fill="#D4AF37"
                     opacity="0.25"
                   />
-                  {/* Year badge */}
+                  {/* Year badge — red ink flag style */}
                   <rect
                     x={m.x + 20}
                     y={cardY + 2}
@@ -268,16 +292,33 @@ const JourneySpread = () => {
             )
           })}
 
+          {/* ── SVG Compass Rose (bottom-left) ── */}
+          <g transform="translate(30, 130)" opacity="0.35">
+            {/* Outer ring */}
+            <circle cx="0" cy="0" r="16" fill="none" stroke="#D4AF37" strokeWidth="0.6" />
+            <circle cx="0" cy="0" r="14" fill="none" stroke="#D4AF37" strokeWidth="0.3" />
+            {/* N/S/E/W pointers */}
+            <polygon points="0,-13 2,-4 -2,-4" fill="#D4AF37" /> {/* N */}
+            <polygon points="0,13 2,4 -2,4" fill="#D4AF37" opacity="0.5" /> {/* S */}
+            <polygon points="13,0 4,2 4,-2" fill="#D4AF37" opacity="0.5" /> {/* E */}
+            <polygon points="-13,0 -4,2 -4,-2" fill="#D4AF37" opacity="0.5" /> {/* W */}
+            {/* Center dot */}
+            <circle cx="0" cy="0" r="1.5" fill="#D4AF37" />
+            {/* Cardinal labels */}
+            <text x="0" y="-17" textAnchor="middle" fill="#D4AF37" fontSize="4" fontFamily="'B612 Mono', monospace" fontWeight="bold">N</text>
+            <text x="0" y="21" textAnchor="middle" fill="#D4AF37" fontSize="3.5" fontFamily="'B612 Mono', monospace">S</text>
+            <text x="19" y="1.5" textAnchor="middle" fill="#D4AF37" fontSize="3.5" fontFamily="'B612 Mono', monospace">E</text>
+            <text x="-19" y="1.5" textAnchor="middle" fill="#D4AF37" fontSize="3.5" fontFamily="'B612 Mono', monospace">W</text>
+          </g>
+
           {/* ── Animated plane icon ── */}
           <g className="journey-plane" opacity="0">
             <g transform="translate(-8, -6)">
-              {/* Airplane silhouette */}
               <path
                 d="M14 5 L10 0 L9 0 L11 5 L3 5 L1 3 L0 3 L1.5 6 L0 9 L1 9 L3 7 L11 7 L9 12 L10 12 L14 7 L16 7 L16 5Z"
                 fill="#0B1D3A"
                 opacity="0.85"
               />
-              {/* Fuselage gold accent */}
               <path
                 d="M14 5.5 L11 5.5 L11 6.5 L14 6.5Z"
                 fill="#D4AF37"

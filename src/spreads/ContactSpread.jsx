@@ -1,7 +1,14 @@
 /**
- * ContactSpread — Exit visa spread.
- * Left: large EXIT VISA stamp.  Right: stamp-style contact buttons.
- * Items fixed: #1 (real URLs), #17 (brand colors), #7 (typography), #29 (page numbers).
+ * ContactSpread — Exit visa spread with moody spotlight lighting.
+ *
+ * Visual enhancements:
+ *   • spread-spotlight vignette (radial gradient)
+ *   • Moody focused lighting on central elements
+ *   • Large bold red EXIT VISA AUTHORIZED stamp
+ *   • "VALID FOR UNLIMITED OPPORTUNITIES" sub-text
+ *   • Four crisp circular social icon stamps in precise black ink
+ *   • Security paper background (guilloché)
+ *   • Microtext security line
  */
 const contacts = [
   {
@@ -52,45 +59,58 @@ const contacts = [
 ]
 
 const ContactSpread = () => (
-  <div className="grid grid-cols-2 h-full" style={{ columnGap: 48 }}>
+  <div className="grid grid-cols-2 h-full relative" style={{ columnGap: 48 }}>
+
+    {/* ── Security paper background ── */}
+    <div className="absolute inset-0 guilloche-bg pointer-events-none opacity-60" />
+
+    {/* ── Spotlight vignette ── */}
+    <div className="absolute inset-0 spread-spotlight pointer-events-none z-[1]" />
+
     {/* Left page — Exit visa stamp */}
-    <div className="relative flex flex-col items-center justify-center p-6">
+    <div className="relative flex flex-col items-center justify-center p-6 z-10">
       {/* Page number watermark */}
       <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 12</span>
 
+      {/* ── Large bold EXIT VISA AUTHORIZED stamp ── */}
       <div
-        className="stamp-effect stamp-slam border-stamp-red/50 rounded-sm px-8 py-5 mb-5"
-        style={{ transform: 'rotate(-3deg)', borderWidth: '3px', borderStyle: 'solid', borderColor: 'rgba(178,34,34,0.5)' }}
+        className="ink-feather-heavy stamp-slam rounded-sm px-7 py-5 mb-5"
+        style={{
+          transform: 'rotate(-3deg)',
+          borderWidth: '3px',
+          borderStyle: 'solid',
+          borderColor: 'rgba(178,34,34,0.55)',
+        }}
       >
-        <p className="font-stamp text-stamp-red/40 text-[9px] tracking-[0.5em] uppercase text-center">
+        <p className="font-stamp text-stamp-red/35 text-[8px] tracking-[0.5em] uppercase text-center">
           Developer Passport
         </p>
-        <h3 className="font-heading text-stamp-red text-2xl sm:text-3xl font-bold tracking-wide mt-1 text-center">
+        <h3 className="font-heading text-stamp-red text-xl sm:text-2xl font-bold tracking-wide mt-1 text-center leading-tight">
           EXIT VISA
         </h3>
-        <div className="w-14 h-px bg-stamp-red/30 mx-auto mt-2.5" />
-        <p className="font-stamp text-stamp-red/30 text-[8px] tracking-[0.3em] uppercase text-center mt-2">
+        <div className="w-16 h-px bg-stamp-red/30 mx-auto mt-1.5" />
+        <p className="font-stamp text-stamp-red/55 text-[10px] tracking-[0.35em] uppercase text-center mt-1.5 font-bold">
           Authorized
         </p>
       </div>
 
       <p className="font-stamp text-medium-gray/50 text-[9px] tracking-[0.3em] uppercase text-center">
-        Connect · Collaborate · Explore
+        Connect &middot; Collaborate &middot; Explore
       </p>
 
       {/* Footer */}
       <div className="mt-auto pt-4">
         <p className="font-stamp text-medium-gray/35 text-[8px] tracking-widest uppercase text-center">
-          © {new Date().getFullYear()} Harshdeep Singh
+          &copy; {new Date().getFullYear()} Harshdeep Singh
         </p>
-        <p className="font-stamp text-medium-gray/25 text-[8px] tracking-wider uppercase text-center mt-0.5">
-          Valid for unlimited opportunities
+        <p className="font-stamp text-medium-gray/30 text-[7px] tracking-[0.2em] uppercase text-center mt-1">
+          Valid for Unlimited Opportunities
         </p>
       </div>
     </div>
 
     {/* Right page — Contact stamp buttons */}
-    <div className="flex flex-col items-center justify-center p-5 sm:p-6 relative">
+    <div className="flex flex-col items-center justify-center p-5 sm:p-6 relative z-10">
       <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 13</span>
 
       <div className="w-full mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
@@ -100,6 +120,7 @@ const ContactSpread = () => (
         <span className="font-stamp text-[8px] text-medium-gray tracking-widest">Contact</span>
       </div>
 
+      {/* ── Crisp circular social icon stamps ── */}
       <div className="grid grid-cols-2 gap-4 sm:gap-5 flex-1 content-center">
         {contacts.map((c, i) => (
           <a
@@ -112,7 +133,7 @@ const ContactSpread = () => (
             aria-label={c.label}
           >
             <div
-              className="stamp-effect stamp-slam w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+              className="stamp-effect stamp-slam w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] rounded-full border-[2.5px] flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
               style={{ borderColor: c.color, color: c.color }}
             >
               {c.icon}
@@ -123,6 +144,13 @@ const ContactSpread = () => (
           </a>
         ))}
       </div>
+    </div>
+
+    {/* ── Microtext security line ── */}
+    <div className="absolute bottom-1 left-0 right-0 overflow-hidden pointer-events-none z-20">
+      <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap text-center select-none">
+        EXIT&bull;VISA&bull;AUTHORIZED&bull;VALID&bull;UNLIMITED&bull;OPPORTUNITIES&bull;EXIT&bull;VISA&bull;AUTHORIZED&bull;VALID&bull;UNLIMITED&bull;OPPORTUNITIES
+      </p>
     </div>
   </div>
 )

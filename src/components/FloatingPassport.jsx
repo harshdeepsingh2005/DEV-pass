@@ -67,8 +67,8 @@ const FloatingPassport = ({ cover, spreads }) => {
         if (jRg.length) gsap.set(jRg, { autoAlpha: 0, scale: 0.3 })
       })
 
-      /* Unpause gold-foil shimmer on cover (it's always visible, not part of flip reveals) */
-      coverLeafRef.current?.querySelectorAll('.gold-foil').forEach(
+      /* Unpause gold-foil & holographic shimmer on cover (it's always visible, not part of flip reveals) */
+      coverLeafRef.current?.querySelectorAll('.gold-foil, .holographic').forEach(
         (el) => { el.style.animationPlayState = 'running' },
       )
 
@@ -146,7 +146,7 @@ const FloatingPassport = ({ cover, spreads }) => {
       if (firstSigs?.length) {
         tl.to(firstSigs, { strokeDashoffset: 0, duration: 3, stagger: 0.8, ease: 'power2.out' }, revealPos0 + 2)
       }
-      const firstAnimated = spreadRefs.current[0]?.querySelectorAll('.gold-foil, [style*="animation"]')
+      const firstAnimated = spreadRefs.current[0]?.querySelectorAll('.gold-foil, .holographic, [style*="animation"]')
       if (firstAnimated?.length) {
         tl.call(() => firstAnimated.forEach(el => el.style.animationPlayState = 'running'), null, revealPos0)
       }
@@ -249,7 +249,7 @@ const FloatingPassport = ({ cover, spreads }) => {
         if (sigs?.length) {
           tl.to(sigs, { strokeDashoffset: 0, duration: 3, stagger: 0.8, ease: 'power2.out' }, revealPos + 2)
         }
-        const animated = spreadRefs.current[i + 1]?.querySelectorAll('.gold-foil, [style*="animation"]')
+        const animated = spreadRefs.current[i + 1]?.querySelectorAll('.gold-foil, .holographic, [style*="animation"]')
         if (animated?.length) {
           tl.call(() => animated.forEach(el => el.style.animationPlayState = 'running'), null, revealPos)
         }

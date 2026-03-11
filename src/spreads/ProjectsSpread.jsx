@@ -1,12 +1,13 @@
 /**
- * ProjectsSpread — Visa-sticker project cards.
+ * ProjectsSpread — Industrial-official visa-sticker project cards.
  *
- * Each project card mimics a passport visa sticker:
- *   • Serial number (top-right)
- *   • Approval stamp overlay (rotated)
- *   • Faint holographic rainbow strip
- *   • Tech tags styled as mini visa labels
- *   • Hover: card lifts, deeper shadow, reveals GitHub + Demo actions
+ * Visual enhancements:
+ *   • Line-ruled paper background (blue horizontal lines)
+ *   • Serial numbers & structured entries
+ *   • Large slanted red APPROVED rubber stamp (ink-feather-heavy)
+ *   • COMPLIANT box stamp on right page
+ *   • Protective coating sheen overlay
+ *   • Holographic strip on each card
  */
 
 const projects = [
@@ -93,7 +94,7 @@ const VisaCard = ({ p }) => (
 
       {/* ── Approval stamp overlay ── */}
       <div
-        className="absolute stamp-effect stamp-slam px-1.5 py-0.5 border rounded-sm font-stamp text-[7px] tracking-wider uppercase opacity-60 pointer-events-none"
+        className="absolute ink-feather stamp-slam px-1.5 py-0.5 border rounded-sm font-stamp text-[7px] tracking-wider uppercase opacity-60 pointer-events-none"
         style={{
           borderColor: p.stampColor,
           color: p.stampColor,
@@ -130,7 +131,7 @@ const VisaCard = ({ p }) => (
         ))}
       </div>
 
-      {/* ── Hover actions row — fades in, takes space from collapsed description ── */}
+      {/* ── Hover actions row ── */}
       <div className="flex items-center gap-3 mt-1.5 max-h-0 overflow-hidden opacity-0 group-hover:max-h-6 group-hover:opacity-100 transition-all duration-300 ease-out">
         <a
           href={p.github}
@@ -172,10 +173,21 @@ const VisaCard = ({ p }) => (
 )
 
 const ProjectsSpread = () => (
-  <div className="grid grid-cols-2 h-full" style={{ columnGap: 48 }}>
+  <div className="grid grid-cols-2 h-full relative" style={{ columnGap: 48 }}>
+
+    {/* ── Line-ruled paper background ── */}
+    <div className="absolute inset-0 line-ruled pointer-events-none opacity-40" />
+
+    {/* ── Protective coating sheen overlay ── */}
+    <div
+      className="absolute inset-0 pointer-events-none z-20"
+      style={{
+        background: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.04) 25%, transparent 50%, rgba(255,255,255,0.06) 75%, transparent 100%)',
+      }}
+    />
 
     {/* ═══ Left page ═══ */}
-    <div className="p-4 sm:p-5 flex flex-col relative">
+    <div className="p-4 sm:p-5 flex flex-col relative z-10">
       <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">P&nbsp;05</span>
 
       <div className="mb-2.5 pb-1.5 border-b border-gold/20">
@@ -183,7 +195,7 @@ const ProjectsSpread = () => (
           Project Visas
         </h2>
         <p className="font-stamp text-[7px] text-medium-gray/40 tracking-[0.25em] uppercase mt-0.5">
-          Issued Entries
+          Issued Entries &bull; Official Record
         </p>
       </div>
 
@@ -195,7 +207,7 @@ const ProjectsSpread = () => (
     </div>
 
     {/* ═══ Right page ═══ */}
-    <div className="p-4 sm:p-5 flex flex-col relative">
+    <div className="p-4 sm:p-5 flex flex-col relative z-10">
       <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">P&nbsp;06</span>
 
       <div className="mb-2.5 pb-1.5 border-b border-gold/20">
@@ -210,17 +222,36 @@ const ProjectsSpread = () => (
         ))}
       </div>
 
-      {/* Large approval stamp */}
+      {/* ── Large slanted APPROVED rubber stamp ── */}
       <div className="mt-auto pt-2 flex justify-center">
         <div
-          className="stamp-effect stamp-slam border-2 border-stamp-red/35 rounded-sm px-5 py-1.5"
-          style={{ transform: 'rotate(-4deg)' }}
+          className="ink-feather-heavy stamp-slam border-[3px] border-stamp-red/50 rounded-sm px-6 py-2"
+          style={{ transform: 'rotate(-8deg)' }}
         >
-          <p className="font-stamp text-stamp-red/45 text-[8px] tracking-[0.3em] uppercase text-center">
-            Reviewed &amp; Approved
+          <p className="font-stamp text-stamp-red/65 text-sm tracking-[0.4em] uppercase text-center font-bold">
+            Approved
           </p>
         </div>
       </div>
+
+      {/* ── COMPLIANT box stamp (top-right area) ── */}
+      <div
+        className="absolute top-14 right-6 stamp-effect stamp-slam pointer-events-none z-30"
+        style={{ transform: 'rotate(4deg)' }}
+      >
+        <div className="border-2 border-[#1E3A8A]/40 rounded-sm px-3 py-1">
+          <p className="font-stamp text-[8px] text-[#1E3A8A]/50 tracking-[0.3em] uppercase font-bold">
+            Compliant
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* ── Microtext security line ── */}
+    <div className="absolute bottom-1 left-0 right-0 overflow-hidden pointer-events-none z-30">
+      <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap text-center select-none">
+        DEV-PASS&bull;PROJECT-REGISTRY&bull;SERIAL-ENTRY&bull;VERIFIED&bull;COMPLIANT&bull;DEV-PASS&bull;PROJECT-REGISTRY&bull;SERIAL-ENTRY&bull;VERIFIED&bull;COMPLIANT&bull;DEV-PASS&bull;PROJECT-REGISTRY
+      </p>
     </div>
   </div>
 )

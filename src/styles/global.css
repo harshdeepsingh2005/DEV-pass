@@ -90,6 +90,119 @@ body {
   mix-blend-mode: multiply;
 }
 
+/* ===== Guilloché Security Pattern ===== */
+.guilloche-bg {
+  background-image:
+    repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      rgba(30,58,138,0.025) 0deg 2deg,
+      transparent 2deg 4deg
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      transparent 0px,
+      transparent 8px,
+      rgba(212,175,55,0.02) 8px,
+      rgba(212,175,55,0.02) 9px
+    );
+}
+
+/* ===== Holographic Sticker ===== */
+@keyframes holoShift {
+  0%   { background-position: 0% 50%;   filter: hue-rotate(0deg);   }
+  50%  { background-position: 100% 50%; filter: hue-rotate(45deg);  }
+  100% { background-position: 0% 50%;   filter: hue-rotate(0deg);   }
+}
+
+.holographic {
+  background: linear-gradient(
+    135deg,
+    rgba(0,255,255,0.35) 0%,
+    rgba(255,0,255,0.3) 25%,
+    rgba(212,175,55,0.4) 50%,
+    rgba(0,255,255,0.35) 75%,
+    rgba(255,0,255,0.3) 100%
+  );
+  background-size: 200% 200%;
+  animation: holoShift 4s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+/* ===== Foxing Spots (aged paper) ===== */
+.foxing-spots {
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(139,90,43,0.08) 0%, transparent 3px),
+    radial-gradient(circle at 78% 15%, rgba(139,90,43,0.06) 0%, transparent 2px),
+    radial-gradient(circle at 45% 85%, rgba(139,90,43,0.07) 0%, transparent 4px),
+    radial-gradient(circle at 92% 60%, rgba(139,90,43,0.05) 0%, transparent 2px),
+    radial-gradient(circle at 5% 75%, rgba(139,90,43,0.06) 0%, transparent 3px),
+    radial-gradient(circle at 60% 40%, rgba(139,90,43,0.04) 0%, transparent 2px);
+}
+
+/* ===== Ink Feathering on stamps ===== */
+.ink-feather {
+  filter: saturate(0.85) contrast(1.1) blur(0.2px);
+  mix-blend-mode: multiply;
+}
+
+.ink-feather-heavy {
+  filter: saturate(0.75) contrast(1.15) blur(0.4px);
+  mix-blend-mode: multiply;
+}
+
+/* ===== Weathered Paper ===== */
+.paper-weathered {
+  background-color: #EDE5D4;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(200,180,140,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(200,180,140,0.2) 0%, transparent 60%),
+    radial-gradient(circle at 30% 80%, rgba(139,90,43,0.06) 0%, transparent 20px),
+    radial-gradient(circle at 70% 20%, rgba(139,90,43,0.05) 0%, transparent 15px);
+}
+
+/* ===== Coffee Stain Ring ===== */
+.coffee-stain {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(139,90,43,0.06) 58%,
+    rgba(139,90,43,0.03) 65%,
+    transparent 70%
+  );
+}
+
+/* ===== Spotlight (vignette for exit visa) ===== */
+.spread-spotlight {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(11,29,58,0.06) 60%,
+    rgba(11,29,58,0.15) 100%
+  );
+}
+
+/* ===== Line-ruled Paper ===== */
+.line-ruled {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 22px,
+      rgba(30,58,138,0.06) 22px,
+      rgba(30,58,138,0.06) 23px
+    );
+}
+
+/* ===== Leather Grain Texture ===== */
+.leather-grain {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 0%, transparent 1px),
+    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.02) 0%, transparent 1px),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.03) 0%, transparent 1px),
+    radial-gradient(circle at 40% 90%, rgba(255,255,255,0.02) 0%, transparent 1px);
+  background-size: 6px 6px, 8px 8px, 5px 7px, 7px 5px;
+}
+
 /* ===== Gold Foil Shimmer ===== */
 @keyframes goldShimmer {
   0% { background-position: -200% center; }

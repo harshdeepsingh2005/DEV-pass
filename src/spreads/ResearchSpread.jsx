@@ -1,6 +1,13 @@
 /**
- * ResearchSpread — Left: research papers.  Right: publication details & citations.
- * Items fixed: #11 (differentiate from ProjectsSpread), #13 (hover), #29 (page numbers).
+ * ResearchSpread — Academic publication spread.
+ *
+ * Visual enhancements:
+ *   • Large faint IEEE watermark SVG in background
+ *   • Glossy paper sheen overlay
+ *   • Research metrics in thin-line grid table
+ *   • Enhanced DOI numbers (monospace, underlined)
+ *   • PEER REVIEWED circular stamp in crisp blue
+ *   • Soft editorial lighting (subtle warm gradient)
  */
 const papers = [
   {
@@ -36,9 +43,43 @@ const statusColor = {
 }
 
 const ResearchSpread = () => (
-  <div className="grid grid-cols-2 h-full" style={{ columnGap: 48 }}>
+  <div className="grid grid-cols-2 h-full relative" style={{ columnGap: 48 }}>
+
+    {/* ── Large faint IEEE watermark ── */}
+    <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="xMidYMid meet">
+      <text
+        x="50%"
+        y="55%"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill="rgba(30,58,138,0.035)"
+        fontSize="120"
+        fontFamily="'Special Elite', serif"
+        fontWeight="bold"
+        letterSpacing="0.1em"
+      >
+        IEEE
+      </text>
+    </svg>
+
+    {/* ── Glossy paper sheen ── */}
+    <div
+      className="absolute inset-0 pointer-events-none z-[1]"
+      style={{
+        background: 'linear-gradient(155deg, transparent 0%, rgba(255,255,255,0.05) 30%, transparent 50%, rgba(255,255,255,0.03) 80%, transparent 100%)',
+      }}
+    />
+
+    {/* ── Soft editorial warm lighting ── */}
+    <div
+      className="absolute inset-0 pointer-events-none z-[1]"
+      style={{
+        background: 'radial-gradient(ellipse at 40% 30%, rgba(212,175,55,0.03) 0%, transparent 70%)',
+      }}
+    />
+
     {/* Left page — Papers */}
-    <div className="p-4 sm:p-5 flex flex-col relative">
+    <div className="p-4 sm:p-5 flex flex-col relative z-10">
       <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 08</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
@@ -57,7 +98,7 @@ const ResearchSpread = () => (
             >
               {/* Status badge */}
               <div
-                className="stamp-effect stamp-slam absolute -top-1.5 -right-1 px-1.5 py-0.5 rounded-sm border font-stamp text-[7px] tracking-wider uppercase"
+                className="ink-feather stamp-slam absolute -top-1.5 -right-1 px-1.5 py-0.5 rounded-sm border font-stamp text-[7px] tracking-wider uppercase"
                 style={{
                   borderColor: sc,
                   color: sc,
@@ -70,14 +111,14 @@ const ResearchSpread = () => (
                 {p.title}
               </h3>
               <p className="font-stamp text-[8px] text-stamp-red/60 tracking-wider mt-0.5">
-                {p.venue} • {p.year}
+                {p.venue} &bull; {p.year}
               </p>
               <p className="text-dark-gray/65 text-[10px] leading-relaxed mt-1">
                 {p.summary}
               </p>
               {p.doi && (
-                <p className="font-mono text-[7px] text-medium-gray/50 mt-1 tracking-wider">
-                  {p.doi}
+                <p className="font-mrz text-[7px] text-medium-gray/50 mt-1 tracking-wider underline underline-offset-2 decoration-medium-gray/20">
+                  DOI: {p.doi}
                 </p>
               )}
             </div>
@@ -87,7 +128,7 @@ const ResearchSpread = () => (
     </div>
 
     {/* Right page — Research metrics & stamps */}
-    <div className="p-4 sm:p-5 relative flex flex-col">
+    <div className="p-4 sm:p-5 relative flex flex-col z-10">
       <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 09</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
@@ -96,23 +137,25 @@ const ResearchSpread = () => (
         </span>
       </div>
 
-      {/* Research metrics */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="text-center p-2 border border-gold/15 rounded-sm">
-          <p className="font-heading text-lg text-passport-navy font-bold">3</p>
-          <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Papers</p>
-        </div>
-        <div className="text-center p-2 border border-gold/15 rounded-sm">
-          <p className="font-heading text-lg text-stamp-red font-bold">1</p>
-          <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Published</p>
-        </div>
-        <div className="text-center p-2 border border-gold/15 rounded-sm">
-          <p className="font-heading text-lg text-ink-blue font-bold">5+</p>
-          <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Citations</p>
-        </div>
-        <div className="text-center p-2 border border-gold/15 rounded-sm">
-          <p className="font-heading text-lg text-gold font-bold">2</p>
-          <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Domains</p>
+      {/* Research metrics — thin-line grid table */}
+      <div className="border border-gold/20 rounded-sm mb-4 overflow-hidden">
+        <div className="grid grid-cols-2">
+          <div className="text-center p-2 border-b border-r border-gold/15">
+            <p className="font-heading text-lg text-passport-navy font-bold">3</p>
+            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Papers</p>
+          </div>
+          <div className="text-center p-2 border-b border-gold/15">
+            <p className="font-heading text-lg text-stamp-red font-bold">1</p>
+            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Published</p>
+          </div>
+          <div className="text-center p-2 border-r border-gold/15">
+            <p className="font-heading text-lg text-ink-blue font-bold">5+</p>
+            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Citations</p>
+          </div>
+          <div className="text-center p-2">
+            <p className="font-heading text-lg text-gold font-bold">2</p>
+            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Domains</p>
+          </div>
         </div>
       </div>
 
@@ -128,22 +171,31 @@ const ResearchSpread = () => (
         </div>
       </div>
 
-      {/* Validation stamps */}
+      {/* ── Validation stamps ── */}
       <div className="flex-1 relative">
-        <div className="absolute top-2 left-4 stamp-effect stamp-slam" style={{ transform: 'rotate(-10deg)' }}>
-          <div className="w-16 h-16 rounded-full border-2 border-[#B22222]/50 flex items-center justify-center">
+        {/* PEER REVIEWED — crisp blue circular stamp */}
+        <div className="absolute top-2 left-4 stamp-effect stamp-slam" style={{ transform: 'rotate(-8deg)' }}>
+          <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full border-[2.5px] border-[#1E3A8A]/55 flex items-center justify-center">
             <div className="text-center">
-              <p className="font-stamp text-[7px] text-[#B22222]/60 tracking-wider uppercase font-bold">Peer</p>
-              <p className="font-stamp text-[5px] text-[#B22222]/40 tracking-wider uppercase">Reviewed</p>
+              <p className="font-stamp text-[8px] text-[#1E3A8A]/65 tracking-[0.15em] uppercase font-bold">Peer</p>
+              <p className="font-stamp text-[6px] text-[#1E3A8A]/50 tracking-[0.2em] uppercase">Reviewed</p>
             </div>
           </div>
         </div>
 
-        <div className="absolute top-4 right-6 stamp-effect stamp-slam" style={{ transform: 'rotate(6deg)' }}>
-          <div className="border-2 border-[#1E3A8A]/50 rounded-sm px-3 py-1.5">
-            <p className="font-stamp text-[7px] text-[#1E3A8A]/60 tracking-[0.2em] uppercase font-bold">IEEE</p>
+        {/* IEEE box stamp */}
+        <div className="absolute top-4 right-6 ink-feather stamp-slam" style={{ transform: 'rotate(5deg)' }}>
+          <div className="border-2 border-[#1E3A8A]/45 rounded-sm px-3.5 py-1.5">
+            <p className="font-stamp text-[8px] text-[#1E3A8A]/55 tracking-[0.25em] uppercase font-bold">IEEE</p>
           </div>
         </div>
+      </div>
+
+      {/* ── Microtext ── */}
+      <div className="mt-auto">
+        <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap select-none">
+          RESEARCH&bull;PUBLICATION&bull;RECORD&bull;IEEE&bull;PEER-REVIEWED&bull;RESEARCH&bull;PUBLICATION&bull;RECORD&bull;IEEE&bull;PEER-REVIEWED
+        </p>
       </div>
     </div>
   </div>
