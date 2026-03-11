@@ -86,6 +86,27 @@ const Stamp = ({ s }) => {
   )
 }
 
+/* ── Ink splashes scattered across pages ── */
+const inkSplashes = [
+  /* Left page */
+  { x: '2%',  y: '28%', w: 18, h: 14, rot: 25,  color: '#1E3A8A', op: 0.08, page: 'left' },
+  { x: '42%', y: '6%',  w: 10, h: 8,  rot: -40, color: '#B22222', op: 0.06, page: 'left' },
+  { x: '35%', y: '50%', w: 22, h: 16, rot: 110, color: '#1E3A8A', op: 0.05, page: 'left' },
+  { x: '58%', y: '30%', w: 8,  h: 6,  rot: 70,  color: '#B22222', op: 0.07, page: 'left' },
+  { x: '18%', y: '72%', w: 14, h: 10, rot: -20, color: '#0B1D3A', op: 0.04, page: 'left' },
+  { x: '48%', y: '88%', w: 6,  h: 5,  rot: 45,  color: '#1E3A8A', op: 0.06, page: 'left' },
+  { x: '70%', y: '55%', w: 12, h: 9,  rot: -65, color: '#B22222', op: 0.05, page: 'left' },
+  /* Right page */
+  { x: '5%',  y: '25%', w: 16, h: 12, rot: -30, color: '#B22222', op: 0.07, page: 'right' },
+  { x: '40%', y: '5%',  w: 8,  h: 6,  rot: 55,  color: '#1E3A8A', op: 0.05, page: 'right' },
+  { x: '75%', y: '18%', w: 20, h: 14, rot: 140, color: '#0B1D3A', op: 0.04, page: 'right' },
+  { x: '30%', y: '48%', w: 12, h: 8,  rot: -80, color: '#B22222', op: 0.06, page: 'right' },
+  { x: '65%', y: '70%', w: 10, h: 7,  rot: 20,  color: '#1E3A8A', op: 0.07, page: 'right' },
+  { x: '15%', y: '85%', w: 14, h: 11, rot: -45, color: '#B22222', op: 0.05, page: 'right' },
+  { x: '50%', y: '32%', w: 7,  h: 5,  rot: 90,  color: '#0B1D3A', op: 0.06, page: 'right' },
+  { x: '85%', y: '50%', w: 9,  h: 7,  rot: -15, color: '#1E3A8A', op: 0.04, page: 'right' },
+]
+
 /* ── Decorative circle accent stamps ── */
 const accents = [
   { text: 'DEV',     sub: '2024',  color: '#B22222', rot: -14, page: 'left',  x: '38%', y: '18%' },
@@ -191,6 +212,28 @@ const SkillsSpread = () => (
             </div>
           </div>
         </div>
+      )
+    })}
+
+    {/* ═══ Ink splashes ═══ */}
+    {inkSplashes.map((sp, i) => {
+      const baseLeft = sp.page === 'left' ? 0 : 50
+      const offset = sp.page === 'right' ? '24px' : '0px'
+      return (
+        <div
+          key={`splash-${i}`}
+          className="absolute ink-splash"
+          style={{
+            left: `calc(${baseLeft}% + ${offset} + ${sp.x})`,
+            top: sp.y,
+            width: sp.w,
+            height: sp.h,
+            backgroundColor: sp.color,
+            opacity: sp.op,
+            transform: `rotate(${sp.rot}deg)`,
+            zIndex: 1,
+          }}
+        />
       )
     })}
 

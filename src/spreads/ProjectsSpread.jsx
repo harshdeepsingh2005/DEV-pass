@@ -247,6 +247,79 @@ const ProjectsSpread = () => (
       </div>
     </div>
 
+    {/* ── ENTRY GRANTED large circle stamp (left page, bottom area) ── */}
+    <div
+      className="absolute stamp-effect stamp-slam pointer-events-none z-20"
+      style={{ left: '8%', bottom: '12%', transform: 'rotate(-12deg)', opacity: 0.3 }}
+    >
+      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-[2px] border-stamp-red/50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="font-stamp text-[6px] sm:text-[7px] text-stamp-red/60 tracking-wider uppercase font-bold leading-tight">Entry</p>
+          <p className="font-stamp text-[7px] sm:text-[8px] text-stamp-red/60 tracking-wider uppercase font-bold leading-tight">Granted</p>
+          <div className="w-6 h-px bg-stamp-red/30 mx-auto mt-0.5" />
+          <p className="font-mrz text-[5px] text-stamp-red/40 mt-0.5">2024.11.03</p>
+        </div>
+      </div>
+    </div>
+
+    {/* ── PROCESSED rectangular stamp (left page, middle-right) ── */}
+    <div
+      className="absolute ink-feather stamp-slam pointer-events-none z-20"
+      style={{ left: '30%', top: '55%', transform: 'rotate(6deg)', opacity: 0.28 }}
+    >
+      <div className="border-[2px] border-[#D4AF37]/50 rounded-sm px-3 py-1">
+        <p className="font-stamp text-[8px] text-[#D4AF37]/60 tracking-[0.35em] uppercase font-bold">Processed</p>
+      </div>
+    </div>
+
+    {/* ── VALID circle stamp (right page, middle-left) ── */}
+    <div
+      className="absolute stamp-effect stamp-slam pointer-events-none z-20"
+      style={{ right: '38%', top: '45%', transform: 'rotate(-8deg)', opacity: 0.25 }}
+    >
+      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-[1.5px] border-ink-blue/40 flex items-center justify-center">
+        <div className="text-center">
+          <p className="font-stamp text-[7px] text-ink-blue/50 tracking-wider uppercase font-bold">Valid</p>
+          <p className="font-mrz text-[4px] text-ink-blue/35">NO.0492</p>
+        </div>
+      </div>
+    </div>
+
+    {/* ── Date stamp (right page, bottom-left) ── */}
+    <div
+      className="absolute ink-feather stamp-slam pointer-events-none z-20"
+      style={{ right: '25%', bottom: '22%', transform: 'rotate(3deg)', opacity: 0.3 }}
+    >
+      <div className="border border-medium-gray/30 rounded-sm px-2.5 py-1">
+        <p className="font-mrz text-[7px] text-medium-gray/45 tracking-widest text-center">15 NOV 2024</p>
+        <div className="w-full h-px bg-medium-gray/20 my-0.5" />
+        <p className="font-stamp text-[5px] text-medium-gray/35 tracking-[0.2em] uppercase text-center">Port of Entry</p>
+      </div>
+    </div>
+
+    {/* ── TRANSIT triangle stamp (left page, upper area) ── */}
+    <div
+      className="absolute stamp-effect stamp-slam pointer-events-none z-20"
+      style={{ left: '35%', top: '15%', transform: 'rotate(15deg)', opacity: 0.22 }}
+    >
+      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-[1.5px] border-[#D4AF37]/40 flex items-center justify-center">
+        <div className="text-center">
+          <p className="font-stamp text-[6px] text-[#D4AF37]/55 tracking-wider uppercase font-bold">Transit</p>
+          <p className="font-mrz text-[4px] text-[#D4AF37]/35">DEV-HUB</p>
+        </div>
+      </div>
+    </div>
+
+    {/* ── REGISTERED stamp (right page, upper-right) ── */}
+    <div
+      className="absolute ink-feather stamp-slam pointer-events-none z-20"
+      style={{ right: '5%', top: '38%', transform: 'rotate(-5deg)', opacity: 0.25 }}
+    >
+      <div className="border-[1.5px] border-stamp-red/35 rounded-sm px-2 py-0.5">
+        <p className="font-stamp text-[6px] text-stamp-red/45 tracking-[0.3em] uppercase font-bold">Registered</p>
+      </div>
+    </div>
+
     {/* ── Microtext security line ── */}
     <div className="absolute bottom-1 left-0 right-0 overflow-hidden pointer-events-none z-30">
       <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap text-center select-none">

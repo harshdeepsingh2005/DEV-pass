@@ -181,6 +181,13 @@ body {
   );
 }
 
+/* ===== Ink Splashes ===== */
+.ink-splash {
+  border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
 /* ===== Line-ruled Paper ===== */
 .line-ruled {
   background-image:
