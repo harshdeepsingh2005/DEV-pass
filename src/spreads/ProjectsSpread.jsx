@@ -74,7 +74,7 @@ const projects = [
 
 /* ── Visa sticker card ── */
 const VisaCard = ({ p }) => (
-  <div className="group relative bg-passport-paper-dark/25 border border-gold/15 rounded-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:shadow-passport-navy/10 hover:border-gold/35 overflow-hidden">
+  <div className="group relative bg-passport-paper-dark/25 border border-gold/15 rounded-sm transition-all duration-300 hover:-translate-y-[1px] hover:shadow-md hover:shadow-passport-navy/12 hover:border-gold/40 overflow-hidden">
 
     {/* ── Holographic strip ── */}
     <div
@@ -93,7 +93,7 @@ const VisaCard = ({ p }) => (
 
       {/* ── Approval stamp overlay ── */}
       <div
-        className="absolute -top-0.5 -right-0.5 stamp-effect stamp-slam px-1.5 py-0.5 border rounded-sm font-stamp text-[7px] tracking-wider uppercase opacity-60 pointer-events-none"
+        className="absolute stamp-effect stamp-slam px-1.5 py-0.5 border rounded-sm font-stamp text-[7px] tracking-wider uppercase opacity-60 pointer-events-none"
         style={{
           borderColor: p.stampColor,
           color: p.stampColor,
@@ -113,13 +113,13 @@ const VisaCard = ({ p }) => (
         </h3>
       </div>
 
-      {/* ── Description ── */}
-      <p className="text-dark-gray/60 text-[9px] sm:text-[10px] leading-relaxed mb-1.5 line-clamp-2">
+      {/* ── Description — collapses on hover to make room for actions ── */}
+      <p className="text-dark-gray/60 text-[9px] sm:text-[10px] leading-relaxed mb-1.5 line-clamp-2 group-hover:line-clamp-1 transition-all duration-200">
         {p.description}
       </p>
 
       {/* ── Mini visa label tags ── */}
-      <div className="flex flex-wrap gap-1 mb-1">
+      <div className="flex flex-wrap gap-1">
         {p.tags.map((t) => (
           <span
             key={t}
@@ -130,8 +130,8 @@ const VisaCard = ({ p }) => (
         ))}
       </div>
 
-      {/* ── Hover actions row ── */}
-      <div className="flex items-center gap-2 h-0 overflow-hidden opacity-0 group-hover:h-5 group-hover:opacity-100 transition-all duration-300 ease-out">
+      {/* ── Hover actions row — fades in, takes space from collapsed description ── */}
+      <div className="flex items-center gap-3 mt-1.5 max-h-0 overflow-hidden opacity-0 group-hover:max-h-6 group-hover:opacity-100 transition-all duration-300 ease-out">
         <a
           href={p.github}
           target="_blank"
@@ -143,7 +143,7 @@ const VisaCard = ({ p }) => (
           </svg>
           Source
         </a>
-        {p.demo && (
+        {p.demo ? (
           <a
             href={p.demo}
             target="_blank"
@@ -155,6 +155,13 @@ const VisaCard = ({ p }) => (
             </svg>
             Demo
           </a>
+        ) : (
+          <span className="font-stamp text-[7px] text-medium-gray/35 tracking-wider uppercase flex items-center gap-1">
+            <svg className="w-2.5 h-2.5" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M14 2.5a.5.5 0 00-.5-.5h-6a.5.5 0 000 1h4.793L2.146 13.146a.5.5 0 00.708.708L13 3.707V8.5a.5.5 0 001 0v-6z" />
+            </svg>
+            No Demo
+          </span>
         )}
       </div>
     </div>
