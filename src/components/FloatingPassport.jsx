@@ -50,6 +50,13 @@ const FloatingPassport = ({ cover, spreads }) => {
       spreadRefs.current.forEach((el, i) => {
         if (el) gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 })
       })
+      /* Hide ALL page leaves — they sit above the base spread layer and
+         block the animated right-half content. Show each leaf only when
+         its flip animation begins so the GSAP-animated base layer is
+         visible on BOTH halves between flips. */
+      pageLeafRefs.current.forEach(leaf => {
+        if (leaf) gsap.set(leaf, { autoAlpha: 0 })
+      })
 
       /* Hide ALL content in each spread — reveal only after the page fully turns */
       spreadRefs.current.forEach((el) => {
@@ -206,6 +213,9 @@ const FloatingPassport = ({ cover, spreads }) => {
 
         const segStart = flipStart + i * flipSegment
         const midpoint = segStart + flipDur / 2
+
+        /* Show leaf right when its flip begins (was hidden to expose animated base layer) */
+        tl.set(leaf, { autoAlpha: 1 }, segStart)
 
         tl.fromTo(
           leaf,
