@@ -21,12 +21,84 @@ import worldMap from '../assets/maps/world-map.webp'
  *   .journey-ping       → CSS pulse (unpaused by GSAP)
  */
 const milestones = [
-  { x: 70,  y: 78,  label: 'B.Tech CS',    sub: 'VIT University', year: '2020', cardBelow: false, region: { rx: 40, ry: 22 } },
-  { x: 195, y: 52,  label: 'ML Research',   sub: 'ML Lab',         year: '2021', cardBelow: true,  region: { rx: 35, ry: 20 } },
-  { x: 310, y: 82,  label: 'AI Systems',    sub: 'Industry',       year: '2022', cardBelow: false, region: { rx: 38, ry: 22 } },
-  { x: 425, y: 48,  label: 'RL Engine',     sub: 'CX-Twin',        year: '2023', cardBelow: true,  region: { rx: 35, ry: 20 } },
-  { x: 550, y: 72,  label: 'Grad Studies',  sub: 'Research',       year: '2024', cardBelow: false, region: { rx: 40, ry: 22 } },
+  { x: 55,  y: 75,  label: 'B.Tech CSE',       sub: 'Lovely Professional Univ.',  year: '2024', cardBelow: false, region: { rx: 40, ry: 22 } },
+  { x: 165, y: 50,  label: 'ML Exploration',    sub: 'Python & TensorFlow',        year: '2024', cardBelow: true,  region: { rx: 35, ry: 20 } },
+  { x: 280, y: 80,  label: 'AI Simulation',     sub: 'CX-Twin RL Engine',          year: '2025', cardBelow: false, region: { rx: 38, ry: 22 } },
+  { x: 390, y: 48,  label: 'Applied AI',        sub: 'UHI & HealthSphere',         year: '2025', cardBelow: true,  region: { rx: 35, ry: 20 } },
+  { x: 500, y: 72,  label: 'AI Research',       sub: 'RL & Simulation Systems',    year: '2026', cardBelow: false, region: { rx: 38, ry: 22 } },
+  { x: 585, y: 50,  label: 'AI Engineer',       sub: 'Next-Gen AI Systems',        year: '2027', cardBelow: true,  region: { rx: 35, ry: 20 } },
 ]
+
+/* Decorative board pins scattered across the map */
+const boardPins = [
+  { x: 115, y: 42,  color: '#B22222', size: 'lg' },
+  { x: 340, y: 35,  color: '#1E3A8A', size: 'md' },
+  { x: 460, y: 130, color: '#B22222', size: 'sm' },
+  { x: 220, y: 125, color: '#1E3A8A', size: 'lg' },
+  { x: 560, y: 120, color: '#B22222', size: 'md' },
+  { x: 30,  y: 30,  color: '#1E3A8A', size: 'sm' },
+]
+
+/* Decorative thumb tacks */
+const thumbTacks = [
+  { x: 440, y: 22,  rot: -8,  color: '#B22222' },
+  { x: 140, y: 135, rot: 12,  color: '#1E3A8A' },
+  { x: 530, y: 28,  rot: 5,   color: '#D4AF37' },
+]
+
+/* ── Photorealistic SVG board pin ── */
+const BoardPin = ({ x, y, color, size }) => {
+  const r = size === 'lg' ? 5.5 : size === 'md' ? 4.2 : 3
+  const id = `pin-${x}-${y}`
+  return (
+    <g>
+      <ellipse cx={x + 1.5} cy={y + r + 3} rx={r * 1.1} ry={r * 0.35} fill="#0B1D3A" opacity="0.18" />
+      <line x1={x} y1={y + r * 0.5} x2={x + 0.3} y2={y + r + 4} stroke="#888" strokeWidth="0.7" />
+      <line x1={x - 0.15} y1={y + r * 0.5} x2={x + 0.15} y2={y + r + 4} stroke="#bbb" strokeWidth="0.25" />
+      <defs>
+        <radialGradient id={id} cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stopColor="white" stopOpacity="0.6" />
+          <stop offset="30%" stopColor={color} stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#111" stopOpacity="0.4" />
+        </radialGradient>
+      </defs>
+      <circle cx={x} cy={y} r={r} fill={`url(#${id})`} />
+      <path
+        d={`M ${x + r * 0.5},${y + r * 0.7} A ${r},${r} 0 0 0 ${x + r * 0.85},${y - r * 0.1}`}
+        fill="none" stroke="white" strokeWidth="0.4" opacity="0.2"
+      />
+      <ellipse cx={x - r * 0.22} cy={y - r * 0.28} rx={r * 0.28} ry={r * 0.22} fill="white" opacity="0.65" />
+      <circle cx={x - r * 0.08} cy={y - r * 0.45} r={r * 0.1} fill="white" opacity="0.35" />
+    </g>
+  )
+}
+
+/* ── Photorealistic SVG thumb tack ── */
+const ThumbTack = ({ x, y, rot, color }) => {
+  const id = `tack-${x}-${y}`
+  return (
+    <g transform={`translate(${x},${y}) rotate(${rot})`}>
+      <ellipse cx="1.5" cy="8" rx="5" ry="1.8" fill="#0B1D3A" opacity="0.16" />
+      <defs>
+        <linearGradient id={`${id}-spike`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#ccc" />
+          <stop offset="50%" stopColor="#888" />
+          <stop offset="100%" stopColor="#555" />
+        </linearGradient>
+        <radialGradient id={`${id}-top`} cx="38%" cy="32%" r="62%">
+          <stop offset="0%" stopColor="white" stopOpacity="0.5" />
+          <stop offset="35%" stopColor={color} stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#111" stopOpacity="0.35" />
+        </radialGradient>
+      </defs>
+      <polygon points="-0.6,3.5 0.6,3.5 0.15,9.5 -0.15,9.5" fill={`url(#${id}-spike)`} />
+      <ellipse cx="0" cy="1" rx="5.5" ry="3.2" fill={`url(#${id}-top)`} />
+      <ellipse cx="0" cy="1" rx="5.5" ry="3.2" fill="none" stroke="#000" strokeWidth="0.3" opacity="0.12" />
+      <ellipse cx="-1.2" cy="-0.3" rx="2.2" ry="1.1" fill="white" opacity="0.5" />
+      <ellipse cx="-0.5" cy="-0.8" rx="0.8" ry="0.4" fill="white" opacity="0.3" />
+    </g>
+  )
+}
 
 /** Build a smooth bezier path through milestone points */
 const buildBezierPath = (pts) => {
@@ -107,7 +179,7 @@ const JourneySpread = () => {
       {/* ════ SVG Journey Map ════ */}
       <div className="relative z-10 px-4 mt-3 sm:mt-5">
         <svg
-          viewBox="0 0 620 160"
+          viewBox="0 0 640 165"
           className="w-full h-auto"
           role="img"
           aria-label="Professional journey timeline"
@@ -130,7 +202,7 @@ const JourneySpread = () => {
             </filter>
           </defs>
 
-          <rect width="620" height="160" fill="url(#jGrid)" />
+          <rect width="640" height="165" fill="url(#jGrid)" />
 
           {/* Faint continent shapes */}
           <g opacity="0.10" fill="#0B1D3A">
@@ -176,6 +248,16 @@ const JourneySpread = () => {
             opacity="0.7"
             className="journey-path"
           />
+
+          {/* ── Decorative board pins ── */}
+          {boardPins.map((p, i) => (
+            <BoardPin key={`bp-${i}`} {...p} />
+          ))}
+
+          {/* ── Decorative thumb tacks ── */}
+          {thumbTacks.map((t, i) => (
+            <ThumbTack key={`tt-${i}`} {...t} />
+          ))}
 
           {/* ── Milestone markers + floating info cards ── */}
           {milestones.map((m, i) => {
@@ -288,6 +370,28 @@ const JourneySpread = () => {
                     {m.sub}
                   </text>
                 </g>
+
+                {/* Photorealistic card pin */}
+                {(() => {
+                  const pinColor = i % 2 === 0 ? '#B22222' : '#1E3A8A'
+                  const pid = `cpin-${i}`
+                  const px = m.x, py = cardY - 1
+                  return (
+                    <g>
+                      <defs>
+                        <radialGradient id={pid} cx="35%" cy="30%" r="65%">
+                          <stop offset="0%" stopColor="white" stopOpacity="0.55" />
+                          <stop offset="30%" stopColor={pinColor} stopOpacity="0.95" />
+                          <stop offset="100%" stopColor="#111" stopOpacity="0.35" />
+                        </radialGradient>
+                      </defs>
+                      <ellipse cx={px + 0.8} cy={py + 4.5} rx="3" ry="1" fill="#0B1D3A" opacity="0.15" />
+                      <circle cx={px} cy={py} r="3.5" fill={`url(#${pid})`} />
+                      <ellipse cx={px - 0.7} cy={py - 0.9} rx="1.2" ry="0.9" fill="white" opacity="0.55" />
+                      <circle cx={px - 0.3} cy={py - 1.4} r="0.4" fill="white" opacity="0.3" />
+                    </g>
+                  )
+                })()}
               </g>
             )
           })}
@@ -330,7 +434,7 @@ const JourneySpread = () => {
           {/* Origin / Current labels */}
           <text
             x={milestones[0].x - 12}
-            y="150"
+            y="155"
             fill="#D4AF37"
             fontSize="6"
             fontFamily="'Special Elite', monospace"
@@ -340,7 +444,7 @@ const JourneySpread = () => {
           </text>
           <text
             x={milestones[milestones.length - 1].x - 18}
-            y="150"
+            y="155"
             fill="#D4AF37"
             fontSize="6"
             fontFamily="'Special Elite', monospace"
