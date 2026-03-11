@@ -352,6 +352,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                 height: 'min(56vh, 500px)',
                 transition: 'width 0.5s ease-out',
                 transformStyle: 'preserve-3d',
+                pointerEvents: 'none',
               }}
             >
               {/* Back cover */}
@@ -371,13 +372,14 @@ const FloatingPassport = ({ cover, spreads }) => {
                   transform: 'translateZ(-2px)',
                   transformStyle: 'preserve-3d',
                   clipPath: 'inset(5px round 6px)',
+                  pointerEvents: 'auto',
                 }}
               >
                 <div
-                  className="absolute inset-0 z-[1]"
+                  className="absolute inset-0 z-[1] pointer-events-none"
                   style={{ backgroundImage: `url(${passportPageTexture})`, backgroundSize: 'cover' }}
                 />
-                <div className="absolute inset-0 z-[2] bg-passport-paper/92" />
+                <div className="absolute inset-0 z-[2] bg-passport-paper/92 pointer-events-none" />
 
                 {/* ── Base spread layers (only active one visible) ── */}
                 {spreads.map((spreadEl, i) => (
@@ -385,7 +387,12 @@ const FloatingPassport = ({ cover, spreads }) => {
                     key={`spread-${i}`}
                     ref={(el) => setSpreadRef(el, i)}
                     className="absolute"
-                    style={{ inset: 10, zIndex: 5 + i, overflow: 'clip' }}
+                    style={{
+                      inset: 10,
+                      zIndex: activeSpread === i ? 15 : 5 + i,
+                      overflow: 'hidden',
+                      pointerEvents: activeSpread === i ? 'auto' : 'none',
+                    }}
                   >
                     {spreadEl}
                   </div>
@@ -396,7 +403,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                   <div
                     key={`leaf-${i}`}
                     ref={(el) => setPageLeafRef(el, i)}
-                    className="absolute top-0 bottom-0"
+                    className="absolute top-0 bottom-0 pointer-events-none"
                     style={{
                       left: '50%',
                       width: '50%',
@@ -471,6 +478,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                   transformOrigin: 'left center',
                   transition: 'width 0.5s ease-out',
                   willChange: 'transform',
+                  pointerEvents: coverOpen ? 'none' : 'auto',
                 }}
               >
                 {/* Exterior face */}
