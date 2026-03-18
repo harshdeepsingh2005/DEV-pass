@@ -298,6 +298,37 @@ body {
   /* Animation driven by GSAP timeline, not CSS */
 }
 
+/* ===== Passport Fullscreen Scaling ===== */
+/*
+ * When .passport-fullscreen is active, --passport-scale (set inline via React)
+ * drives proportional zoom on inner content containers. 
+ * CSS zoom scales fonts, spacing, borders, and weights uniformly.
+ */
+.passport-content {
+  --passport-scale: 1;
+}
+
+/* Spread page content — zoom scales everything proportionally */
+.passport-fullscreen .passport-spread-inner {
+  zoom: var(--passport-scale, 1);
+  transform-origin: top left;
+}
+
+/* Cover exterior face content — scale the rendering inside the cover */
+.passport-fullscreen .cover-exterior-face > .relative {
+  zoom: var(--passport-scale, 1);
+}
+
+/* Cover interior face — scale decorative inner content */
+.passport-fullscreen .cover-interior-face > * {
+  zoom: var(--passport-scale, 1);
+}
+
+/* Page leaf content — zoom text on flipping pages proportionally */
+.passport-fullscreen .passport-leaf-content {
+  zoom: var(--passport-scale, 1);
+}
+
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 6px;

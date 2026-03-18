@@ -6,8 +6,71 @@ import deskBg from '../assets/background/desk-background.webp'
 import passportCover from '../assets/passport/passport_cover.webp'
 import passportPageTexture from '../assets/texture/passport-page.webp'
 import PassportSpine from './PassportSpine'
+import DiaryModal from './DiaryModal'
+import PenBoard from './PenBoard'
+import CompassModal from './CompassModal'
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin)
+
+/* ═══════ DOODLE ART SVG COMPONENTS — matching Vercel deployment ═══════ */
+
+/** Paper airplane — hand-drawn triangle shape with tail lines */
+const PaperAirplane = ({ className, top, left, right, bottom }) => (
+  <svg
+    style={{ top, left, right, bottom }}
+    viewBox="0 0 100 100"
+    className={`absolute pointer-events-none text-white/40 ${className}`}
+  >
+    <path
+      d="M10,50 L80,20 L60,80 Z M10,50 L50,50 L60,80 M50,50 L80,20"
+      fill="none" stroke="currentColor" strokeWidth="1.5"
+      strokeLinecap="round" strokeLinejoin="round"
+    />
+    <path
+      d="M-10,60 C0,65 5,55 8,52 M-20,68 C-15,70 -10,65 -8,58"
+      fill="none" stroke="currentColor" strokeWidth="1"
+      strokeDasharray="2 3"
+    />
+  </svg>
+)
+
+/** Curved dashed arrow — sweeping arc with barb tip */
+const CurvedArrow = ({ className, top, left, right, bottom }) => (
+  <svg
+    style={{ top, left, right, bottom }}
+    viewBox="0 0 100 100"
+    className={`absolute pointer-events-none text-white/40 ${className}`}
+  >
+    <path
+      d="M20,80 C20,50 50,30 80,20"
+      fill="none" stroke="currentColor" strokeWidth="1.5"
+      strokeLinecap="round" strokeDasharray="3 2"
+    />
+    <path
+      d="M60,15 L80,20 L85,40"
+      fill="none" stroke="currentColor" strokeWidth="1.5"
+      strokeLinecap="round" strokeLinejoin="round"
+    />
+  </svg>
+)
+
+/** Dotted globe wireframe — outer circle + equator ellipse + meridian + pole line */
+const DottedGlobe = ({ className, top, left, right, bottom }) => (
+  <svg
+    style={{ top, left, right, bottom }}
+    viewBox="0 0 100 100"
+    className={`absolute pointer-events-none text-white/30 ${className}`}
+  >
+    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor"
+      strokeWidth="1.5" strokeDasharray="5 3" />
+    <ellipse cx="50" cy="50" rx="20" ry="45" fill="none" stroke="currentColor"
+      strokeWidth="1" strokeDasharray="3 4" />
+    <ellipse cx="50" cy="50" rx="45" ry="15" fill="none" stroke="currentColor"
+      strokeWidth="1" strokeDasharray="3 4" />
+    <line x1="50" y1="5" x2="50" y2="95" stroke="currentColor"
+      strokeWidth="1" strokeDasharray="2 4" />
+  </svg>
+)
 
 /**
  * FloatingPassport — 3D page-flip passport driven by scroll.
@@ -32,6 +95,32 @@ const FloatingPassport = ({ cover, spreads }) => {
   const spreadRefs = useRef([])
   const [coverOpen, setCoverOpen] = useState(false)
   const [activeSpread, setActiveSpread] = useState(-1)
+  const [modal, setModal] = useState(null) // 'diary' | 'pen' | 'compass'
+  const [isFullscreen, setIsFullscreen] = useState(false)
+
+  /* ── Fullscreen state listener ── */
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      const fs = !!document.fullscreenElement
+      setIsFullscreen(fs)
+      // Recalculate scroll positions after viewport change
+      setTimeout(() => ScrollTrigger.refresh(), 300)
+    }
+    document.addEventListener('fullscreenchange', onFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', onFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', onFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', onFullscreenChange)
+    }
+  }, [])
+
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {})
+    } else {
+      document.exitFullscreen?.().catch(() => {})
+    }
+  }, [])
 
   const setPageLeafRef = useCallback((el, i) => {
     if (el) pageLeafRefs.current[i] = el
@@ -61,11 +150,11 @@ const FloatingPassport = ({ cover, spreads }) => {
       /* Hide ALL content in each spread — reveal only after the page fully turns */
       spreadRefs.current.forEach((el) => {
         if (!el) return
-        const children = el.querySelectorAll(':scope > *')
+        const children = el.querySelectorAll('.passport-spread-inner > *')
         if (children.length) gsap.set(children, { autoAlpha: 0, y: 8 })
-        /* Stamp-slam elements get extra initial state for the slam-down effect */
+        /* Stamp-slam elements — bigger initial scale + brightness flash for dramatic slam */
         const stamps = el.querySelectorAll('.stamp-slam')
-        if (stamps.length) gsap.set(stamps, { scale: 1.4, rotation: () => gsap.utils.random(-8, 8) })
+        if (stamps.length) gsap.set(stamps, { scale: 2.5, autoAlpha: 0, filter: 'brightness(1.5)', transformOrigin: 'center center' })
         /* Journey milestone markers start hidden + scaled down for pop-in */
         const jMs = el.querySelectorAll('.journey-milestone')
         if (jMs.length) gsap.set(jMs, { autoAlpha: 0, scale: 0 })
@@ -119,7 +208,24 @@ const FloatingPassport = ({ cover, spreads }) => {
       tl.fromTo(
         coverLeafRef.current,
         { rotationY: 0 },
-        { rotationY: -180, ease: 'power2.inOut', duration: 12 },
+        {
+          rotationY: -180, ease: 'power2.inOut', duration: 12,
+          onUpdate: function () {
+            const cover = coverLeafRef.current
+            if (!cover) return
+            const angle = gsap.getProperty(cover, 'rotationY')
+            const ext = cover.querySelector('.cover-exterior-face')
+            const int_ = cover.querySelector('.cover-interior-face')
+            if (!ext || !int_) return
+            if (angle <= -90) {
+              gsap.set(ext, { opacity: 0 })
+              gsap.set(int_, { opacity: 1 })
+            } else {
+              gsap.set(ext, { opacity: 1 })
+              gsap.set(int_, { opacity: 0 })
+            }
+          },
+        },
         6,
       )
       tl.to(pagesRef.current, { autoAlpha: 1, duration: 3 }, 8)
@@ -129,19 +235,19 @@ const FloatingPassport = ({ cover, spreads }) => {
       const coverFlipStart = 6
       const coverFlipDur = 12
       const revealPos0 = coverFlipStart + coverFlipDur * 0.8
-      const firstChildren = spreadRefs.current[0]?.querySelectorAll(':scope > *')
+      const firstChildren = spreadRefs.current[0]?.querySelectorAll('.passport-spread-inner > *')
       if (firstChildren?.length) {
         tl.to(firstChildren,
           { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
           revealPos0,
         )
       }
-      /* Stamp-slam on first spread — slam in after content starts revealing */
+      /* Stamp-slam on first spread — slam in with brightness flash */
       const firstStamps = spreadRefs.current[0]?.querySelectorAll('.stamp-slam')
       if (firstStamps?.length) {
         tl.to(firstStamps, {
-          autoAlpha: 1, scale: 1, y: 0, rotation: 0,
-          duration: 1.2, stagger: 0.2, ease: 'back.out(2)',
+          autoAlpha: 1, scale: 1, y: 0, filter: 'brightness(0.95)',
+          duration: 0.8, stagger: 0.2, ease: 'back.out(3)',
         }, revealPos0 + 1.5)
       }
       /* Trigger any in-page animations on first spread */
@@ -223,7 +329,7 @@ const FloatingPassport = ({ cover, spreads }) => {
         const segStart = flipStart + i * flipSegment
         const midpoint = segStart + flipDur / 2
 
-        /* Show leaf right when its flip begins (was hidden to expose animated base layer) */
+        /* Show leaf right when its flip begins */
         tl.set(leaf, { autoAlpha: 1 }, segStart)
 
         tl.fromTo(
@@ -232,6 +338,24 @@ const FloatingPassport = ({ cover, spreads }) => {
           { rotationY: -180, ease: 'power2.inOut', duration: flipDur },
           segStart,
         )
+
+        /* ── Animated page shadows — shadow sweeps across the page during turn ── */
+        const shadowFront = leaf.querySelector('.page-shadow-front')
+        const shadowBack  = leaf.querySelector('.page-shadow-back')
+        if (shadowFront) {
+          tl.fromTo(shadowFront,
+            { opacity: 0 },
+            { opacity: 1, duration: flipDur / 2, ease: 'power1.in' },
+            segStart,
+          )
+        }
+        if (shadowBack) {
+          tl.fromTo(shadowBack,
+            { opacity: 1 },
+            { opacity: 0, duration: flipDur / 2, ease: 'power1.out' },
+            midpoint,
+          )
+        }
 
         if (spreadRefs.current[i]) {
           tl.set(spreadRefs.current[i], { autoAlpha: 0 }, midpoint)
@@ -244,19 +368,19 @@ const FloatingPassport = ({ cover, spreads }) => {
 
         /* Reveal content on newly visible spread — at 80% of page flip */
         const revealPos = segStart + flipDur * 0.8
-        const nextChildren = spreadRefs.current[i + 1]?.querySelectorAll(':scope > *')
+        const nextChildren = spreadRefs.current[i + 1]?.querySelectorAll('.passport-spread-inner > *')
         if (nextChildren?.length) {
           tl.to(nextChildren,
             { autoAlpha: 1, y: 0, stagger: 0.15, duration: 2.5, ease: 'power3.out' },
             revealPos,
           )
         }
-        /* Stamp-slam on this spread — slam in after content starts revealing */
+        /* Stamp-slam — dramatic slam with brightness flash */
         const stamps = spreadRefs.current[i + 1]?.querySelectorAll('.stamp-slam')
         if (stamps?.length) {
           tl.to(stamps, {
-            autoAlpha: 1, scale: 1, y: 0, rotation: 0,
-            duration: 1.2, stagger: 0.2, ease: 'back.out(2)',
+            autoAlpha: 1, scale: 1, y: 0, filter: 'brightness(0.95)',
+            duration: 0.8, stagger: 0.2, ease: 'back.out(3)',
           }, revealPos + 1.5)
         }
         /* Trigger any in-page animations on this spread */
@@ -324,55 +448,74 @@ const FloatingPassport = ({ cover, spreads }) => {
           <img src={deskBg} alt="" className="w-full h-full object-cover" aria-hidden="true" />
           <div className="absolute inset-0 bg-black/25" />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 pointer-events-none"
             style={{ background: 'radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.55) 100%)' }}
           />
           <div
-            className="absolute inset-0 mix-blend-soft-light"
+            className="absolute inset-0 mix-blend-soft-light pointer-events-none"
             style={{ background: 'radial-gradient(ellipse at 45% 40%, rgba(255,220,160,0.08) 0%, transparent 70%)' }}
           />
+
+          {/* ── SVG Doodle Art — dotted globes ── */}
+          <DottedGlobe top="5%" right="12%" className="w-36 h-36" />
+          <DottedGlobe bottom="15%" left="8%" className="w-48 h-48 -rotate-12" />
+          <DottedGlobe top="45%" right="5%" className="w-24 h-24 rotate-[25deg] opacity-60" />
+
+          {/* ── SVG Doodle Art — paper airplanes ── */}
+          <PaperAirplane top="20%" right="28%" className="w-24 h-24 -rotate-12" />
+          <PaperAirplane bottom="40%" left="15%" className="w-20 h-20 rotate-[60deg]" />
+          <PaperAirplane bottom="10%" right="30%" className="w-28 h-28 rotate-[-20deg]" />
+
+          {/* ── SVG Doodle Art — curved arrows ── */}
+          <CurvedArrow top="13%" left="19%" className="w-16 h-16 -scale-x-100 rotate-[-15deg] opacity-70" />
+          <CurvedArrow top="42%" left="18%" className="w-20 h-20 -scale-x-100 rotate-[5deg] opacity-70" />
+          <CurvedArrow bottom="22%" right="16%" className="w-20 h-20 -scale-y-100 rotate-[20deg] opacity-70" />
+          <CurvedArrow bottom="18%" left="12%" className="w-20 h-20 rotate-[10deg] opacity-70" />
         </div>
 
         {/* ═══════ FLOATING PASSPORT ═══════ */}
         <div
-          className="absolute inset-0 z-20 flex items-center justify-center"
+          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
           style={{ perspective: '2200px' }}
         >
           {/* Shadow wrapper — filter isolated here so it doesn't kill preserve-3d */}
           <div
             style={{
               filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.5)) drop-shadow(0 12px 24px rgba(0,0,0,0.3))',
+              pointerEvents: 'auto',
             }}
           >
             <div
               ref={passportRef}
-              className="relative"
+              className={`relative passport-content${isFullscreen ? ' passport-fullscreen' : ''}`}
               style={{
-                width: coverOpen ? 'min(82vw, 880px)' : 'min(34vw, 380px)',
-                height: 'min(56vh, 500px)',
-                transition: 'width 0.5s ease-out',
+                width: isFullscreen
+                  ? (coverOpen ? 'min(92vw, 1200px)' : 'min(42vw, 520px)')
+                  : (coverOpen ? 'min(82vw, 880px)' : 'min(34vw, 380px)'),
+                height: isFullscreen ? 'min(80vh, 750px)' : 'min(56vh, 500px)',
+                transition: 'width 0.5s ease-out, height 0.5s ease-out',
                 transformStyle: 'preserve-3d',
                 pointerEvents: 'none',
+                '--passport-scale': isFullscreen ? '1.35' : '1',
               }}
             >
               {/* Back cover */}
               <div
-                className="absolute inset-0 rounded-md"
+                className="absolute inset-0 rounded-md pointer-events-none"
                 style={{
                   background: 'linear-gradient(145deg, #0a1a30 0%, #0B1D3A 50%, #081629 100%)',
                   transform: 'translateZ(-4px)',
                 }}
               />
 
-              {/* ═══════ PAGES CONTAINER ═══════ */}
               <div
                 ref={pagesRef}
                 className="passport-paper absolute inset-0 rounded-md"
                 style={{
-                  transform: 'translateZ(-2px)',
                   transformStyle: 'preserve-3d',
                   clipPath: 'inset(5px round 6px)',
                   pointerEvents: 'auto',
+                  zIndex: 1,
                 }}
               >
                 <div
@@ -394,7 +537,9 @@ const FloatingPassport = ({ cover, spreads }) => {
                       pointerEvents: activeSpread === i ? 'auto' : 'none',
                     }}
                   >
-                    {spreadEl}
+                    <div className="passport-spread-inner w-full h-full relative" style={{ zIndex: 10, pointerEvents: 'auto' }}>
+                      {spreadEl}
+                    </div>
                   </div>
                 ))}
 
@@ -416,7 +561,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                     {/* Front face — right half of spread[i] */}
                     <div
                       className="absolute overflow-hidden"
-                      style={{ inset: 5, backfaceVisibility: 'hidden' }}
+                      style={{ inset: 5, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                     >
                       <div
                         className="absolute inset-0"
@@ -424,11 +569,13 @@ const FloatingPassport = ({ cover, spreads }) => {
                       />
                       <div className="absolute inset-0 bg-passport-paper/95" />
                       <div
-                        className="absolute top-0 bottom-0"
+                        className="passport-leaf-content absolute top-0 bottom-0"
                         style={{ width: '200%', left: '-100%' }}
                       >
                         {spreads[i]}
                       </div>
+                      {/* Shadow overlay — darkens as page lifts during flip */}
+                      <div className="page-shadow-front absolute inset-0 bg-gradient-to-l from-black/0 via-black/10 to-black/60 pointer-events-none opacity-0 mix-blend-multiply" />
                       <div
                         className="absolute right-0 top-0 bottom-0 pointer-events-none"
                         style={{ width: 8, background: 'linear-gradient(to left, rgba(0,0,0,0.08) 0%, transparent 100%)' }}
@@ -438,7 +585,7 @@ const FloatingPassport = ({ cover, spreads }) => {
                     {/* Back face — left half of spread[i+1] */}
                     <div
                       className="absolute overflow-hidden"
-                      style={{ inset: 5, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                      style={{ inset: 5, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                     >
                       <div
                         className="absolute inset-0"
@@ -446,11 +593,13 @@ const FloatingPassport = ({ cover, spreads }) => {
                       />
                       <div className="absolute inset-0 bg-passport-paper/95" />
                       <div
-                        className="absolute top-0 bottom-0"
+                        className="passport-leaf-content absolute top-0 bottom-0"
                         style={{ width: '200%', left: '0' }}
                       >
                         {spreads[i + 1]}
                       </div>
+                      {/* Shadow overlay — fades off as back face is revealed */}
+                      <div className="page-shadow-back absolute inset-0 bg-gradient-to-r from-black/0 via-black/10 to-black/60 pointer-events-none opacity-0 mix-blend-multiply" />
                       <div
                         className="absolute left-0 top-0 bottom-0 pointer-events-none"
                         style={{ width: 8, background: 'linear-gradient(to right, rgba(0,0,0,0.08) 0%, transparent 100%)' }}
@@ -468,7 +617,7 @@ const FloatingPassport = ({ cover, spreads }) => {
               {/* ═══════ FRONT COVER ═══════ */}
               <div
                 ref={coverLeafRef}
-                className="absolute z-40 rounded-md"
+                className="absolute z-40 rounded-md shadow-[8px_0_20px_rgba(0,0,0,0.5)]"
                 style={{
                   top: 0,
                   right: 0,
@@ -483,9 +632,10 @@ const FloatingPassport = ({ cover, spreads }) => {
               >
                 {/* Exterior face */}
                 <div
-                  className="absolute inset-0 rounded-r-md overflow-hidden"
+                  className="cover-exterior-face absolute inset-0 rounded-r-md overflow-hidden"
                   style={{
                     backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
                     backgroundImage: `url(${passportCover})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
@@ -497,9 +647,10 @@ const FloatingPassport = ({ cover, spreads }) => {
 
                 {/* Interior face */}
                 <div
-                  className="absolute inset-0 rounded-l-md overflow-hidden"
+                  className="cover-interior-face absolute inset-0 rounded-l-md overflow-hidden opacity-0"
                   style={{
                     backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)',
                     background: 'linear-gradient(135deg, #0B1D3A 0%, #122a52 50%, #0a1a30 100%)',
                   }}
@@ -568,7 +719,95 @@ const FloatingPassport = ({ cover, spreads }) => {
             ))}
           </div>
         </div>
+
+        {/* ═══════ FLOATING DESK LINKS — Vercel pill-button style ═══════ */}
+
+        {/* Log Journal — top-left */}
+        <button
+          onClick={() => setModal('diary')}
+          style={{ top: '12%', left: '10%' }}
+          className="absolute z-10 bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md text-white/80 hover:text-white transition-all rounded-full px-3.5 py-1.5 flex items-center gap-2 font-sans text-[10px] tracking-wide shadow-xl hover:scale-105 pointer-events-auto"
+        >
+          <span className="opacity-70">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+          </span>
+          Log Journal
+        </button>
+
+        {/* Digital Pen Tool — mid-left, slight rotation */}
+        <button
+          onClick={() => setModal('pen')}
+          style={{ top: '36%', left: '16%' }}
+          className="absolute z-10 bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md text-white/80 hover:text-white transition-all rounded-full px-3.5 py-1.5 flex items-center gap-2 font-sans text-[10px] tracking-wide shadow-xl hover:scale-105 pointer-events-auto -rotate-12"
+        >
+          <span className="opacity-70">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 20h9" />
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+            </svg>
+          </span>
+          Digital Pen Tool
+        </button>
+
+        {/* Connect on LinkedIn — bottom-left */}
+        <button
+          onClick={() => window.open('https://linkedin.com/in/harshdeepsingh2005', '_blank')}
+          style={{ bottom: '25%', left: '20%' }}
+          className="absolute z-10 bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md text-white/80 hover:text-white transition-all rounded-full px-3.5 py-1.5 flex items-center gap-2 font-sans text-[10px] tracking-wide shadow-xl hover:scale-105 pointer-events-auto"
+        >
+          <span className="opacity-70">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </span>
+          Connect on LinkedIn
+        </button>
+
+        {/* Career Compass — bottom-right */}
+        <button
+          onClick={() => setModal('compass')}
+          style={{ bottom: '14%', right: '8%' }}
+          className="absolute z-10 bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md text-white/80 hover:text-white transition-all rounded-full px-3.5 py-1.5 flex items-center gap-2 font-sans text-[10px] tracking-wide shadow-xl hover:scale-105 pointer-events-auto"
+        >
+          <span className="opacity-70">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+            </svg>
+          </span>
+          Career Compass
+        </button>
+
+        {/* Fullscreen toggle — bottom-right corner */}
+        <button
+          onClick={toggleFullscreen}
+          className="absolute z-10 bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md text-white/80 hover:text-white transition-all rounded-full px-3.5 py-1.5 flex items-center gap-2 font-sans text-[10px] tracking-wide shadow-xl hover:scale-105 pointer-events-auto"
+          style={{ bottom: 24, right: 24 }}
+        >
+          <span className="opacity-70">
+            {isFullscreen ? (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 14h6v6m10-10h-6V4m0 6l7-7M3 21l7-7" />
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+              </svg>
+            )}
+          </span>
+          {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+        </button>
       </div>
+
+      {/* ═══════ MODALS ═══════ */}
+      {modal === 'diary' && <DiaryModal onClose={() => setModal(null)} />}
+      {modal === 'pen'   && <PenBoard  onClose={() => setModal(null)} />}
+      {modal === 'compass' && <CompassModal onClose={() => setModal(null)} />}
     </div>
   )
 }

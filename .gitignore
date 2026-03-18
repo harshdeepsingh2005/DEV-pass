@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# MCP and Skills
+mcp/
+.agents/skills/

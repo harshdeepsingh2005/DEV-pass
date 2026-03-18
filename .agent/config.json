@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "design-engine": {
+      "command": "node",
+      "args": ["./mcp/mcp-server.js"],
+      "env": {
+        "FIGMA_TOKEN": ""
+      },
+      "description": "Design Asset Engine — generates UI layouts, React+Tailwind components, icon sets, templates, and reads Figma files."
+    }
+  }
+}
