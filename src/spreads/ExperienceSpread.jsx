@@ -13,37 +13,37 @@
 const experiences = [
   {
     year: '2024–Now',
-    title: 'Graduate Research – AI & RL',
-    employer: 'University Research Lab',
-    description: 'Advanced research in reinforcement learning for simulation systems and customer behavior modeling.',
+    title: 'IEEE Research & AI Systems',
+    employer: 'LPU — Independent Research',
+    description: 'Published 3 IEEE papers (BehaviorGraph-RL, CausalPathNet, UniCore-RL). Built CX-Twin, AutoPilot-for-Anything, and HealthSphere AI systems.',
     type: 'research',
+  },
+  {
+    year: '2023–24',
+    title: 'Full-Stack AI Project Builder',
+    employer: 'LPU — Self-Directed Projects',
+    description: 'Designed and shipped HealthSphere (preventive healthcare ML), Urban Heat Island predictor, CIVITAS disaster management, and LOCAL OLLAMA code-agent.',
+    type: 'work',
   },
   {
     year: '2023',
-    title: 'AI Engineer – Simulation',
-    employer: 'CX-Twin Project',
-    description: 'Built CX-Twin simulation engine with Deep Q-Network agents and stochastic modeling.',
-    type: 'work',
-  },
-  {
-    year: '2022',
-    title: 'ML Engineer',
-    employer: 'Industry — Geospatial Analytics',
-    description: 'Developed ML pipelines for geospatial analysis and urban heat island prediction.',
-    type: 'work',
-  },
-  {
-    year: '2021',
-    title: 'Research Assistant – ML Lab',
-    employer: 'Healthcare AI Lab',
-    description: 'Contributed to explainable AI research in healthcare and patient risk prediction.',
+    title: 'RL & Simulation Deep-Dive',
+    employer: 'LPU — AI & ML Specialization',
+    description: 'Studied Deep Q-Networks, built first customer behavior simulation prototypes. Began geospatial ML research with MODIS satellite data.',
     type: 'research',
   },
   {
-    year: '2020',
-    title: 'B.Tech Computer Science',
-    employer: 'VIT University',
-    description: 'Completed CS studies focused on AI and data science. First RL research exposure.',
+    year: '2022–23',
+    title: 'CS Foundations & ML Basics',
+    employer: 'LPU — B.Tech CSE (AI & ML)',
+    description: 'Mastered data structures, algorithms, Python, C++. Built early ML projects with Scikit-Learn. First exposure to neural networks and deep learning.',
+    type: 'education',
+  },
+  {
+    year: '2022',
+    title: 'B.Tech CSE — Admission',
+    employer: 'Lovely Professional University',
+    description: 'Enrolled in B.Tech Computer Science & Engineering with AI & ML specialization. Started the journey into intelligent systems.',
     type: 'education',
   },
 ]
@@ -142,7 +142,7 @@ const ExperienceSpread = () => (
             Admitted
           </p>
           <p className="font-stamp text-stamp-red/90 font-bold text-[5px] tracking-[0.15em] uppercase text-center mt-0.5">
-            AI Research Lab
+            LPU — CSE Dept
           </p>
         </div>
       </div>
@@ -199,7 +199,7 @@ const ExperienceSpread = () => (
     {/* ── Microtext ── */}
     <div className="absolute bottom-1 left-0 right-0 overflow-hidden pointer-events-none z-20">
       <p className="font-mrz text-[4px] text-medium-gray/90 font-bold tracking-[0.15em] whitespace-nowrap text-center select-none">
-        IMMIGRATION&bull;RECORD&bull;EMPLOYMENT&bull;HISTORY&bull;VERIFIED&bull;IMMIGRATION&bull;RECORD&bull;EMPLOYMENT&bull;HISTORY&bull;VERIFIED
+        IMMIGRATION&bull;RECORD&bull;ACADEMIC&bull;JOURNEY&bull;VERIFIED&bull;IMMIGRATION&bull;RECORD&bull;ACADEMIC&bull;JOURNEY&bull;VERIFIED
       </p>
     </div>
   </div>
