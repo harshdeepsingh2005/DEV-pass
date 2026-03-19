@@ -754,7 +754,7 @@ const FloatingPassport = ({ cover, spreads }) => {
 
         {/* Connect on LinkedIn — bottom-left */}
         <button
-          onClick={() => window.open('https://linkedin.com/in/harshdeepsingh2005', '_blank')}
+          onClick={() => window.open('https://linkedin.com/in/harshdeep-singh-28a4a6283/', '_blank')}
           style={{ bottom: '25%', left: '20%' }}
           className="absolute z-10 bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md text-white/80 hover:text-white transition-all rounded-full px-3.5 py-1.5 flex items-center gap-2 font-sans text-[10px] tracking-wide shadow-xl hover:scale-105 pointer-events-auto"
         >

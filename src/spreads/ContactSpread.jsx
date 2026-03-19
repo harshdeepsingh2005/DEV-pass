@@ -28,7 +28,7 @@ const contacts = [
       </svg>
     ),
     label: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/harshdeepsingh2005',
+    url: 'https://www.linkedin.com/in/harshdeep-singh-28a4a6283/',
     color: '#0077B5',
   },
   {
@@ -39,7 +39,7 @@ const contacts = [
       </svg>
     ),
     label: 'Email',
-    url: 'mailto:harshdeepsingh2005@gmail.com',
+    url: 'mailto:harshdeepsinghsabharwal@gmail.com',
     color: '#B22222',
   },
   {
@@ -52,7 +52,7 @@ const contacts = [
       </svg>
     ),
     label: 'Download CV',
-    url: '/Harshdeep_Singh_CV.pdf',
+    url: import.meta.env.BASE_URL + 'Harshdeep_Singh_CV.pdf',
     color: '#B22222',
     download: true,
   },

@@ -17,6 +17,8 @@
  * All animations driven by GSAP via FloatingPassport timeline.
  */
 
+import mePhoto from '../assets/my_picture/me.png'
+
 const techStack = [
   'Python', 'TensorFlow', 'PyTorch', 'Django',
   'React', 'JavaScript', 'SQL', 'Docker',
@@ -79,21 +81,28 @@ const IdentitySpread = () => (
 
       {/* ── Passport Photo Frame (printed-on-paper look) ── */}
       <div className="relative mt-1">
-        {/* photo placeholder with paper-printed treatment */}
+        {/* photo with paper-printed treatment */}
         <div
-          className="w-[100px] h-[126px] sm:w-[110px] sm:h-[138px] border border-gold/20 shadow-inner flex items-center justify-center relative overflow-hidden"
+          className="w-[100px] h-[126px] sm:w-[110px] sm:h-[138px] border border-gold/20 shadow-inner relative overflow-hidden"
           style={{
             background: 'linear-gradient(135deg, #E8E0D0 0%, #D8CFC0 50%, #E2DAC8 100%)',
           }}
         >
           {/* Paper grain overlay */}
-          <div className="absolute inset-0 opacity-30" style={{
+          <div className="absolute inset-0 opacity-30 z-10 pointer-events-none" style={{
             backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(180,160,120,0.08) 2px, rgba(180,160,120,0.08) 3px)',
           }} />
-          <svg viewBox="0 0 100 120" className="w-16 h-20 text-passport-navy/90 font-bold relative z-10">
-            <circle cx="50" cy="35" r="22" fill="currentColor" />
-            <ellipse cx="50" cy="95" rx="35" ry="25" fill="currentColor" />
-          </svg>
+          {/* Actual photo */}
+          <img
+            src={mePhoto}
+            alt="Harshdeep Singh"
+            className="w-full h-full object-cover relative z-[1]"
+            style={{
+              filter: 'contrast(1.05) saturate(0.85) sepia(0.08)',
+              mixBlendMode: 'multiply',
+              objectPosition: '100% center',
+            }}
+          />
         </div>
         {/* gold corner brackets */}
         <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-2 border-l-2 border-gold/50" />
