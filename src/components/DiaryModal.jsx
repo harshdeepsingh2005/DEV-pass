@@ -739,7 +739,7 @@ const ResearchDetail = ({ researchId, onBack }) => {
                 fontSize: 10, letterSpacing: '0.15em',
                 color: '#1c0f04', textTransform: 'uppercase',
                 fontWeight: 600,
-              }}>Published Paper</span>
+              }}>Filed Paper</span>
             </div>
             <span style={{
               fontFamily: 'Special Elite, monospace',

@@ -15,7 +15,7 @@ const papers = [
     venue: 'IEEE Conference on AI Systems',
     year: '2024',
     summary: 'Deep Q-Networks for modeling stochastic customer behavior in simulated environments with improved prediction accuracy.',
-    status: 'Published',
+    status: 'Filed',
     doi: '10.1109/ICAIS.2024.XXXXX',
   },
   {
@@ -37,7 +37,7 @@ const papers = [
 ]
 
 const statusColor = {
-  Published: '#B22222',
+  Filed: '#B22222',
   'In Review': '#1E3A8A',
   'In Progress': '#D4AF37',
 }
@@ -146,7 +146,7 @@ const ResearchSpread = () => (
           </div>
           <div className="text-center p-2 border-b border-gold/15">
             <p className="font-heading text-lg text-stamp-red font-bold">1</p>
-            <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">Published</p>
+            <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">Filed</p>
           </div>
           <div className="text-center p-2 border-r border-gold/15">
             <p className="font-heading text-lg text-ink-blue font-bold">5+</p>

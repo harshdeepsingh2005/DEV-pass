@@ -15,7 +15,7 @@ const experiences = [
     year: '2024–Now',
     title: 'IEEE Research & AI Systems',
     employer: 'LPU — Independent Research',
-    description: 'Published 3 IEEE papers (BehaviorGraph-RL, CausalPathNet, UniCore-RL). Built CX-Twin, AutoPilot-for-Anything, and HealthSphere AI systems.',
+    description: 'Filed 3 IEEE papers (BehaviorGraph-RL, CausalPathNet, UniCore-RL). Built CX-Twin, AutoPilot-for-Anything, and HealthSphere AI systems.',
     type: 'research',
   },
   {
