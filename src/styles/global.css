@@ -2,7 +2,7 @@
 
 /* ===== Design Tokens ===== */
 @theme {
-  --color-passport-navy: #0B1D3A;
+  --color-passport-navy: #040c1a;
   --color-passport-navy-light: #122a52;
   --color-passport-paper: #F5F1E8;
   --color-passport-paper-dark: #E8E0D0;
@@ -12,9 +12,9 @@
   --color-stamp-red-light: #D44040;
   --color-ink-blue: #1E3A8A;
   --color-ink-blue-light: #2B4FA8;
-  --color-dark-gray: #333333;
-  --color-medium-gray: #666666;
-  --color-light-gray: #999999;
+  --color-dark-gray: #000000;
+  --color-medium-gray: #333333;
+  --color-light-gray: #444444;
 
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;

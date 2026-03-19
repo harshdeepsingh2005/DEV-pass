@@ -153,15 +153,15 @@ const SkillsSpread = () => (
 
     {/* ═══ Left page header ═══ */}
     <div className="absolute top-3 left-4 z-10" style={{ width: 'calc(50% - 28px)' }}>
-      <h2 className="font-heading text-passport-navy/80 text-sm font-bold">Skills Visas</h2>
-      <p className="font-stamp text-[7px] text-medium-gray/40 tracking-[0.3em] uppercase mt-0.5">
+      <h2 className="font-heading text-passport-navy/90 font-bold text-sm font-bold">Skills Visas</h2>
+      <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-[0.3em] uppercase mt-0.5">
         Programming &amp; Engineering
       </p>
     </div>
 
     {/* ═══ Right page header ═══ */}
     <div className="absolute top-3 z-10" style={{ left: 'calc(50% + 28px)' }}>
-      <p className="font-stamp text-[7px] text-medium-gray/40 tracking-[0.3em] uppercase">
+      <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-[0.3em] uppercase">
         Machine Learning &amp; AI
       </p>
     </div>
@@ -170,8 +170,8 @@ const SkillsSpread = () => (
     <div className="absolute top-10 left-4 right-4 h-px bg-gold/15 z-10" />
 
     {/* Page numbers */}
-    <span className="absolute bottom-2 left-3 z-10 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">P&nbsp;03</span>
-    <span className="absolute bottom-2 right-3 z-10 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">P&nbsp;04</span>
+    <span className="absolute bottom-2 left-3 z-10 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest select-none">P&nbsp;03</span>
+    <span className="absolute bottom-2 right-3 z-10 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest select-none">P&nbsp;04</span>
 
     {/* ═══ Holographic security sticker (top-right corner) ═══ */}
     <div

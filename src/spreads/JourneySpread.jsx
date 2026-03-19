@@ -419,13 +419,13 @@ const JourneySpread = () => {
 
       {/* Legend */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-5">
-        <span className="flex items-center gap-1.5 font-stamp text-[7px] text-medium-gray/50 tracking-widest uppercase">
+        <span className="flex items-center gap-1.5 font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">
           <span className="w-1.5 h-1.5 rounded-full bg-gold" /> Milestone
         </span>
-        <span className="flex items-center gap-1.5 font-stamp text-[7px] text-medium-gray/50 tracking-widest uppercase">
+        <span className="flex items-center gap-1.5 font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">
           <span className="w-4 h-px border-t border-dashed border-gold" /> Route
         </span>
-        <span className="flex items-center gap-1.5 font-stamp text-[7px] text-medium-gray/50 tracking-widest uppercase">
+        <span className="flex items-center gap-1.5 font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">
           <svg className="w-3 h-2.5" viewBox="0 0 16 12">
             <path
               d="M14 5 L10 0 L9 0 L11 5 L3 5 L1 3 L0 3 L1.5 6 L0 9 L1 9 L3 7 L11 7 L9 12 L10 12 L14 7 L16 7 L16 5Z"

@@ -70,7 +70,7 @@ const ContactSpread = () => (
     {/* Left page — Exit visa stamp */}
     <div className="relative flex flex-col items-center justify-center p-6 z-10">
       {/* Page number watermark */}
-      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 12</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest">P 12</span>
 
       {/* ── Large bold EXIT VISA AUTHORIZED stamp ── */}
       <div
@@ -82,28 +82,28 @@ const ContactSpread = () => (
           borderColor: 'rgba(178,34,34,0.55)',
         }}
       >
-        <p className="font-stamp text-stamp-red/35 text-[8px] tracking-[0.5em] uppercase text-center">
+        <p className="font-stamp text-stamp-red/90 font-bold text-[8px] tracking-[0.5em] uppercase text-center">
           Developer Passport
         </p>
         <h3 className="font-heading text-stamp-red text-xl sm:text-2xl font-bold tracking-wide mt-1 text-center leading-tight">
           EXIT VISA
         </h3>
         <div className="w-16 h-px bg-stamp-red/30 mx-auto mt-1.5" />
-        <p className="font-stamp text-stamp-red/55 text-[10px] tracking-[0.35em] uppercase text-center mt-1.5 font-bold">
+        <p className="font-stamp text-stamp-red/90 font-bold text-[10px] tracking-[0.35em] uppercase text-center mt-1.5 font-bold">
           Authorized
         </p>
       </div>
 
-      <p className="font-stamp text-medium-gray/50 text-[9px] tracking-[0.3em] uppercase text-center">
+      <p className="font-stamp text-medium-gray/90 font-bold text-[9px] tracking-[0.3em] uppercase text-center">
         Connect &middot; Collaborate &middot; Explore
       </p>
 
       {/* Footer */}
       <div className="mt-auto pt-4">
-        <p className="font-stamp text-medium-gray/35 text-[8px] tracking-widest uppercase text-center">
+        <p className="font-stamp text-medium-gray/90 font-bold text-[8px] tracking-widest uppercase text-center">
           &copy; {new Date().getFullYear()} Harshdeep Singh
         </p>
-        <p className="font-stamp text-medium-gray/30 text-[7px] tracking-[0.2em] uppercase text-center mt-1">
+        <p className="font-stamp text-medium-gray/90 font-bold text-[7px] tracking-[0.2em] uppercase text-center mt-1">
           Valid for Unlimited Opportunities
         </p>
       </div>
@@ -111,7 +111,7 @@ const ContactSpread = () => (
 
     {/* Right page — Contact stamp buttons */}
     <div className="flex flex-col items-center justify-center p-5 sm:p-6 relative z-10">
-      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 13</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest">P 13</span>
 
       <div className="w-full mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <span className="font-stamp text-[8px] text-medium-gray tracking-widest">
@@ -129,7 +129,7 @@ const ContactSpread = () => (
             target={c.download ? '_self' : '_blank'}
             rel="noopener noreferrer"
             download={c.download ? true : undefined}
-            className="group flex flex-col items-center gap-2 text-passport-navy/60 hover:text-passport-navy transition-colors"
+            className="group flex flex-col items-center gap-2 text-passport-navy/90 font-bold hover:text-passport-navy transition-colors"
             aria-label={c.label}
           >
             <div
@@ -148,7 +148,7 @@ const ContactSpread = () => (
 
     {/* ── Microtext security line ── */}
     <div className="absolute bottom-1 left-0 right-0 overflow-hidden pointer-events-none z-20">
-      <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap text-center select-none">
+      <p className="font-mrz text-[4px] text-medium-gray/90 font-bold tracking-[0.15em] whitespace-nowrap text-center select-none">
         EXIT&bull;VISA&bull;AUTHORIZED&bull;VALID&bull;UNLIMITED&bull;OPPORTUNITIES&bull;EXIT&bull;VISA&bull;AUTHORIZED&bull;VALID&bull;UNLIMITED&bull;OPPORTUNITIES
       </p>
     </div>

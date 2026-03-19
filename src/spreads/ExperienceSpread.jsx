@@ -92,7 +92,7 @@ const ExperienceSpread = () => (
 
     {/* Left page */}
     <div className="p-4 sm:p-5 flex flex-col relative z-10">
-      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 10</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest">P 10</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <h2 className="font-heading text-passport-navy text-sm sm:text-base font-bold">
@@ -122,10 +122,10 @@ const ExperienceSpread = () => (
             <h3 className="font-heading text-xs sm:text-sm text-passport-navy font-bold leading-snug mt-0.5">
               {exp.title}
             </h3>
-            <p className="font-stamp text-[8px] text-medium-gray/60 tracking-wider uppercase mt-0.5">
+            <p className="font-stamp text-[8px] text-medium-gray/90 font-bold tracking-wider uppercase mt-0.5">
               {exp.employer}
             </p>
-            <p className="text-dark-gray/60 text-[10px] leading-relaxed mt-0.5">
+            <p className="text-dark-gray/90 font-bold text-[10px] leading-relaxed mt-0.5">
               {exp.description}
             </p>
           </div>
@@ -138,10 +138,10 @@ const ExperienceSpread = () => (
         style={{ transform: 'rotate(-12deg)' }}
       >
         <div className="border-[2.5px] border-stamp-red/50 rounded-sm px-3 py-1.5">
-          <p className="font-stamp text-stamp-red/55 text-[9px] tracking-[0.3em] uppercase font-bold text-center">
+          <p className="font-stamp text-stamp-red/90 font-bold text-[9px] tracking-[0.3em] uppercase font-bold text-center">
             Admitted
           </p>
-          <p className="font-stamp text-stamp-red/35 text-[5px] tracking-[0.15em] uppercase text-center mt-0.5">
+          <p className="font-stamp text-stamp-red/90 font-bold text-[5px] tracking-[0.15em] uppercase text-center mt-0.5">
             AI Research Lab
           </p>
         </div>
@@ -150,7 +150,7 @@ const ExperienceSpread = () => (
 
     {/* Right page */}
     <div className="p-4 sm:p-5 flex flex-col relative z-10">
-      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 11</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest">P 11</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <span className="font-stamp text-[8px] text-medium-gray tracking-widest">Continued</span>
@@ -173,10 +173,10 @@ const ExperienceSpread = () => (
             <h3 className="font-heading text-xs sm:text-sm text-passport-navy font-bold leading-snug mt-0.5">
               {exp.title}
             </h3>
-            <p className="font-stamp text-[8px] text-medium-gray/60 tracking-wider uppercase mt-0.5">
+            <p className="font-stamp text-[8px] text-medium-gray/90 font-bold tracking-wider uppercase mt-0.5">
               {exp.employer}
             </p>
-            <p className="text-dark-gray/60 text-[10px] leading-relaxed mt-0.5">
+            <p className="text-dark-gray/90 font-bold text-[10px] leading-relaxed mt-0.5">
               {exp.description}
             </p>
           </div>
@@ -198,7 +198,7 @@ const ExperienceSpread = () => (
 
     {/* ── Microtext ── */}
     <div className="absolute bottom-1 left-0 right-0 overflow-hidden pointer-events-none z-20">
-      <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap text-center select-none">
+      <p className="font-mrz text-[4px] text-medium-gray/90 font-bold tracking-[0.15em] whitespace-nowrap text-center select-none">
         IMMIGRATION&bull;RECORD&bull;EMPLOYMENT&bull;HISTORY&bull;VERIFIED&bull;IMMIGRATION&bull;RECORD&bull;EMPLOYMENT&bull;HISTORY&bull;VERIFIED
       </p>
     </div>

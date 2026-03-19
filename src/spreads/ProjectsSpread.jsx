@@ -88,7 +88,7 @@ const VisaCard = ({ p }) => (
 
     <div className="p-2.5 relative">
       {/* ── Serial number ── */}
-      <span className="absolute top-1.5 right-2 font-mrz text-[6px] text-medium-gray/30 tracking-widest select-none">
+      <span className="absolute top-1.5 right-2 font-mrz text-[6px] text-medium-gray/90 font-bold tracking-widest select-none">
         {p.serial}
       </span>
 
@@ -115,7 +115,7 @@ const VisaCard = ({ p }) => (
       </div>
 
       {/* ── Description — collapses on hover to make room for actions ── */}
-      <p className="text-dark-gray/60 text-[9px] sm:text-[10px] leading-relaxed mb-1.5 line-clamp-2 group-hover:line-clamp-1 transition-all duration-200">
+      <p className="text-dark-gray/90 font-bold text-[9px] sm:text-[10px] leading-relaxed mb-1.5 line-clamp-2 group-hover:line-clamp-1 transition-all duration-200">
         {p.description}
       </p>
 
@@ -137,7 +137,7 @@ const VisaCard = ({ p }) => (
           href={p.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-stamp text-[7px] text-passport-navy/70 hover:text-ink-blue tracking-wider uppercase flex items-center gap-1 transition-colors"
+          className="font-stamp text-[7px] text-passport-navy/90 font-bold hover:text-ink-blue tracking-wider uppercase flex items-center gap-1 transition-colors"
         >
           <svg className="w-2.5 h-2.5" viewBox="0 0 16 16" fill="currentColor">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
@@ -149,7 +149,7 @@ const VisaCard = ({ p }) => (
             href={p.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-stamp text-[7px] text-stamp-red/70 hover:text-stamp-red tracking-wider uppercase flex items-center gap-1 transition-colors"
+            className="font-stamp text-[7px] text-stamp-red/90 font-bold hover:text-stamp-red tracking-wider uppercase flex items-center gap-1 transition-colors"
           >
             <svg className="w-2.5 h-2.5" viewBox="0 0 16 16" fill="currentColor">
               <path d="M14 2.5a.5.5 0 00-.5-.5h-6a.5.5 0 000 1h4.793L2.146 13.146a.5.5 0 00.708.708L13 3.707V8.5a.5.5 0 001 0v-6z" />
@@ -157,7 +157,7 @@ const VisaCard = ({ p }) => (
             Demo
           </a>
         ) : (
-          <span className="font-stamp text-[7px] text-medium-gray/35 tracking-wider uppercase flex items-center gap-1">
+          <span className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-wider uppercase flex items-center gap-1">
             <svg className="w-2.5 h-2.5" viewBox="0 0 16 16" fill="currentColor">
               <path d="M14 2.5a.5.5 0 00-.5-.5h-6a.5.5 0 000 1h4.793L2.146 13.146a.5.5 0 00.708.708L13 3.707V8.5a.5.5 0 001 0v-6z" />
             </svg>
@@ -188,13 +188,13 @@ const ProjectsSpread = () => (
 
     {/* ═══ Left page ═══ */}
     <div className="p-4 sm:p-5 flex flex-col relative z-10">
-      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">P&nbsp;05</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest select-none">P&nbsp;05</span>
 
       <div className="mb-2.5 pb-1.5 border-b border-gold/20">
         <h2 className="font-heading text-passport-navy text-sm sm:text-base font-bold">
           Project Visas
         </h2>
-        <p className="font-stamp text-[7px] text-medium-gray/40 tracking-[0.25em] uppercase mt-0.5">
+        <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-[0.25em] uppercase mt-0.5">
           Issued Entries &bull; Official Record
         </p>
       </div>
@@ -208,10 +208,10 @@ const ProjectsSpread = () => (
 
     {/* ═══ Right page ═══ */}
     <div className="p-4 sm:p-5 flex flex-col relative z-10">
-      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">P&nbsp;06</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest select-none">P&nbsp;06</span>
 
       <div className="mb-2.5 pb-1.5 border-b border-gold/20">
-        <span className="font-stamp text-[8px] text-medium-gray/50 tracking-[0.3em] uppercase">
+        <span className="font-stamp text-[8px] text-medium-gray/90 font-bold tracking-[0.3em] uppercase">
           Continued
         </span>
       </div>
@@ -228,7 +228,7 @@ const ProjectsSpread = () => (
           className="ink-feather-heavy stamp-slam border-[3px] border-stamp-red/50 rounded-sm px-6 py-2"
           style={{ transform: 'rotate(-8deg)' }}
         >
-          <p className="font-stamp text-stamp-red/65 text-sm tracking-[0.4em] uppercase text-center font-bold">
+          <p className="font-stamp text-stamp-red/90 font-bold text-sm tracking-[0.4em] uppercase text-center font-bold">
             Approved
           </p>
         </div>
@@ -254,10 +254,10 @@ const ProjectsSpread = () => (
     >
       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-[2px] border-stamp-red/50 flex items-center justify-center">
         <div className="text-center">
-          <p className="font-stamp text-[6px] sm:text-[7px] text-stamp-red/60 tracking-wider uppercase font-bold leading-tight">Entry</p>
-          <p className="font-stamp text-[7px] sm:text-[8px] text-stamp-red/60 tracking-wider uppercase font-bold leading-tight">Granted</p>
+          <p className="font-stamp text-[6px] sm:text-[7px] text-stamp-red/90 font-bold tracking-wider uppercase font-bold leading-tight">Entry</p>
+          <p className="font-stamp text-[7px] sm:text-[8px] text-stamp-red/90 font-bold tracking-wider uppercase font-bold leading-tight">Granted</p>
           <div className="w-6 h-px bg-stamp-red/30 mx-auto mt-0.5" />
-          <p className="font-mrz text-[5px] text-stamp-red/40 mt-0.5">2024.11.03</p>
+          <p className="font-mrz text-[5px] text-stamp-red/90 font-bold mt-0.5">2024.11.03</p>
         </div>
       </div>
     </div>
@@ -291,9 +291,9 @@ const ProjectsSpread = () => (
       style={{ right: '25%', bottom: '22%', transform: 'rotate(3deg)', opacity: 0.3 }}
     >
       <div className="border border-medium-gray/30 rounded-sm px-2.5 py-1">
-        <p className="font-mrz text-[7px] text-medium-gray/45 tracking-widest text-center">15 NOV 2024</p>
+        <p className="font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest text-center">15 NOV 2024</p>
         <div className="w-full h-px bg-medium-gray/20 my-0.5" />
-        <p className="font-stamp text-[5px] text-medium-gray/35 tracking-[0.2em] uppercase text-center">Port of Entry</p>
+        <p className="font-stamp text-[5px] text-medium-gray/90 font-bold tracking-[0.2em] uppercase text-center">Port of Entry</p>
       </div>
     </div>
 
@@ -316,13 +316,13 @@ const ProjectsSpread = () => (
       style={{ right: '5%', top: '38%', transform: 'rotate(-5deg)', opacity: 0.25 }}
     >
       <div className="border-[1.5px] border-stamp-red/35 rounded-sm px-2 py-0.5">
-        <p className="font-stamp text-[6px] text-stamp-red/45 tracking-[0.3em] uppercase font-bold">Registered</p>
+        <p className="font-stamp text-[6px] text-stamp-red/90 font-bold tracking-[0.3em] uppercase font-bold">Registered</p>
       </div>
     </div>
 
     {/* ── Microtext security line ── */}
     <div className="absolute bottom-1 left-0 right-0 overflow-hidden pointer-events-none z-30">
-      <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap text-center select-none">
+      <p className="font-mrz text-[4px] text-medium-gray/90 font-bold tracking-[0.15em] whitespace-nowrap text-center select-none">
         DEV-PASS&bull;PROJECT-REGISTRY&bull;SERIAL-ENTRY&bull;VERIFIED&bull;COMPLIANT&bull;DEV-PASS&bull;PROJECT-REGISTRY&bull;SERIAL-ENTRY&bull;VERIFIED&bull;COMPLIANT&bull;DEV-PASS&bull;PROJECT-REGISTRY
       </p>
     </div>

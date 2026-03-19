@@ -42,7 +42,7 @@ const Rule = ({ className = '' }) => (
 
 /* ─── Section label used on the right page ─── */
 const SectionLabel = ({ children }) => (
-  <span className="font-stamp text-[7px] text-gold/60 tracking-[0.35em] uppercase block mb-0.5 select-none">
+  <span className="font-stamp text-[7px] text-gold/90 font-bold tracking-[0.35em] uppercase block mb-0.5 select-none">
     {children}
   </span>
 )
@@ -50,10 +50,10 @@ const SectionLabel = ({ children }) => (
 /* ─── Metadata row used on the left page ─── */
 const MetaField = ({ label, value, mono = false }) => (
   <div className="flex items-baseline gap-2">
-    <span className="font-stamp text-[7px] text-medium-gray/55 tracking-[0.2em] uppercase whitespace-nowrap w-[72px] shrink-0 text-right select-none">
+    <span className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-[0.2em] uppercase whitespace-nowrap w-[72px] shrink-0 text-right select-none">
       {label}
     </span>
-    <span className={`${mono ? 'font-mrz tracking-wider' : 'font-body'} text-[10px] text-passport-navy/80 leading-tight`}>
+    <span className={`${mono ? 'font-mrz tracking-wider' : 'font-body'} text-[10px] text-passport-navy/90 font-bold leading-tight`}>
       {value}
     </span>
   </div>
@@ -66,13 +66,13 @@ const IdentitySpread = () => (
     <div className="flex flex-col items-center p-4 sm:p-5 relative">
 
       {/* page number */}
-      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest select-none">
         P&nbsp;01
       </span>
 
       {/* header label */}
       <div className="w-full mb-3 pb-1.5 border-b border-gold/20">
-        <span className="font-stamp text-[8px] text-gold/50 tracking-[0.35em] uppercase select-none">
+        <span className="font-stamp text-[8px] text-gold/90 font-bold tracking-[0.35em] uppercase select-none">
           Identification
         </span>
       </div>
@@ -90,7 +90,7 @@ const IdentitySpread = () => (
           <div className="absolute inset-0 opacity-30" style={{
             backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(180,160,120,0.08) 2px, rgba(180,160,120,0.08) 3px)',
           }} />
-          <svg viewBox="0 0 100 120" className="w-16 h-20 text-passport-navy/20 relative z-10">
+          <svg viewBox="0 0 100 120" className="w-16 h-20 text-passport-navy/90 font-bold relative z-10">
             <circle cx="50" cy="35" r="22" fill="currentColor" />
             <ellipse cx="50" cy="95" rx="35" ry="25" fill="currentColor" />
           </svg>
@@ -112,14 +112,14 @@ const IdentitySpread = () => (
               boxShadow: '0 0 3px rgba(178,34,34,0.15)',
             }}
           >
-            <p className="font-stamp text-stamp-red/80 text-[8px] tracking-[0.3em] font-bold uppercase leading-none whitespace-nowrap">
+            <p className="font-stamp text-stamp-red/90 font-bold text-[8px] tracking-[0.3em] font-bold uppercase leading-none whitespace-nowrap">
               CLASS: EXPERT
             </p>
           </div>
         </div>
       </div>
 
-      <p className="font-stamp text-[7px] text-medium-gray/40 tracking-[0.35em] uppercase mt-3 select-none">
+      <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-[0.35em] uppercase mt-3 select-none">
         Passport Photo
       </p>
 
@@ -143,7 +143,7 @@ const IdentitySpread = () => (
         {focusTags.map((tag) => (
           <span
             key={tag}
-            className="stamp-effect stamp-slam font-stamp text-[7px] text-passport-navy/60 bg-gold/8 border border-gold/20 rounded-sm px-2 py-0.5 tracking-wider uppercase"
+            className="stamp-effect stamp-slam font-stamp text-[7px] text-passport-navy/90 font-bold bg-gold/8 border border-gold/20 rounded-sm px-2 py-0.5 tracking-wider uppercase"
           >
             {tag}
           </span>
@@ -167,24 +167,24 @@ const IdentitySpread = () => (
 
       {/* ── Microtext security line (repeating faint text) ── */}
       <div className="absolute bottom-8 left-0 right-0 overflow-hidden pointer-events-none select-none">
-        <p className="font-mrz text-[3px] text-passport-navy/6 tracking-[0.5em] uppercase whitespace-nowrap">
+        <p className="font-mrz text-[3px] text-passport-navy/90 font-bold tracking-[0.5em] uppercase whitespace-nowrap">
           DEVELOPER·PASSPORT·HARSHDEEP·SINGH·AI·ENGINEER·VERIFIED·AUTHENTIC·DEVELOPER·PASSPORT·HARSHDEEP·SINGH·AI·ENGINEER·VERIFIED·AUTHENTIC
         </p>
       </div>
 
       {/* page number */}
-      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest select-none">
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest select-none">
         P&nbsp;02
       </span>
 
       {/* header label */}
       <div className="w-full mb-2.5 pb-1.5 border-b border-gold/20 relative z-10">
         <div className="flex justify-between items-center">
-          <span className="font-stamp text-[8px] text-gold/50 tracking-[0.35em] uppercase select-none">
+          <span className="font-stamp text-[8px] text-gold/90 font-bold tracking-[0.35em] uppercase select-none">
             Personal Data
           </span>
           {/* Issue date */}
-          <span className="font-mrz text-[6px] text-medium-gray/30 tracking-widest select-none">
+          <span className="font-mrz text-[6px] text-medium-gray/90 font-bold tracking-widest select-none">
             ISSUED 2024
           </span>
         </div>
@@ -196,7 +196,7 @@ const IdentitySpread = () => (
         <p className="font-heading text-base sm:text-lg text-passport-navy font-bold leading-snug">
           Harshdeep Singh
         </p>
-        <p className="font-stamp text-[10px] text-stamp-red/80 tracking-wider uppercase mt-0.5">
+        <p className="font-stamp text-[10px] text-stamp-red/90 font-bold tracking-wider uppercase mt-0.5">
           AI &amp; Machine Learning Engineer
         </p>
       </div>
@@ -206,7 +206,7 @@ const IdentitySpread = () => (
       {/* ── BIOGRAPHY ── */}
       <div className="mb-2 relative z-10">
         <SectionLabel>Biography</SectionLabel>
-        <p className="text-dark-gray/70 text-[10px] sm:text-[11px] leading-relaxed">
+        <p className="text-dark-gray/90 font-bold text-[10px] sm:text-[11px] leading-relaxed">
           AI engineer building complex simulation engines and research-oriented
           systems. Passionate about reinforcement learning, predictive modeling,
           and turning data into intelligent decision-making tools.
@@ -222,7 +222,7 @@ const IdentitySpread = () => (
           {expertise.map((item) => (
             <span
               key={item}
-              className="text-[9px] text-passport-navy/70 font-body before:content-['▸'] before:mr-1 before:text-gold/60 before:text-[7px]"
+              className="text-[9px] text-passport-navy/90 font-bold font-body before:content-['▸'] before:mr-1 before:text-gold/90 font-bold before:text-[7px]"
             >
               {item}
             </span>
@@ -239,7 +239,7 @@ const IdentitySpread = () => (
           {techStack.map((t) => (
             <span
               key={t}
-              className="font-mrz text-[7px] text-passport-navy/55 bg-passport-navy/5 border border-passport-navy/10 rounded-[3px] px-1.5 py-[1px] tracking-wide"
+              className="font-mrz text-[7px] text-passport-navy/90 font-bold bg-passport-navy/5 border border-passport-navy/10 rounded-[3px] px-1.5 py-[1px] tracking-wide"
             >
               {t}
             </span>
@@ -284,7 +284,7 @@ const IdentitySpread = () => (
       </div>
 
       {/* ── MRZ zone ── */}
-      <div className="mt-1.5 pt-1.5 border-t border-medium-gray/15 font-mrz text-[7px] text-passport-navy/25 leading-tight tracking-[0.15em] select-none overflow-hidden relative z-10">
+      <div className="mt-1.5 pt-1.5 border-t border-medium-gray/15 font-mrz text-[7px] text-passport-navy/90 font-bold leading-tight tracking-[0.15em] select-none overflow-hidden relative z-10">
         <p>P&lt;IND&lt;SINGH&lt;&lt;HARSHDEEP&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</p>
         <p>DEV2024013&lt;IND&lt;0000000&lt;M&lt;2505010&lt;&lt;&lt;&lt;&lt;&lt;&lt;00</p>
       </div>

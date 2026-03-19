@@ -80,7 +80,7 @@ const ResearchSpread = () => (
 
     {/* Left page — Papers */}
     <div className="p-4 sm:p-5 flex flex-col relative z-10">
-      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 08</span>
+      <span className="absolute bottom-2 left-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest">P 08</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <h2 className="font-heading text-passport-navy text-sm sm:text-base font-bold">
@@ -110,14 +110,14 @@ const ResearchSpread = () => (
               <h3 className="font-heading text-xs text-passport-navy font-bold pr-14 leading-snug group-hover:text-ink-blue transition-colors">
                 {p.title}
               </h3>
-              <p className="font-stamp text-[8px] text-stamp-red/60 tracking-wider mt-0.5">
+              <p className="font-stamp text-[8px] text-stamp-red/90 font-bold tracking-wider mt-0.5">
                 {p.venue} &bull; {p.year}
               </p>
-              <p className="text-dark-gray/65 text-[10px] leading-relaxed mt-1">
+              <p className="text-dark-gray/90 font-bold text-[10px] leading-relaxed mt-1">
                 {p.summary}
               </p>
               {p.doi && (
-                <p className="font-mrz text-[7px] text-medium-gray/50 mt-1 tracking-wider underline underline-offset-2 decoration-medium-gray/20">
+                <p className="font-mrz text-[7px] text-medium-gray/90 font-bold mt-1 tracking-wider underline underline-offset-2 decoration-medium-gray/20">
                   DOI: {p.doi}
                 </p>
               )}
@@ -129,7 +129,7 @@ const ResearchSpread = () => (
 
     {/* Right page — Research metrics & stamps */}
     <div className="p-4 sm:p-5 relative flex flex-col z-10">
-      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/20 tracking-widest">P 09</span>
+      <span className="absolute bottom-2 right-3 font-mrz text-[7px] text-medium-gray/90 font-bold tracking-widest">P 09</span>
 
       <div className="mb-3 pb-2 border-b border-gold/20 flex justify-between items-center">
         <span className="font-stamp text-[8px] text-medium-gray tracking-widest">
@@ -142,26 +142,26 @@ const ResearchSpread = () => (
         <div className="grid grid-cols-2">
           <div className="text-center p-2 border-b border-r border-gold/15">
             <p className="font-heading text-lg text-passport-navy font-bold">3</p>
-            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Papers</p>
+            <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">Papers</p>
           </div>
           <div className="text-center p-2 border-b border-gold/15">
             <p className="font-heading text-lg text-stamp-red font-bold">1</p>
-            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Published</p>
+            <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">Published</p>
           </div>
           <div className="text-center p-2 border-r border-gold/15">
             <p className="font-heading text-lg text-ink-blue font-bold">5+</p>
-            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Citations</p>
+            <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">Citations</p>
           </div>
           <div className="text-center p-2">
             <p className="font-heading text-lg text-gold font-bold">2</p>
-            <p className="font-stamp text-[7px] text-medium-gray/60 tracking-widest uppercase">Domains</p>
+            <p className="font-stamp text-[7px] text-medium-gray/90 font-bold tracking-widest uppercase">Domains</p>
           </div>
         </div>
       </div>
 
       {/* Research focus areas */}
       <div className="mb-3">
-        <p className="font-stamp text-[8px] text-medium-gray/60 tracking-widest uppercase mb-2">Focus Areas</p>
+        <p className="font-stamp text-[8px] text-medium-gray/90 font-bold tracking-widest uppercase mb-2">Focus Areas</p>
         <div className="flex flex-wrap gap-1.5">
           {['Reinforcement Learning', 'Explainable AI', 'Geospatial ML', 'Healthcare AI', 'Simulation'].map((area) => (
             <span key={area} className="font-stamp text-[7px] text-ink-blue/70 border border-ink-blue/20 rounded-sm px-2 py-0.5 tracking-wider uppercase">
@@ -193,7 +193,7 @@ const ResearchSpread = () => (
 
       {/* ── Microtext ── */}
       <div className="mt-auto">
-        <p className="font-mrz text-[4px] text-medium-gray/10 tracking-[0.15em] whitespace-nowrap select-none">
+        <p className="font-mrz text-[4px] text-medium-gray/90 font-bold tracking-[0.15em] whitespace-nowrap select-none">
           RESEARCH&bull;PUBLICATION&bull;RECORD&bull;IEEE&bull;PEER-REVIEWED&bull;RESEARCH&bull;PUBLICATION&bull;RECORD&bull;IEEE&bull;PEER-REVIEWED
         </p>
       </div>
